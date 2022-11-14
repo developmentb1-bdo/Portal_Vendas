@@ -67,6 +67,7 @@ namespace SAPB1.SqlServerDAL.Funcionario
         public ColaboradorDTO SelecionarColaboradorPorUsuarioESenha(string usuario, string senha)
         {
             ColaboradorDTO colaborador = new ColaboradorDTO();
+            //Tipo do banco de dados utilizado 
             string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
             string query = $@"SELECT * FROM OHEM WHERE ""U_usuario"" = '{usuario}' AND ""U_senha"" = '{senha}'";
 
