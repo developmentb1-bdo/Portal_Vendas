@@ -1,0 +1,16 @@
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.WebForms.Abt\bin\SAPB1.WebForms.Abt.dll.config
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.WebForms.Abt\bin\SAPB1.WebForms.Abt.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.WebForms.Abt\bin\SAPB1.WebForms.Abt.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.WebForms.Abt\bin\SAPB1.BLL.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.WebForms.Abt\bin\SAPB1.DALFactory.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.WebForms.Abt\bin\SAPB1.DTO.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.WebForms.Abt\bin\SAPB1.IDAL.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.WebForms.Abt\bin\SAPB1.SqlServerDAL.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.WebForms.Abt\bin\SAPB1.BLL.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.WebForms.Abt\bin\SAPB1.DALFactory.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.WebForms.Abt\bin\SAPB1.DTO.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.WebForms.Abt\bin\SAPB1.IDAL.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.WebForms.Abt\bin\SAPB1.SqlServerDAL.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.WebForms.Abt\obj\Release\SAPB1.WebForms.Abt.csprojResolveAssemblyReference.cache
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.WebForms.Abt\obj\Release\SAPB1.WebForms.Abt.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.WebForms.Abt\obj\Release\SAPB1.WebForms.Abt.pdb

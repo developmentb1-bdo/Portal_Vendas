@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5BDFEEFE-9EFB-4C49-9A8C-B70867A87F2F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SAPB1.DALFactory</RootNamespace>
+    <AssemblyName>SAPB1.DALFactory</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Administracao\AdministracaoFactory.cs" />
+    <Compile Include="Administracao\Configuracao\IdiomaFactory.cs" />
+    <Compile Include="Administracao\Configuracao\PaisFactory.cs" />
+    <Compile Include="Anexo\AnexoFactory.cs" />
+    <Compile Include="Compras\CompraFactory.cs" />
+    <Compile Include="Concessionario\ConcessionarioFactory.cs" />
+    <Compile Include="CondicaoPagamento\CondicaoPagamentoFactory.cs" />
+    <Compile Include="DeskPararelo\Estoque\EstoqueDadosFactory.cs" />
+    <Compile Include="Empregado\EmpregadoFactory.cs" />
+    <Compile Include="Empresa\Filial\FilialFactory.cs" />
+    <Compile Include="Estado\EstadoFactory.cs" />
+    <Compile Include="Estoque\EstoqueFactory.cs" />
+    <Compile Include="EstruturaItem\EstruturaItemFactory.cs" />
+    <Compile Include="FormasPagamento\FormaPagamentoFactory.cs" />
+    <Compile Include="Funcionario\ColaboradorFactory.cs" />
+    <Compile Include="Funcionario\Vendedor\VendedorFactory.cs" />
+    <Compile Include="GrupoItem\GrupoItemFactory.cs" />
+    <Compile Include="Item\ItemFactory.cs" />
+    <Compile Include="Municipio\MunicipioFactory.cs" />
+    <Compile Include="NotaFiscal\NotaFiscalItemFactory.cs" />
+    <Compile Include="OrdemProducao\OrdemProducaoFactory.cs" />
+    <Compile Include="ParceiroNegocio\ParceiroNegocioFactory.cs" />
+    <Compile Include="PedidoPeca\ItemPecaFactory.cs" />
+    <Compile Include="PedidoPeca\PedidoPecaFactory.cs" />
+    <Compile Include="PedidoVenda\CotacaoFactory.cs" />
+    <Compile Include="PedidoVenda\EnderecoFactory.cs" />
+    <Compile Include="PedidoVenda\ItemCotacaoFactory.cs" />
+    <Compile Include="PedidoVenda\ItemVendaFactory.cs" />
+    <Compile Include="PedidoVenda\PedidoVendaFactory.cs" />
+    <Compile Include="Previsao\ItemPrevisaoFactory.cs" />
+    <Compile Include="Projeto\ProjetoFactory.cs" />
+    <Compile Include="Relatorio\FaturamentoFactory.cs" />
+    <Compile Include="Relatorio\FinanceiroFactory.cs" />
+    <Compile Include="Representante\RepresentanteFactory.cs" />
+    <Compile Include="Servico\ChamadoServicoFactory.cs" />
+    <Compile Include="Servico\ChamadoTprFactory.cs" />
+    <Compile Include="Servico\ChassiAntigoFactory.cs" />
+    <Compile Include="Servico\ContratoFactory.cs" />
+    <Compile Include="Servico\ItensChamadoFactory.cs" />
+    <Compile Include="Servico\ModeloVeiculoFactory.cs" />
+    <Compile Include="Servico\OpcaoTipoGarantiaFactory.cs" />
+    <Compile Include="Servico\ServicoFactory.cs" />
+    <Compile Include="Servico\TipoGarantiaFactory.cs" />
+    <Compile Include="Servico\TransacaoFactory.cs" />
+    <Compile Include="Servico\TrpFactory.cs" />
+    <Compile Include="SetorIndustrial\SetorIndustrialFactory.cs" />
+    <Compile Include="TabelaPreco\ItensTabelaPrecoFactory.cs" />
+    <Compile Include="TabelaPreco\TabelaPrecoFactory.cs" />
+    <Compile Include="Territorio\TerritorioFactory.cs" />
+    <Compile Include="TiposEnvio\TipoEnvioFacytory.cs" />
+    <Compile Include="Usuario\UsuarioFactory.cs" />
+    <Compile Include="Utilizacao\Cfop\CfopFactory.cs" />
+    <Compile Include="Utilizacao\UtilizacaoFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SAPB1.IDAL\SAPB1.IDAL.csproj">
+      <Project>{f56062cf-8823-42c4-b8f6-645e20841cb8}</Project>
+      <Name>SAPB1.IDAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

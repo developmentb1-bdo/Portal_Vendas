@@ -1,0 +1,17 @@
+C:\Projeto\SAPB1\Arquitetura\SAPB1.DTO\bin\Debug\SAPB1.DTO.dll
+C:\Projeto\SAPB1\Arquitetura\SAPB1.DTO\bin\Debug\SAPB1.DTO.pdb
+C:\Projeto\SAPB1\Arquitetura\SAPB1.DTO\obj\Debug\SAPB1.DTO.csproj.CoreCompileInputs.cache
+C:\Projeto\SAPB1\Arquitetura\SAPB1.DTO\obj\Debug\SAPB1.DTO.dll
+C:\Projeto\SAPB1\Arquitetura\SAPB1.DTO\obj\Debug\SAPB1.DTO.pdb
+C:\Projeto\SAPB1\Arquitetura\SAPB1.DTO\obj\Debug\SAPB1.DTO.csprojAssemblyReference.cache
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DTO\bin\Debug\SAPB1.DTO.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DTO\bin\Debug\SAPB1.DTO.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DTO\obj\Debug\SAPB1.DTO.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DTO\obj\Debug\SAPB1.DTO.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DTO\obj\Debug\SAPB1.DTO.csprojResolveAssemblyReference.cache
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.DTO\bin\Debug\SAPB1.DTO.dll
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.DTO\bin\Debug\SAPB1.DTO.pdb
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.DTO\obj\Debug\SAPB1.DTO.csproj.AssemblyReference.cache
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.DTO\obj\Debug\SAPB1.DTO.csproj.CoreCompileInputs.cache
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.DTO\obj\Debug\SAPB1.DTO.dll
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.DTO\obj\Debug\SAPB1.DTO.pdb

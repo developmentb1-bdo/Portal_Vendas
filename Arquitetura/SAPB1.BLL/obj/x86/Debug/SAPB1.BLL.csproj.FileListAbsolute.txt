@@ -1,0 +1,14 @@
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.BLL\bin\x86\Debug\SAPB1.BLL.dll.config
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.BLL\bin\x86\Debug\SAPB1.BLL.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.BLL\bin\x86\Debug\SAPB1.BLL.pdb
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.BLL\bin\x86\Debug\SAPB1.DALFactory.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.BLL\bin\x86\Debug\SAPB1.DTO.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.BLL\bin\x86\Debug\SAPB1.IDAL.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.BLL\bin\x86\Debug\SAPB1.DALFactory.pdb
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.BLL\bin\x86\Debug\SAPB1.DTO.pdb
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.BLL\bin\x86\Debug\SAPB1.IDAL.pdb
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.BLL\obj\x86\Debug\SAPB1.BLL.csproj.AssemblyReference.cache
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.BLL\obj\x86\Debug\SAPB1.BLL.csproj.CoreCompileInputs.cache
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.BLL\obj\x86\Debug\SAPB1.BLL.csproj.CopyComplete
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.BLL\obj\x86\Debug\SAPB1.BLL.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.BLL\obj\x86\Debug\SAPB1.BLL.pdb

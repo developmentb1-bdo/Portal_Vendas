@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{248762DB-8C80-427D-A6DE-DE54999B7C07}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SAPB1.BLL</RootNamespace>
+    <AssemblyName>SAPB1.BLL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Administracao\Configuracao\IdiomaBLL.cs" />
+    <Compile Include="Administracao\Configuracao\PaisBLL.cs" />
+    <Compile Include="Administracao\FilialBLL.cs" />
+    <Compile Include="Anexo\AnexoBLL.cs" />
+    <Compile Include="Compras\CompraBLL.cs" />
+    <Compile Include="Concessionario\ConcessionarioBLL.cs" />
+    <Compile Include="CondicaoPagamento\CondicaoPagamentoBLL.cs" />
+    <Compile Include="DeskPack\LoginDeskBLL.cs" />
+    <Compile Include="DeskPararelo\Estoque\EstoqueDadosBLL.cs" />
+    <Compile Include="DI\FuncoesSapDi.cs" />
+    <Compile Include="Email\EmailBLL.cs" />
+    <Compile Include="Empregado\EmpregadoBLL.cs" />
+    <Compile Include="Empresa\Filial\FilialBLL.cs" />
+    <Compile Include="Estado\EstadoBLL.cs" />
+    <Compile Include="Estoque\DepositoBLL.cs" />
+    <Compile Include="Estoque\EstoqueBLL.cs" />
+    <Compile Include="EstruturaItem\EstruturaItemBLL.cs" />
+    <Compile Include="FormasPagamento\FormaPagamentoBLL.cs" />
+    <Compile Include="Funcionario\ColaboradorBLL.cs" />
+    <Compile Include="Funcionario\Vendedor\VendedorBLL.cs" />
+    <Compile Include="ParceiroNegocio\GrupoItem\GrupoItemBLL.cs" />
+    <Compile Include="Item\ItemBLL.cs" />
+    <Compile Include="Municipio\MunicipioBLL.cs" />
+    <Compile Include="NotaFiscal\NotaFiscalItemBLL.cs" />
+    <Compile Include="ParceiroNegocio\ContatoBLL.cs" />
+    <Compile Include="ParceiroNegocio\EnderecoBLL.cs" />
+    <Compile Include="ParceiroNegocio\GrupoBLL.cs" />
+    <Compile Include="ParceiroNegocio\IdentificacaoFiscalBLL.cs" />
+    <Compile Include="ParceiroNegocio\MoedaBLL.cs" />
+    <Compile Include="ParceiroNegocio\ParceiroNegocioBLL.cs" />
+    <Compile Include="PedidoPeca\ItemPecaBLL.cs" />
+    <Compile Include="PedidoPeca\PedidoPecaBLL.cs" />
+    <Compile Include="PedidoVenda\CotacaoBLL.cs" />
+    <Compile Include="PedidoVenda\EnderecoBLL.cs" />
+    <Compile Include="PedidoVenda\ItemCotacaoBLL.cs" />
+    <Compile Include="PedidoVenda\ItemVendaBLL.cs" />
+    <Compile Include="PedidoVenda\PedidoVendaBLL.cs" />
+    <Compile Include="PedidoVenda\PedidoVendaXml.cs" />
+    <Compile Include="Producao\ProducaoBLL.cs" />
+    <Compile Include="Projeto\ProjetoBLL.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Relatorio\FaturamentoBLL.cs" />
+    <Compile Include="Relatorio\FinanceiroBLL.cs" />
+    <Compile Include="Representante\RepresentanteBLL.cs" />
+    <Compile Include="Service References\SAP.Web.Services.WsIntegra\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Cep\CepBLL.cs" />
+    <Compile Include="Servicos\CartaoEquipamentoBLL.cs" />
+    <Compile Include="Servicos\ChamadoServicoBLL.cs" />
+    <Compile Include="Servicos\ChamadoTprBLL.cs" />
+    <Compile Include="Servicos\ChassiAntigoBLL.cs" />
+    <Compile Include="Servicos\ContratoBLL.cs" />
+    <Compile Include="Servicos\ItemChamadoServicoBLL.cs" />
+    <Compile Include="Servicos\ModeloVeiculoBLL.cs" />
+    <Compile Include="Servicos\OpcaoTipoGarantiaBLL.cs" />
+    <Compile Include="Servicos\TipoGarantiaBLL.cs" />
+    <Compile Include="Servicos\TprBLL.cs" />
+    <Compile Include="Servicos\TransacaoBLL.cs" />
+    <Compile Include="SetorIndustrial\SetorIndustrialBLL.cs" />
+    <Compile Include="TabelaPreco\ItensTabelaPrecoBLL.cs" />
+    <Compile Include="TabelaPreco\TabelaPrecoBLL.cs" />
+    <Compile Include="Territorio\TerritorioBLL.cs" />
+    <Compile Include="TiposEnvio\TipoEnvioBLL.cs" />
+    <Compile Include="Usuario\UsuarioBLL.cs" />
+    <Compile Include="Utilizacao\Cfop\CfopBLL.cs" />
+    <Compile Include="Utilizacao\UtilizacaoBLL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SAPB1.DALFactory\SAPB1.DALFactory.csproj">
+      <Project>{5bdfeefe-9efb-4c49-9a8c-b70867a87f2f}</Project>
+      <Name>SAPB1.DALFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SAPB1.DTO\SAPB1.DTO.csproj">
+      <Project>{e0025ff1-7d15-4d2f-b2dd-3060a2c1a9f5}</Project>
+      <Name>SAPB1.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SAPB1.IDAL\SAPB1.IDAL.csproj">
+      <Project>{f56062cf-8823-42c4-b8f6-645e20841cb8}</Project>
+      <Name>SAPB1.IDAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\SAP.Web.Services.WsIntegra\Dagan.wsdl" />
+    <None Include="Service References\SAP.Web.Services.WsIntegra\SAPB1.BLL.SAP.Web.Services.WsIntegra.Message.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\SAP.Web.Services.WsIntegra\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SAP.Web.Services.WsIntegra\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SAP.Web.Services.WsIntegra\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SAP.Web.Services.WsIntegra\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

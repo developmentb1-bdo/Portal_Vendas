@@ -1,0 +1,9 @@
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Release\SAPB1.SqlServerDAL.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Release\SAPB1.SqlServerDAL.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Release\SAPB1.DTO.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Release\SAPB1.IDAL.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Release\SAPB1.DTO.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Release\SAPB1.IDAL.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Release\SAPB1.SqlServerDAL.csprojResolveAssemblyReference.cache
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Release\SAPB1.SqlServerDAL.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Release\SAPB1.SqlServerDAL.pdb

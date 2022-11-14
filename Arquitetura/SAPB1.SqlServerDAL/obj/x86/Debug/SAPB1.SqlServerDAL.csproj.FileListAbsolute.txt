@@ -1,0 +1,12 @@
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\x86\Debug\SAPB1.SqlServerDAL.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\x86\Debug\SAPB1.SqlServerDAL.pdb
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\x86\Debug\Sap.Data.Hana.v4.5.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\x86\Debug\SAPB1.DTO.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\x86\Debug\SAPB1.IDAL.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\x86\Debug\SAPB1.DTO.pdb
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\x86\Debug\SAPB1.IDAL.pdb
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\x86\Debug\SAPB1.SqlServerDAL.csproj.AssemblyReference.cache
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\x86\Debug\SAPB1.SqlServerDAL.csproj.CoreCompileInputs.cache
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\x86\Debug\SAPB1.SqlServerDAL.csproj.CopyComplete
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\x86\Debug\SAPB1.SqlServerDAL.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\x86\Debug\SAPB1.SqlServerDAL.pdb

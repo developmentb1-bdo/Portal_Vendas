@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="3" virtualPath="/PedidoVenda_Action.aspx" hash="2d80641f0" filehash="1a554ff27638afcf" flags="110000" assembly="App_Web_pedidovenda_action.aspx.cdcab7d2" type="ASP.pedidovenda_action_aspx">
+    <filedeps>
+        <filedep name="/PedidoVenda_Action.aspx" />
+        <filedep name="/SapB1Master.Master" />
+    </filedeps>
+</preserve>

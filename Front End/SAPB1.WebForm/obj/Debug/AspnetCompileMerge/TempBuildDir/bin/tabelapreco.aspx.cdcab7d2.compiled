@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="3" virtualPath="/TabelaPreco.aspx" hash="2d80641f0" filehash="3283743730b4b626" flags="110000" assembly="App_Web_tabelapreco.aspx.cdcab7d2" type="ASP.tabelapreco_aspx">
+    <filedeps>
+        <filedep name="/SapB1Master.Master" />
+        <filedep name="/TabelaPreco.aspx" />
+    </filedeps>
+</preserve>

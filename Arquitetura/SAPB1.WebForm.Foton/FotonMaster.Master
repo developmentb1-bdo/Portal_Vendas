@@ -1,0 +1,25 @@
+﻿<%@ Master 
+    Language="C#" 
+    AutoEventWireup="true" 
+    CodeBehind="FotonMaster.master.cs" 
+    Inherits="SAPB1.WebForm.Foton.FotonMaster" 
+%>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head runat="server">
+        <title></title>
+        <asp:ContentPlaceHolder ID="head" runat="server">
+        </asp:ContentPlaceHolder>
+    </head>
+    <body>
+        <form id="form1" runat="server">
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+            </asp:ContentPlaceHolder>
+        </div>
+        </form>
+    </body>
+</html>

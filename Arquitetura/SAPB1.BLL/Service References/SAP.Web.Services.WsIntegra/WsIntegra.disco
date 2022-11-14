@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="http://s7tech.ddnsfree.com/Ws/WsIntegra.asmx?wsdl" docRef="http://s7tech.ddnsfree.com/Ws/WsIntegra.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="http://s7tech.ddnsfree.com/Ws/WsIntegra.asmx" xmlns:q1="http://s7tech.com.br/" binding="q1:WsIntegraSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="http://s7tech.ddnsfree.com/Ws/WsIntegra.asmx" xmlns:q2="http://s7tech.com.br/" binding="q2:WsIntegraSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>

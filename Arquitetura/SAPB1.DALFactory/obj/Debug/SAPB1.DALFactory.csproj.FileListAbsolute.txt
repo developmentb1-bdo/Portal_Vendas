@@ -1,0 +1,31 @@
+C:\Projeto\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Debug\SAPB1.DALFactory.dll
+C:\Projeto\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Debug\SAPB1.DALFactory.pdb
+C:\Projeto\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Debug\SAPB1.IDAL.dll
+C:\Projeto\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Debug\SAPB1.DTO.dll
+C:\Projeto\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Debug\SAPB1.IDAL.pdb
+C:\Projeto\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Debug\SAPB1.DTO.pdb
+C:\Projeto\SAPB1\Arquitetura\SAPB1.DALFactory\obj\Debug\SAPB1.DALFactory.csprojAssemblyReference.cache
+C:\Projeto\SAPB1\Arquitetura\SAPB1.DALFactory\obj\Debug\SAPB1.DALFactory.csproj.CoreCompileInputs.cache
+C:\Projeto\SAPB1\Arquitetura\SAPB1.DALFactory\obj\Debug\SAPB1.DALFactory.csproj.CopyComplete
+C:\Projeto\SAPB1\Arquitetura\SAPB1.DALFactory\obj\Debug\SAPB1.DALFactory.dll
+C:\Projeto\SAPB1\Arquitetura\SAPB1.DALFactory\obj\Debug\SAPB1.DALFactory.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Debug\SAPB1.DALFactory.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Debug\SAPB1.DALFactory.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Debug\SAPB1.IDAL.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Debug\SAPB1.DTO.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Debug\SAPB1.IDAL.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Debug\SAPB1.DTO.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DALFactory\obj\Debug\SAPB1.DALFactory.csprojResolveAssemblyReference.cache
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DALFactory\obj\Debug\SAPB1.DALFactory.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DALFactory\obj\Debug\SAPB1.DALFactory.pdb
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Debug\SAPB1.DALFactory.dll
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Debug\SAPB1.DALFactory.pdb
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Debug\SAPB1.IDAL.dll
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Debug\SAPB1.DTO.dll
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Debug\SAPB1.IDAL.pdb
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Debug\SAPB1.DTO.pdb
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.DALFactory\obj\Debug\SAPB1.DALFactory.csproj.AssemblyReference.cache
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.DALFactory\obj\Debug\SAPB1.DALFactory.csproj.CoreCompileInputs.cache
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.DALFactory\obj\Debug\SAPB1.DALFactory.csproj.CopyComplete
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.DALFactory\obj\Debug\SAPB1.DALFactory.dll
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.DALFactory\obj\Debug\SAPB1.DALFactory.pdb

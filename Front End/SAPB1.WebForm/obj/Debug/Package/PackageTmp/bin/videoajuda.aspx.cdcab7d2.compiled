@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="3" virtualPath="/VideoAjuda.aspx" hash="2d80641f0" filehash="cd7c977350b4adc2" flags="110000" assembly="App_Web_videoajuda.aspx.cdcab7d2" type="ASP.videoajuda_aspx">
+    <filedeps>
+        <filedep name="/SapB1Master.Master" />
+        <filedep name="/VideoAjuda.aspx" />
+    </filedeps>
+</preserve>

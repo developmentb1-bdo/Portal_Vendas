@@ -1,0 +1,9 @@
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.IDAL\bin\x64\Debug\SAPB1.IDAL.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.IDAL\bin\x64\Debug\SAPB1.IDAL.pdb
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.IDAL\bin\x64\Debug\SAPB1.DTO.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.IDAL\bin\x64\Debug\SAPB1.DTO.pdb
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.IDAL\obj\x64\Debug\SAPB1.IDAL.csproj.AssemblyReference.cache
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.IDAL\obj\x64\Debug\SAPB1.IDAL.csproj.CoreCompileInputs.cache
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.IDAL\obj\x64\Debug\SAPB1.IDAL.csproj.CopyComplete
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.IDAL\obj\x64\Debug\SAPB1.IDAL.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.IDAL\obj\x64\Debug\SAPB1.IDAL.pdb

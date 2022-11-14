@@ -1,0 +1,11 @@
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.DALFactory\bin\x64\Debug\SAPB1.DALFactory.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.DALFactory\bin\x64\Debug\SAPB1.DALFactory.pdb
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.DALFactory\bin\x64\Debug\SAPB1.IDAL.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.DALFactory\bin\x64\Debug\SAPB1.DTO.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.DALFactory\bin\x64\Debug\SAPB1.IDAL.pdb
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.DALFactory\bin\x64\Debug\SAPB1.DTO.pdb
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.DALFactory\obj\x64\Debug\SAPB1.DALFactory.csproj.AssemblyReference.cache
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.DALFactory\obj\x64\Debug\SAPB1.DALFactory.csproj.CoreCompileInputs.cache
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.DALFactory\obj\x64\Debug\SAPB1.DALFactory.csproj.CopyComplete
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.DALFactory\obj\x64\Debug\SAPB1.DALFactory.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.DALFactory\obj\x64\Debug\SAPB1.DALFactory.pdb

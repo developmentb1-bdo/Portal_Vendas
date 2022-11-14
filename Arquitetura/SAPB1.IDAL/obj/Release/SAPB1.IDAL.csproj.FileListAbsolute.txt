@@ -1,0 +1,7 @@
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.IDAL\bin\Release\SAPB1.IDAL.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.IDAL\bin\Release\SAPB1.IDAL.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.IDAL\bin\Release\SAPB1.DTO.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.IDAL\bin\Release\SAPB1.DTO.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.IDAL\obj\Release\SAPB1.IDAL.csprojResolveAssemblyReference.cache
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.IDAL\obj\Release\SAPB1.IDAL.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.IDAL\obj\Release\SAPB1.IDAL.pdb

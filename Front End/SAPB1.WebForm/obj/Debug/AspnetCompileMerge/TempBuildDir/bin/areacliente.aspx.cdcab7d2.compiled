@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="3" virtualPath="/AreaCliente.aspx" hash="2d80641f0" filehash="ee9778cd49e6851c" flags="110000" assembly="App_Web_areacliente.aspx.cdcab7d2" type="ASP.areacliente_aspx">
+    <filedeps>
+        <filedep name="/AreaCliente.aspx" />
+        <filedep name="/MasterCliente.Master" />
+    </filedeps>
+</preserve>

@@ -1,0 +1,94 @@
+C:\Projeto\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.WebForm.dll.config
+C:\Projeto\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.WebForm.dll
+C:\Projeto\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.WebForm.pdb
+C:\Projeto\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.BLL.dll
+C:\Projeto\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.DALFactory.dll
+C:\Projeto\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.DTO.dll
+C:\Projeto\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.IDAL.dll
+C:\Projeto\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.SqlServerDAL.dll
+C:\Projeto\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.BLL.pdb
+C:\Projeto\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.BLL.dll.config
+C:\Projeto\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.DALFactory.pdb
+C:\Projeto\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.DTO.pdb
+C:\Projeto\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.IDAL.pdb
+C:\Projeto\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.SqlServerDAL.pdb
+C:\Projeto\SAPB1\Front End\SAPB1.WebForm\obj\Debug\SAPB1.WebForm.csprojAssemblyReference.cache
+C:\Projeto\SAPB1\Front End\SAPB1.WebForm\obj\Debug\SAPB1.WebForm.csproj.CoreCompileInputs.cache
+C:\Projeto\SAPB1\Front End\SAPB1.WebForm\obj\Debug\SAPB1.WebForm.csproj.CopyComplete
+C:\Projeto\SAPB1\Front End\SAPB1.WebForm\obj\Debug\SAPB1.WebForm.dll
+C:\Projeto\SAPB1\Front End\SAPB1.WebForm\obj\Debug\SAPB1.WebForm.pdb
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\Css\StyleUiAutoComplete.css
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.WebForm.dll.config
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.WebForm.dll
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.WebForm.pdb
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\CrystalDecisions.CrystalReports.Engine.dll
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\CrystalDecisions.ReportAppServer.DataSetConversion.dll
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\CrystalDecisions.ReportSource.dll
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\CrystalDecisions.Shared.dll
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\CrystalDecisions.Web.dll
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\CrystalDecisions.Windows.Forms.dll
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.BLL.dll
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.DALFactory.dll
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.DTO.dll
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.IDAL.dll
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.SqlServerDAL.dll
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\BusinessObjects.Licensing.KeycodeDecoder.dll
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\FlashControlV71.dll
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\ShockwaveFlashObjects.dll
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\stdole.dll
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.BLL.pdb
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.DALFactory.pdb
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.DTO.pdb
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.IDAL.pdb
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.SqlServerDAL.pdb
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\en\CrystalDecisions.CrystalReports.Engine.resources.dll
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\en\CrystalDecisions.ReportSource.resources.dll
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\en\CrystalDecisions.Shared.resources.dll
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\en\CrystalDecisions.Web.resources.dll
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\en\CrystalDecisions.Windows.Forms.resources.dll
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\obj\Debug\SAPB1.WebForm.csprojResolveAssemblyReference.cache
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\obj\Debug\SAPB1.WebForm.dll
+C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\obj\Debug\SAPB1.WebForm.pdb
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Front End\SAPB1.WebForm\bin\Css\StyleUiAutoComplete.css
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.WebForm.dll.config
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.WebForm.dll
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.WebForm.pdb
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.BLL.dll
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.DALFactory.dll
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.DTO.dll
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.IDAL.dll
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.SqlServerDAL.dll
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Front End\SAPB1.WebForm\bin\stdole.dll
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.BLL.pdb
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.BLL.dll.config
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.DALFactory.pdb
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.DTO.pdb
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.IDAL.pdb
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.SqlServerDAL.pdb
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Front End\SAPB1.WebForm\obj\Debug\SAPB1.WebForm.csproj.AssemblyReference.cache
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Front End\SAPB1.WebForm\obj\Debug\SAPB1.WebForm.csproj.CoreCompileInputs.cache
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Front End\SAPB1.WebForm\obj\Debug\SAPB1.WebForm.csproj.CopyComplete
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Front End\SAPB1.WebForm\obj\Debug\SAPB1.WebForm.dll
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Front End\SAPB1.WebForm\obj\Debug\SAPB1.WebForm.pdb
+D:\PortalVendas\SAPB1\Front End\SAPB1.WebForm\bin\Css\StyleUiAutoComplete.css
+D:\PortalVendas\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.WebForm.dll.config
+D:\PortalVendas\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.WebForm.dll
+D:\PortalVendas\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.WebForm.pdb
+D:\PortalVendas\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.BLL.dll
+D:\PortalVendas\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.DALFactory.dll
+D:\PortalVendas\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.DTO.dll
+D:\PortalVendas\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.IDAL.dll
+D:\PortalVendas\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.SqlServerDAL.dll
+D:\PortalVendas\SAPB1\Front End\SAPB1.WebForm\bin\stdole.dll
+D:\PortalVendas\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.BLL.pdb
+D:\PortalVendas\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.BLL.dll.config
+D:\PortalVendas\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.DALFactory.pdb
+D:\PortalVendas\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.DTO.pdb
+D:\PortalVendas\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.IDAL.pdb
+D:\PortalVendas\SAPB1\Front End\SAPB1.WebForm\bin\SAPB1.SqlServerDAL.pdb
+D:\PortalVendas\SAPB1\Front End\SAPB1.WebForm\obj\Debug\SAPB1.WebForm.csproj.AssemblyReference.cache
+D:\PortalVendas\SAPB1\Front End\SAPB1.WebForm\obj\Debug\SAPB1.WebForm.csproj.CoreCompileInputs.cache
+D:\PortalVendas\SAPB1\Front End\SAPB1.WebForm\obj\Debug\SAPB1.WebForm.csproj.CopyComplete
+D:\PortalVendas\SAPB1\Front End\SAPB1.WebForm\obj\Debug\SAPB1.WebForm.dll
+D:\PortalVendas\SAPB1\Front End\SAPB1.WebForm\obj\Debug\SAPB1.WebForm.pdb
+D:\PortalVendas\SAPB1\Front End\SAPB1.WebForm\bin\Sap.Data.Hana.v4.5.dll

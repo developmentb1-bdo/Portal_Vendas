@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{479FE5D2-15B0-40D6-BB4F-DE95AEEDF6A7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SAPB1.SqlServerDAL</RootNamespace>
+    <AssemblyName>SAPB1.SqlServerDAL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Administracao\AdministracaoDAL.cs" />
+    <Compile Include="Administracao\Configuracao\IdiomaDAL.cs" />
+    <Compile Include="Administracao\Configuracao\PaisDAL.cs" />
+    <Compile Include="Administracao\FilialDAL.cs" />
+    <Compile Include="Anexo\AnexoDAL.cs" />
+    <Compile Include="Compras\ComprasDAL.cs" />
+    <Compile Include="Concessionario\ConcessionarioDAL.cs" />
+    <Compile Include="CondicaoPagamento\CondicaoPagamentoDAL.cs" />
+    <Compile Include="DeskPararelo\Estoque\EstoqueDadosDAL.cs" />
+    <Compile Include="Empregado\EmpregadoDAL.cs" />
+    <Compile Include="Empresa\Filial\FilialDAL.cs" />
+    <Compile Include="Estado\EstadoDAL.cs" />
+    <Compile Include="Estoque\DepositoDAL.cs" />
+    <Compile Include="Estoque\EstoqueDAL.cs" />
+    <Compile Include="EstruturaItem\EstruturaItemDAL.cs" />
+    <Compile Include="FormasPagamento\FormaPagamentoDAL.cs" />
+    <Compile Include="Funcionario\ColaboradorDAL.cs" />
+    <Compile Include="Funcionario\Vendedor\VendedorDAL.cs" />
+    <Compile Include="GrupoItem\GrupoItemDAL.cs" />
+    <Compile Include="HanaConexao.cs" />
+    <Compile Include="Item\ItemDAL.cs" />
+    <Compile Include="Municipio\MunicipioDAL.cs" />
+    <Compile Include="NotaFiscal\NotaFiscalItemDAL.cs" />
+    <Compile Include="OrdemProducao\OrdemProducaoDAL.cs" />
+    <Compile Include="ParceiroNegocio\ContatoDAL.cs" />
+    <Compile Include="ParceiroNegocio\EnderecoDAL.cs" />
+    <Compile Include="ParceiroNegocio\GrupoDAL.cs" />
+    <Compile Include="ParceiroNegocio\IdentificacaoFiscalDAL.cs" />
+    <Compile Include="ParceiroNegocio\MoedaDAL.cs" />
+    <Compile Include="ParceiroNegocio\ParceiroNegocioDAL.cs" />
+    <Compile Include="PedidoPeca\ItemPecaDAL.cs" />
+    <Compile Include="PedidoPeca\PedidoPecaDAL.cs" />
+    <Compile Include="PedidoVenda\CotacaoDAL.cs" />
+    <Compile Include="PedidoVenda\CotacaoItemDAL.cs" />
+    <Compile Include="PedidoVenda\EnderecoDAL.cs" />
+    <Compile Include="PedidoVenda\ItemVendaDAL.cs" />
+    <Compile Include="PedidoVenda\PedidoVendaDAL.cs" />
+    <Compile Include="Previsao\ItemPrevisaoDAL.cs" />
+    <Compile Include="Projeto\ProjetoDAL.cs" />
+    <Compile Include="Relatorio\FaturamentoDAL.cs" />
+    <Compile Include="Relatorio\FinanceiroDAL.cs" />
+    <Compile Include="Representante\RepresentanteDAL.cs" />
+    <Compile Include="Servico\CartaoEquipamentoDAL.cs" />
+    <Compile Include="Servico\ChamadoServicoDAL.cs" />
+    <Compile Include="Servico\ChamadoTprDAL.cs" />
+    <Compile Include="Servico\ChassiAntigoDAL.cs" />
+    <Compile Include="Servico\ContratoDAL.cs" />
+    <Compile Include="Servico\ItemChamadoServicoDAL.cs" />
+    <Compile Include="Servico\ModeloVeiculoDAL.cs" />
+    <Compile Include="Servico\OpcaoTipoGarantiaDAL.cs" />
+    <Compile Include="Servico\TipoGarantiaDAL.cs" />
+    <Compile Include="Servico\TprDAL.cs" />
+    <Compile Include="Servico\TransacaoDAL.cs" />
+    <Compile Include="SetorIndustrial\SetorIndustrialDAL.cs" />
+    <Compile Include="SqlServerConexao.cs" />
+    <Compile Include="TabelaPreco\ItensTabelaPrecoDAL.cs" />
+    <Compile Include="TabelaPreco\TabelaPrecoDAL.cs" />
+    <Compile Include="Territorio\TerritorioDAL.cs" />
+    <Compile Include="TiposEnvio\TipoEnvioDAL.cs" />
+    <Compile Include="Usuario\UsuarioDAL.cs" />
+    <Compile Include="Utilizacao\Cfop\CfopDAL.cs" />
+    <Compile Include="Utilizacao\UtilizacaoDAL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Sap.Data.Hana.v4.5, Version=2.5.86.0, Culture=neutral, PublicKeyToken=0326b8ea63db4bc4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\sap\hdbclient\ado.net\v4.5\Sap.Data.Hana.v4.5.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SAPB1.DTO\SAPB1.DTO.csproj">
+      <Project>{e0025ff1-7d15-4d2f-b2dd-3060a2c1a9f5}</Project>
+      <Name>SAPB1.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SAPB1.IDAL\SAPB1.IDAL.csproj">
+      <Project>{f56062cf-8823-42c4-b8f6-645e20841cb8}</Project>
+      <Name>SAPB1.IDAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dlls\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

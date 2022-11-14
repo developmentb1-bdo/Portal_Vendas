@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="3" virtualPath="/SapB1Master.Master" hash="2d80641f0" filehash="b5b065a40f2" flags="110000" assembly="App_Web_sapb1master.master.cdcab7d2" type="ASP.sapb1master_master">
+    <filedeps>
+        <filedep name="/SapB1Master.Master" />
+    </filedeps>
+</preserve>

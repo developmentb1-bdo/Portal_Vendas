@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SAPB1.WebForms.Foton.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="SAPB1_WebForms_Foton_WsFotonRamo_ipostep_vP_0010000104_in_WCSX_com_sap_b1i_vplatform_runtime_INB_WS_CALL_SYNC_XPT_INB_WS_CALL_SYNC_XPT_ipo_proc_Service" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://RONY-PC:8080/B1iXcellerator/exec/soap/vP.0010000104.in_WCSX/com.sap.b1i.vplatform.runtime/INB_WS_CALL_SYNC_XPT/INB_WS_CALL_SYNC_XPT.ipo/proc</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

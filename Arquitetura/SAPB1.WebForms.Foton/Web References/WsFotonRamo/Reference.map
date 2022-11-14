@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Results>
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="file:///C:/Users/Vinicius Kendi/Source/Workspaces/Workspace/renew/Projetos/Supertech/SAPB1/Arquitetura/SAPB1.WebForms.Foton/WDSLWebServiceRamo/0010000104_RSD.WSFOTON (8).wsdl" filename="ipostep_vP.0010000104.in_WCSX_com.sap.b1i.vplatform.runtime_INB_WS_CALL_SYNC_XPT_INB_WS_CALL_SYNC_XPT.wsdl" />
+  </Results>
+</DiscoveryClientResultsFile>

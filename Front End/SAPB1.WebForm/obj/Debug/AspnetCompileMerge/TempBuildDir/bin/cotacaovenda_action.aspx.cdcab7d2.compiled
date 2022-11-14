@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="3" virtualPath="/CotacaoVenda_Action.aspx" hash="2d80641f0" filehash="b1376e1440b65cf2" flags="110000" assembly="App_Web_cotacaovenda_action.aspx.cdcab7d2" type="ASP.cotacaovenda_action_aspx">
+    <filedeps>
+        <filedep name="/CotacaoVenda_Action.aspx" />
+        <filedep name="/SapB1Master.Master" />
+    </filedeps>
+</preserve>

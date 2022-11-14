@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="3" virtualPath="/DashBoard.aspx" hash="2d80641f0" filehash="4c53ebc70f095125" flags="110000" assembly="App_Web_dashboard.aspx.cdcab7d2" type="ASP.dashboard_aspx">
+    <filedeps>
+        <filedep name="/DashBoard.aspx" />
+        <filedep name="/SapB1Master.Master" />
+    </filedeps>
+</preserve>

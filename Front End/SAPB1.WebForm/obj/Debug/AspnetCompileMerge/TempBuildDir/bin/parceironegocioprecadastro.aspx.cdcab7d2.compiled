@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="3" virtualPath="/ParceiroNegocioPreCadastro.aspx" hash="2d80641f0" filehash="cb0e1e3b4150adda" flags="110000" assembly="App_Web_parceironegocioprecadastro.aspx.cdcab7d2" type="ASP.parceironegocioprecadastro_aspx">
+    <filedeps>
+        <filedep name="/ParceiroNegocioPreCadastro.aspx" />
+        <filedep name="/SapB1Master.Master" />
+    </filedeps>
+</preserve>

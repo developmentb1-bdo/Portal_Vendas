@@ -1,0 +1,9 @@
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Release\SAPB1.DALFactory.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Release\SAPB1.DALFactory.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Release\SAPB1.IDAL.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Release\SAPB1.DTO.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Release\SAPB1.IDAL.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Release\SAPB1.DTO.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DALFactory\obj\Release\SAPB1.DALFactory.csprojResolveAssemblyReference.cache
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DALFactory\obj\Release\SAPB1.DALFactory.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DALFactory\obj\Release\SAPB1.DALFactory.pdb

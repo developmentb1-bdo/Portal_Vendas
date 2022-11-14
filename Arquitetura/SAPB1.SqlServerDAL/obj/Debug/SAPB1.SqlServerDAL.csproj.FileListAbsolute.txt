@@ -1,0 +1,43 @@
+C:\Projeto\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.SqlServerDAL.dll
+C:\Projeto\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.SqlServerDAL.pdb
+C:\Projeto\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.DTO.dll
+C:\Projeto\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.IDAL.dll
+C:\Projeto\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.DTO.pdb
+C:\Projeto\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.IDAL.pdb
+C:\Projeto\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Debug\SAPB1.SqlServerDAL.csprojAssemblyReference.cache
+C:\Projeto\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Debug\SAPB1.SqlServerDAL.csproj.CoreCompileInputs.cache
+C:\Projeto\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Debug\SAPB1.SqlServerDAL.csproj.CopyComplete
+C:\Projeto\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Debug\SAPB1.SqlServerDAL.dll
+C:\Projeto\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Debug\SAPB1.SqlServerDAL.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.SqlServerDAL.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.SqlServerDAL.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.DTO.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.IDAL.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.DTO.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.IDAL.pdb
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Debug\SAPB1.SqlServerDAL.csprojResolveAssemblyReference.cache
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Debug\SAPB1.SqlServerDAL.dll
+C:\Portal Dev\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Debug\SAPB1.SqlServerDAL.pdb
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.SqlServerDAL.dll
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.SqlServerDAL.pdb
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.DTO.dll
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.IDAL.dll
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.DTO.pdb
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.IDAL.pdb
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Debug\SAPB1.SqlServerDAL.csproj.AssemblyReference.cache
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Debug\SAPB1.SqlServerDAL.csproj.CoreCompileInputs.cache
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Debug\SAPB1.SqlServerDAL.csproj.CopyComplete
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Debug\SAPB1.SqlServerDAL.dll
+D:\Items Shared on 01-11-2022\SAPB1_01_11_2022\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Debug\SAPB1.SqlServerDAL.pdb
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.SqlServerDAL.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.SqlServerDAL.pdb
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\Sap.Data.Hana.v4.5.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.DTO.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.IDAL.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.DTO.pdb
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Debug\SAPB1.IDAL.pdb
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Debug\SAPB1.SqlServerDAL.csproj.AssemblyReference.cache
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Debug\SAPB1.SqlServerDAL.csproj.CoreCompileInputs.cache
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Debug\SAPB1.SqlServerDAL.csproj.CopyComplete
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Debug\SAPB1.SqlServerDAL.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Debug\SAPB1.SqlServerDAL.pdb

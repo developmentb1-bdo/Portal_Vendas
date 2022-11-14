@@ -1,0 +1,6 @@
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.DTO\bin\x86\Debug\SAPB1.DTO.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.DTO\bin\x86\Debug\SAPB1.DTO.pdb
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.DTO\obj\x86\Debug\SAPB1.DTO.csproj.AssemblyReference.cache
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.DTO\obj\x86\Debug\SAPB1.DTO.csproj.CoreCompileInputs.cache
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.DTO\obj\x86\Debug\SAPB1.DTO.dll
+D:\PortalVendas\SAPB1\Arquitetura\SAPB1.DTO\obj\x86\Debug\SAPB1.DTO.pdb
