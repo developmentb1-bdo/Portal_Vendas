@@ -30,7 +30,6 @@ namespace SAPB1.SqlServerDAL
         {
             try
             {
-                Connection();
                 var cmd = new HanaCommand(querySql, _conn);
                 return cmd.ExecuteScalar();
             }

@@ -14,53 +14,90 @@ namespace SAPB1.SqlServerDAL.Funcionario
     {
         public ColaboradorDTO SelecionarColaboradorPorId(int empId)
         {
-            SqlCommand cmd = new SqlCommand();
+            string query = $@"SELECT * FROM OHEM WHERE empID = {empId}";
+            ColaboradorDTO colaborador = new ColaboradorDTO();
 
-            StringBuilder stb = new StringBuilder();
-            stb.Append("SELECT * FROM OHEM WHERE empID = @EmpID");
-
-            SqlServerConexao conexao = new SqlServerConexao();           
-
-            try
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
+            if (tipoBD == "Hana")
             {
-                cmd.CommandText = stb.ToString();
-                cmd.Parameters.AddWithValue("@EmpID", empId);
-
-                cmd.Connection = conexao.Conexao;
-
-                conexao.Conectar();
-
-                SqlDataReader rdr = cmd.ExecuteReader();
-
-                ColaboradorDTO colaborador = new ColaboradorDTO();
-
-                if(rdr.HasRows)
+                HanaConexao conexaoHana = new HanaConexao();
+                try
                 {
-                    while(rdr.Read())
-                    {
-                        colaborador.EmpId = Convert.ToInt32(rdr["empID"]);
-                        colaborador.FirstName = rdr["firstName"].ToString();
-                        colaborador.LastName = rdr["lastName"].ToString();
-                        colaborador.MiddleName = rdr["middleName"].ToString();
-                        colaborador.Position = Convert.ToInt32(rdr["position"]);
-                        colaborador.SalesPrson = Convert.ToInt32((rdr["salesPrson"].ToString().Equals("") ? "0" : rdr["salesPrson"]));
-                        colaborador.U_AcessoPortal = ((!DBNull.Value.Equals(rdr["U_AcessoPortal"])) ? rdr["U_AcessoPortal"].ToString() : "");
-                    }
-                }
+                    var retornoQuery = conexaoHana.ExecuteDataTable(query);
 
-                rdr.Close();
-                rdr.Dispose();
+                    foreach (DataRow dr in retornoQuery.Rows)
+                    {
+                        if (dr["empID"] != DBNull.Value)
+                        {
+                            colaborador.EmpId = Convert.ToInt32(dr["empID"]);
+                            colaborador.FirstName = dr["firstName"].ToString();
+                            colaborador.LastName = dr["lastName"].ToString();
+                            colaborador.MiddleName = dr["middleName"].ToString();
+
+                            if (dr["position"] != DBNull.Value)
+                                colaborador.Position = Convert.ToInt32(dr["position"]);
+
+                            colaborador.SalesPrson = Convert.ToInt32((dr["salesPrson"].ToString().Equals("") ? "0" : dr["salesPrson"]));
+                            colaborador.U_AcessoPortal = ((!DBNull.Value.Equals(dr["U_AcessoPortal"])) ? dr["U_AcessoPortal"].ToString() : "");
+                        }
+                    }
+
+                }
+                catch (Exception er)
+                {
+                    throw new Exception("Erro no banco de dados: " + er.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
+                }
 
                 return colaborador;
             }
-            catch (SqlException er)
+            else
             {
-                throw new Exception("Erro no banco de dados: " + er.Message);
-            }
-            finally
-            {
-                conexao.Desconectar();
-                cmd.Dispose();
+
+                SqlCommand cmd = new SqlCommand();                
+                SqlServerConexao conexao = new SqlServerConexao();
+
+                try
+                {
+                    cmd.CommandText = query;
+
+                    cmd.Connection = conexao.Conexao;
+
+                    conexao.Conectar();
+
+                    SqlDataReader rdr = cmd.ExecuteReader();                  
+
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            colaborador.EmpId = Convert.ToInt32(rdr["empID"]);
+                            colaborador.FirstName = rdr["firstName"].ToString();
+                            colaborador.LastName = rdr["lastName"].ToString();
+                            colaborador.MiddleName = rdr["middleName"].ToString();
+                            colaborador.Position = Convert.ToInt32(rdr["position"]);
+                            colaborador.SalesPrson = Convert.ToInt32((rdr["salesPrson"].ToString().Equals("") ? "0" : rdr["salesPrson"]));
+                            colaborador.U_AcessoPortal = ((!DBNull.Value.Equals(rdr["U_AcessoPortal"])) ? rdr["U_AcessoPortal"].ToString() : "");
+                        }
+                    }
+
+                    rdr.Close();
+                    rdr.Dispose();
+
+                    return colaborador;
+                }
+                catch (SqlException er)
+                {
+                    throw new Exception("Erro no banco de dados: " + er.Message);
+                }
+                finally
+                {
+                    conexao.Desconectar();
+                    cmd.Dispose();
+                }
             }
         }
 

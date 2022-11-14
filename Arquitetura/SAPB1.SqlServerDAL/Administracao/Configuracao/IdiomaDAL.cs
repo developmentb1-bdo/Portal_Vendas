@@ -13,7 +13,7 @@ namespace SAPB1.SqlServerDAL.Administracao.Configuracao
         public IList<IdiomaDTO> Listar()
         {
             StringBuilder stb = new StringBuilder();
-            stb.Append("SELECT * from OLNG ORDER BY Name");
+            stb.Append($@"SELECT * from OLNG ORDER BY ""Name""");
 
             SqlServerConexao conexao = new SqlServerConexao();
             SqlCommand cmd = new SqlCommand();
