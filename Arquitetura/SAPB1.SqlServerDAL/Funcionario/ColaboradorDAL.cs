@@ -14,7 +14,7 @@ namespace SAPB1.SqlServerDAL.Funcionario
     {
         public ColaboradorDTO SelecionarColaboradorPorId(int empId)
         {
-            string query = $@"SELECT * FROM OHEM WHERE empID = {empId}";
+            string query = $@"SELECT * FROM OHEM WHERE ""empID"" = {empId}";
             ColaboradorDTO colaborador = new ColaboradorDTO();
 
             string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
