@@ -123,34 +123,67 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
         {
             ParceiroNegocioDTO parceiroNegocioDTO = new ParceiroNegocioDTO();
 
-            try
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
+            if (tipoBD == "Hana")
             {
-                StringBuilder tSQL = new StringBuilder();
-                tSQL.Append(tSQLBase);
-                tSQL.Append("WHERE CardCode = @CardCode");
-
-                conexao.Conectar();
-
-                SqlCommand comando = new SqlCommand(tSQL.ToString(), conexao.Conexao);
-                comando.Parameters.Add(new SqlParameter("@CardCode", cardCode));
-                SqlDataReader dataReader = comando.ExecuteReader();
-
-                if (dataReader.HasRows)
+                HanaConexao conexaoHana = new HanaConexao();
+                try
                 {
-                    dataReader.Read();
-                    parceiroNegocioDTO = ObterParceiroNegocioDTO(dataReader);
-                }
-                dataReader.Close();
+                    string query = $@"SELECT * FROM OCRD WHERE ""CardCode"" = '{cardCode}'";
+                    conexaoHana.Connection();
 
-                return parceiroNegocioDTO;
+                    DataTable dt = conexaoHana.ExecuteDataTable(query);
+
+                    if (dt.Rows.Count > 0)
+                    {
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            parceiroNegocioDTO = ObterParceiroNegocioHanaDTO(dr);
+                        }
+                    }
+
+                    return parceiroNegocioDTO;
+                }
+                catch (Exception err)
+                {
+                    throw new Exception(err.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
+                }
             }
-            catch (SqlException erro)
+            else
             {
-                throw new Exception(erro.Message);
-            }
-            finally
-            {
-                conexao.Desconectar();
+                try
+                {
+                    StringBuilder tSQL = new StringBuilder();
+                    tSQL.Append(tSQLBase);
+                    tSQL.Append("WHERE CardCode = @CardCode");
+
+                    conexao.Conectar();
+
+                    SqlCommand comando = new SqlCommand(tSQL.ToString(), conexao.Conexao);
+                    comando.Parameters.Add(new SqlParameter("@CardCode", cardCode));
+                    SqlDataReader dataReader = comando.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        dataReader.Read();
+                        parceiroNegocioDTO = ObterParceiroNegocioDTO(dataReader);
+                    }
+                    dataReader.Close();
+
+                    return parceiroNegocioDTO;
+                }
+                catch (SqlException erro)
+                {
+                    throw new Exception(erro.Message);
+                }
+                finally
+                {
+                    conexao.Desconectar();
+                }
             }
         }
 
@@ -529,79 +562,152 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
 
         public IList<ParceiroNegocioDTO> Listar(ParceiroNegocioDTO parceiroNegocioDTO)
         {
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
             IList<ParceiroNegocioDTO> listParceiroNegocioDTO = new List<ParceiroNegocioDTO>();
 
-            SqlCommand comando = new SqlCommand();
-            try
+            if (tipoBD == "Hana")
             {
-                conexao.Conectar();
+                string query = "SELECT * FROM OCRD ";
+                HanaConexao conexaoHana = new HanaConexao();
 
-                StringBuilder stb = new StringBuilder();
-                stb.Append(tSQLBase);
-
-                if (!parceiroNegocioDTO.CardType.Contains("-"))
+                try
                 {
-                    stb.Append("WHERE CardType = @CardType ");
-                    comando.Parameters.AddWithValue("@CardType", parceiroNegocioDTO.CardType);
-                }
-                else
-                {
-                    stb.Append("WHERE (");
-
-                    string[] dadosTipos = parceiroNegocioDTO.CardType.Split('-');
-
-                    for (int i = 0; i < dadosTipos.Length; i++)
+                    conexaoHana.Connection();
+                    if (!parceiroNegocioDTO.CardType.Contains("-"))
                     {
-                        stb.Append("CardType = @CardType" + i + " ");
-                        comando.Parameters.AddWithValue("@CardType" + i, dadosTipos[i]);
 
-                        if (i < dadosTipos.Length - 1)
+                        query += $@"WHERE ""CardType"" = {parceiroNegocioDTO.CardType} ";
+                    }
+                    else
+                    {
+                        query += "WHERE (";
+
+                        string[] dadosTipos = parceiroNegocioDTO.CardType.Split('-');
+
+                        for (int i = 0; i < dadosTipos.Length; i++)
                         {
-                            stb.Append("OR ");
+                            query += $@"""CardType"" = '{dadosTipos[i]}' ";
+
+                            if (i < dadosTipos.Length - 1)
+                            {
+                                query += "OR ";
+                            }
+                        }
+                        query += ") ";
+                    }
+
+                    if (parceiroNegocioDTO.validFor != null)
+                    {
+                        query += $@"AND ""validFor"" = {parceiroNegocioDTO.validFor} ";
+                    }
+
+                    if (parceiroNegocioDTO.SlpCode > 0)
+                    {
+                        query += $@"AND ""SlpCode"" = {parceiroNegocioDTO.SlpCode} ";
+                    }
+
+                    query += $@"ORDER BY ""CardName""";
+
+
+                    DataTable dt = conexaoHana.ExecuteDataTable(query);
+
+                    if (dt.Rows.Count > 0)
+                    {
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            ParceiroNegocioDTO parceiroNegocioDTOParametro = new ParceiroNegocioDTO();
+                            parceiroNegocioDTOParametro = ObterParceiroNegocioHanaDTO(dr);
+
+                            listParceiroNegocioDTO.Add(parceiroNegocioDTOParametro);
                         }
                     }
 
-                    stb.Append(") ");
+                    return listParceiroNegocioDTO;
                 }
-
-                if (parceiroNegocioDTO.validFor != null)
+                catch (Exception err)
                 {
-                    stb.Append("AND validFor = @ValidFor ");
-                    comando.Parameters.AddWithValue("@ValidFor", parceiroNegocioDTO.validFor);
+                    throw new Exception(err.Message);
                 }
-
-                if (parceiroNegocioDTO.SlpCode > 0)
+                finally
                 {
-                    stb.Append("AND SlpCode = @SlpCode ");
-                    comando.Parameters.AddWithValue("@SlpCode", parceiroNegocioDTO.SlpCode);
+                    conexaoHana.Dispose();
                 }
-
-                stb.Append("ORDER BY CardName");
-
-                comando.CommandText = stb.ToString();
-                comando.Connection = conexao.Conexao;
-
-                SqlDataReader dataReader = comando.ExecuteReader();
-
-                while (dataReader.Read())
-                {
-                    ParceiroNegocioDTO parceiroNegocioDTOParametro = new ParceiroNegocioDTO();
-                    parceiroNegocioDTOParametro = ObterParceiroNegocioDTO(dataReader);
-
-                    listParceiroNegocioDTO.Add(parceiroNegocioDTOParametro);
-                }
-                dataReader.Close();
-
-                return listParceiroNegocioDTO;
             }
-            catch (SqlException erro)
+            else
             {
-                throw new Exception(erro.Message);
+                SqlCommand comando = new SqlCommand();
+                try
+                {
+                    conexao.Conectar();
+
+                    StringBuilder stb = new StringBuilder();
+                    stb.Append(tSQLBase);
+
+                    if (!parceiroNegocioDTO.CardType.Contains("-"))
+                    {
+                        stb.Append("WHERE CardType = @CardType ");
+                        comando.Parameters.AddWithValue("@CardType", parceiroNegocioDTO.CardType);
+                    }
+                    else
+                    {
+                        stb.Append("WHERE (");
+
+                        string[] dadosTipos = parceiroNegocioDTO.CardType.Split('-');
+
+                        for (int i = 0; i < dadosTipos.Length; i++)
+                        {
+                            stb.Append("CardType = @CardType" + i + " ");
+                            comando.Parameters.AddWithValue("@CardType" + i, dadosTipos[i]);
+
+                            if (i < dadosTipos.Length - 1)
+                            {
+                                stb.Append("OR ");
+                            }
+                        }
+
+                        stb.Append(") ");
+                    }
+
+                    if (parceiroNegocioDTO.validFor != null)
+                    {
+                        stb.Append("AND validFor = @ValidFor ");
+                        comando.Parameters.AddWithValue("@ValidFor", parceiroNegocioDTO.validFor);
+                    }
+
+                    if (parceiroNegocioDTO.SlpCode > 0)
+                    {
+                        stb.Append("AND SlpCode = @SlpCode ");
+                        comando.Parameters.AddWithValue("@SlpCode", parceiroNegocioDTO.SlpCode);
+                    }
+
+                    stb.Append("ORDER BY CardName");
+
+                    comando.CommandText = stb.ToString();
+                    comando.Connection = conexao.Conexao;
+
+                    SqlDataReader dataReader = comando.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        ParceiroNegocioDTO parceiroNegocioDTOParametro = new ParceiroNegocioDTO();
+                        parceiroNegocioDTOParametro = ObterParceiroNegocioDTO(dataReader);
+
+                        listParceiroNegocioDTO.Add(parceiroNegocioDTOParametro);
+                    }
+                    dataReader.Close();
+
+                    return listParceiroNegocioDTO;
+                }
+                catch (SqlException erro)
+                {
+                    throw new Exception(erro.Message);
+                }
+                finally
+                {
+                    conexao.Desconectar();
+                }
             }
-            finally
-            {
-                conexao.Desconectar();
-            }
+
         }
 
         public int RetornarQtdParceiroNegocio(ParceiroNegocioDTO parceiroNegocioDTO)

@@ -29,7 +29,7 @@ namespace SAPB1.SqlServerDAL.Funcionario.Vendedor
 
                         if (!string.IsNullOrEmpty(vendedorDTO.Active))
                         {
-                            query += $@"""Active"" = {vendedorDTO.Active} ";
+                            query += $@"""Active"" = '{vendedorDTO.Active}' ";
 
                             if (!string.IsNullOrEmpty(vendedorDTO.Locked))
                             {
@@ -39,14 +39,14 @@ namespace SAPB1.SqlServerDAL.Funcionario.Vendedor
 
                         if (!string.IsNullOrEmpty(vendedorDTO.Locked))
                         {
-                            query += $@"""Locked"" = {vendedorDTO.Locked} ";
+                            query += $@"""Locked"" = '{vendedorDTO.Locked}' ";
                         }
                     }
                     else
                     {
                         if (vendedorDTO.SlpCode > 0)
                         {
-                            query += $@"WHERE ""SlpCode"" = {vendedorDTO.SlpCode} ";
+                            query += $@"WHERE ""SlpCode"" = '{vendedorDTO.SlpCode}' ";
                         }
                     }
                 }
@@ -172,7 +172,7 @@ namespace SAPB1.SqlServerDAL.Funcionario.Vendedor
                         listVendedores.Add(vendedorDTO);
                     }
                 }
-
+                return listVendedores;
             }
             catch (Exception err)
             {
@@ -183,7 +183,6 @@ namespace SAPB1.SqlServerDAL.Funcionario.Vendedor
                 conexaoHana.Dispose();
             }
 
-            return listVendedores;
         }
 
         private IList<VendedorDTO> PopularDados(ref SqlCommand cmd)
