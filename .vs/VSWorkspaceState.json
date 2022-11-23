@@ -2,12 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\Arquitetura",
-    "\\Arquitetura\\SAPB1.BLL",
     "\\Arquitetura\\SAPB1.SqlServerDAL",
     "\\Arquitetura\\SAPB1.SqlServerDAL\\ParceiroNegocio",
     "\\Front End",
     "\\Front End\\SAPB1.WebForm"
   ],
-  "SelectedNode": "\\Front End\\SAPB1.WebForm\\ParceiroNegocio.aspx",
+  "SelectedNode": "\\Arquitetura\\SAPB1.sln",
   "PreviewInSolutionExplorer": false
 }
