@@ -4,6 +4,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using SAPB1.DTO.Deposito;
 using SAPB1.IDAL.Estoque;
@@ -15,37 +17,75 @@ namespace SAPB1.SqlServerDAL.Estoque
         public DepositoDAL() { }
 
         string tSQLBase = @"SELECT WhsCode, WhsName FROM OWHS;";
-        SqlServerConexao conexao = new SqlServerConexao();
 
         public IList<DepositoDTO> Listar()
         {
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
             IList<DepositoDTO> listDepositoDTO = new List<DepositoDTO>();
 
-            try
+            if (tipoBD == "Hana")
             {
-                conexao.Conectar();
+                HanaConexao conexaoHana = new HanaConexao();
+                string query = $@"SELECT ""WhsCode"", ""WhsName"" FROM OWHS";
 
-                SqlCommand comando = new SqlCommand(tSQLBase, conexao.Conexao);
-                SqlDataReader dataReader = comando.ExecuteReader();
-
-                while (dataReader.Read())
+                try
                 {
-                    DepositoDTO depositoDTO = new DepositoDTO();
-                    depositoDTO = ObterDepositoDTO(dataReader);
+                    conexaoHana.Connection();
+                    DataTable dt = conexaoHana.ExecuteDataTable(query);
 
-                    listDepositoDTO.Add(depositoDTO);
+                    if (dt.Rows.Count > 0)
+                    {
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            DepositoDTO depositoDTO = new DepositoDTO();
+                            depositoDTO = ObterDepositoHanaDTO(dr);
+
+                            listDepositoDTO.Add(depositoDTO);
+                        }
+                    }
+
+                    return listDepositoDTO;
                 }
-                dataReader.Close();
+                catch (Exception err)
+                {
+                    throw new Exception("Erro no banco de dados: " + err.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
+                }
             }
-            catch (Exception erro)
+            else
             {
-                throw new Exception(erro.Message);
+                SqlServerConexao conexao = new SqlServerConexao();
+                try
+                {
+                    conexao.Conectar();
+
+                    SqlCommand comando = new SqlCommand(tSQLBase, conexao.Conexao);
+                    SqlDataReader dataReader = comando.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        DepositoDTO depositoDTO = new DepositoDTO();
+                        depositoDTO = ObterDepositoDTO(dataReader);
+
+                        listDepositoDTO.Add(depositoDTO);
+                    }
+                    dataReader.Close();
+                }
+                catch (Exception erro)
+                {
+                    throw new Exception(erro.Message);
+                }
+                finally
+                {
+                    conexao.Desconectar();
+                }
+                return listDepositoDTO;
             }
-            finally
-            {
-                conexao.Desconectar();
-            }
-            return listDepositoDTO;
+
         }
 
         DepositoDTO ObterDepositoDTO(SqlDataReader dataReader)
@@ -57,6 +97,15 @@ namespace SAPB1.SqlServerDAL.Estoque
                 depositoDTO.WhsCode = Convert.ToString(dataReader["WhsCode"]);
                 depositoDTO.WhsName = Convert.ToString(dataReader["WhsName"]);
             }
+            return depositoDTO;
+        }
+
+        DepositoDTO ObterDepositoHanaDTO(DataRow dr)
+        {
+            DepositoDTO depositoDTO = new DepositoDTO();
+            depositoDTO.WhsCode = Convert.ToString(dr["WhsCode"]);
+            depositoDTO.WhsName = Convert.ToString(dr["WhsName"]);
+
             return depositoDTO;
         }
     }
