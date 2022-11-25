@@ -75,6 +75,7 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
                         listParceiroNegocioDTO.Add(parceiroNegocioDTO);
                     }
 
+                    return listParceiroNegocioDTO;
                 }
                 catch (SqlException erro)
                 {
@@ -85,7 +86,7 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
                     conexaoHana.Dispose();
                 }
 
-                return listParceiroNegocioDTO;
+
             }
             else
             {
