@@ -6,85 +6,139 @@ using System.Data.SqlClient;
 using SAPB1.DTO.Utilizacao;
 using SAPB1.DTO.Utilizacao.Cfop;
 using SAPB1.IDAL.Utilizacao;
+using System.Configuration;
+using System.Data;
 
 namespace SAPB1.SqlServerDAL.Utilizacao
 {
-    public class UtilizacaoDAL:IUtilizacao
+    public class UtilizacaoDAL : IUtilizacao
     {
         SqlServerConexao conexao = new SqlServerConexao();
 
         public IList<UtilizacaoDTO> Listar(UtilizacaoDTO utlizacaoDTO)
         {
-            SqlCommand cmd = new SqlCommand();
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
 
-            StringBuilder stb = new StringBuilder();
-            stb.Append("SELECT ");
-            stb.Append("ID, ");
-            stb.Append("Usage, ");
-            stb.Append("Locked, ");
-            stb.Append("UserSign, ");
-            stb.Append("TaxOnly, ");
-            stb.Append("PostTax, ");
-            stb.Append("Descr, ");
-            stb.Append("CFOPIIS, ");
-            stb.Append("CFOPIOS, ");
-            stb.Append("CFOPII, ");
-            stb.Append("CFOPOIS, ");
-            stb.Append("CFOPOOS, ");
-            stb.Append("CFOPOE, ");
-            stb.Append("ThirdParty, ");
-            //stb.Append("U_ApropCred, ");
-            stb.Append("FreeChrgBP ");
-            //stb.Append("U_SomaPisCofins ");
-            stb.Append("FROM OUSG ");
-
-            if(utlizacaoDTO !=null)
+            if (tipoBD == "Hana")
             {
-                if(!string.IsNullOrEmpty(utlizacaoDTO.Locked) || utlizacaoDTO.ID !=0)
+                HanaConexao conexaoHana = new HanaConexao();
+                string query = $@"SELECT ""ID"", ""Usage"", ""Locked"", ""UserSign"", ""TaxOnly"", ""PostTax"", ""Descr"", ""CFOPIIS"", ""CFOPIOS"", ""CFOPII"", ""CFOPOIS"", ""CFOPOOS"", ""CFOPOE"", ""ThirdParty"", ""FreeChrgBP"" FROM OUSG ";
+
+                if (utlizacaoDTO != null)
                 {
-                    stb.Append("WHERE ");
-
-                    if(!string.IsNullOrEmpty(utlizacaoDTO.Locked))
+                    if (!string.IsNullOrEmpty(utlizacaoDTO.Locked) || utlizacaoDTO.ID != 0)
                     {
-                        stb.Append("Locked = @Locked ");
+                        query += "WHERE ";
 
-                        cmd.Parameters.AddWithValue("@Locked", utlizacaoDTO.Locked);
-
-                        if(utlizacaoDTO.ID !=0)
+                        if (!string.IsNullOrEmpty(utlizacaoDTO.Locked))
                         {
-                            stb.Append("AND ");
-                        }
+                            query += $@"""Locked"" = '{utlizacaoDTO.Locked}' ";
 
-                        if(utlizacaoDTO.ID !=0)
-                        {
-                            stb.Append("ID = @ID ");
+                            if (utlizacaoDTO.ID != 0)
+                            {
+                                query += "AND ";
+                            }
 
-                            cmd.Parameters.AddWithValue("@ID", utlizacaoDTO.ID);
+                            if (utlizacaoDTO.ID != 0)
+                            {
+                                query += $@"""ID"" = '{utlizacaoDTO.ID}' ";
+
+                            }
                         }
                     }
                 }
+
+                query += $@"ORDER BY ""Usage""";
+
+                try
+                {
+                    conexaoHana.Connection();
+
+                    return PopularDadosHana(query, conexaoHana);
+                }
+                catch (Exception er)
+                {
+                    throw new Exception("Erro no banco de dados: " + er.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
+                }
             }
-
-            stb.Append("ORDER BY Usage");
-
-            try
+            else
             {
-                cmd.CommandText = stb.ToString();
-                cmd.Connection = conexao.Conexao;
+                SqlCommand cmd = new SqlCommand();
 
-                conexao.Conectar();
+                StringBuilder stb = new StringBuilder();
+                stb.Append("SELECT ");
+                stb.Append("ID, ");
+                stb.Append("Usage, ");
+                stb.Append("Locked, ");
+                stb.Append("UserSign, ");
+                stb.Append("TaxOnly, ");
+                stb.Append("PostTax, ");
+                stb.Append("Descr, ");
+                stb.Append("CFOPIIS, ");
+                stb.Append("CFOPIOS, ");
+                stb.Append("CFOPII, ");
+                stb.Append("CFOPOIS, ");
+                stb.Append("CFOPOOS, ");
+                stb.Append("CFOPOE, ");
+                stb.Append("ThirdParty, ");
+                //stb.Append("U_ApropCred, ");
+                stb.Append("FreeChrgBP ");
+                //stb.Append("U_SomaPisCofins ");
+                stb.Append("FROM OUSG ");
 
-                return PopularDados(ref cmd);
+                if (utlizacaoDTO != null)
+                {
+                    if (!string.IsNullOrEmpty(utlizacaoDTO.Locked) || utlizacaoDTO.ID != 0)
+                    {
+                        stb.Append("WHERE ");
+
+                        if (!string.IsNullOrEmpty(utlizacaoDTO.Locked))
+                        {
+                            stb.Append("Locked = @Locked ");
+
+                            cmd.Parameters.AddWithValue("@Locked", utlizacaoDTO.Locked);
+
+                            if (utlizacaoDTO.ID != 0)
+                            {
+                                stb.Append("AND ");
+                            }
+
+                            if (utlizacaoDTO.ID != 0)
+                            {
+                                stb.Append("ID = @ID ");
+
+                                cmd.Parameters.AddWithValue("@ID", utlizacaoDTO.ID);
+                            }
+                        }
+                    }
+                }
+
+                stb.Append("ORDER BY Usage");
+
+                try
+                {
+                    cmd.CommandText = stb.ToString();
+                    cmd.Connection = conexao.Conexao;
+
+                    conexao.Conectar();
+
+                    return PopularDados(ref cmd);
+                }
+                catch (SqlException er)
+                {
+                    throw new Exception("Erro no banco de dados: " + er.Message);
+                }
+                finally
+                {
+                    conexao.Desconectar();
+                    cmd.Dispose();
+                }
             }
-            catch(SqlException er)
-            {
-                throw new Exception("Erro no banco de dados: " + er.Message);
-            }
-            finally
-            {
-                conexao.Desconectar();
-                cmd.Dispose();
-            }
+
         }
 
         private IList<UtilizacaoDTO> PopularDados(ref SqlCommand cmd)
@@ -93,9 +147,9 @@ namespace SAPB1.SqlServerDAL.Utilizacao
 
             IList<UtilizacaoDTO> listUtilizacao = new List<UtilizacaoDTO>();
 
-            if(rdr.HasRows)
+            if (rdr.HasRows)
             {
-                while(rdr.Read())
+                while (rdr.Read())
                 {
                     CfopDTO cfopDTO = new CfopDTO();
 
@@ -135,6 +189,53 @@ namespace SAPB1.SqlServerDAL.Utilizacao
 
                 rdr.Close();
                 rdr.Dispose();
+            }
+
+            return listUtilizacao;
+        }
+
+        private IList<UtilizacaoDTO> PopularDadosHana(string query, HanaConexao conexaoHana)
+        {
+            DataTable dt = conexaoHana.ExecuteDataTable(query);
+            IList<UtilizacaoDTO> listUtilizacao = new List<UtilizacaoDTO>();
+
+            if (dt.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    CfopDTO cfopDTO = new CfopDTO();
+
+                    UtilizacaoDTO utilizacaoDTO = new UtilizacaoDTO();
+                    utilizacaoDTO.ID = Convert.ToInt32(dr["ID"].ToString());
+                    utilizacaoDTO.Usage = dr["Usage"].ToString();
+                    utilizacaoDTO.Locked = dr["Locked"].ToString();
+                    utilizacaoDTO.TaxOnly = dr["TaxOnly"].ToString();
+                    utilizacaoDTO.PostTax = Convert.ToInt32(dr["PostTax"].ToString());
+                    utilizacaoDTO.Descr = dr["Descr"].ToString();
+
+                    cfopDTO.Code = dr["CFOPIIS"].ToString();
+                    utilizacaoDTO.CFOPIIS = cfopDTO;
+
+                    cfopDTO.Code = dr["CFOPIOS"].ToString();
+                    utilizacaoDTO.CFOPIOS = cfopDTO;
+
+                    cfopDTO.Code = dr["CFOPII"].ToString();
+                    utilizacaoDTO.CFOPII = cfopDTO;
+
+                    cfopDTO.Code = dr["CFOPOE"].ToString();
+                    utilizacaoDTO.CFOPOE = cfopDTO;
+
+                    cfopDTO.Code = dr["CFOPOIS"].ToString();
+                    utilizacaoDTO.CFOPOIS = cfopDTO;
+
+                    cfopDTO.Code = dr["CFOPOOS"].ToString();
+                    utilizacaoDTO.CFOPOOS = cfopDTO;
+
+                    utilizacaoDTO.ThirdParty = dr["ThirdParty"].ToString();
+                    utilizacaoDTO.FreeChrgBP = dr["FreeChrgBP"].ToString();
+
+                    listUtilizacao.Add(utilizacaoDTO);
+                }
             }
 
             return listUtilizacao;

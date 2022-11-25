@@ -5,10 +5,12 @@ using System.Text;
 using SAPB1.IDAL.TiposEnvio;
 using SAPB1.DTO.TiposEnvio;
 using System.Data.SqlClient;
+using System.Configuration;
+using System.Data;
 
 namespace SAPB1.SqlServerDAL.TiposEnvio
 {
-    public class TipoEnvioDAL:ITipoEnvio
+    public class TipoEnvioDAL : ITipoEnvio
     {
         string queryPadrao = "SELECT TrnspCode, TrnspName, UserSign, WebSite FROM OSHP ";
 
@@ -16,42 +18,76 @@ namespace SAPB1.SqlServerDAL.TiposEnvio
 
         public IList<TipoEnvioDTO> Listar(TipoEnvioDTO tipoEnvioDTO)
         {
-            SqlCommand cmd = new SqlCommand();
-
-            StringBuilder stb = new StringBuilder();
-            stb.Append(queryPadrao);
-
-            if(tipoEnvioDTO !=null)
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
+            if (tipoBD == "Hana")
             {
-                if(tipoEnvioDTO.UserSign !=0)
+                HanaConexao conexaoHana = new HanaConexao();
+                string query = $@"SELECT ""TrnspCode"", ""TrnspName"", ""UserSign"", ""WebSite"" FROM OSHP ";
+                if (tipoEnvioDTO != null)
                 {
-                    stb.Append("WHERE ");
-                    stb.Append("UserSign = @UserSign ");
+                    if (tipoEnvioDTO.UserSign != 0)
+                    {
+                        query += $@"WHERE ""UserSign"" = '{tipoEnvioDTO.UserSign}' ";
+                    }
+                }
 
-                    cmd.Parameters.AddWithValue("@UserSign", tipoEnvioDTO.UserSign);
+                query += $@"ORDER BY ""TrnspName""";
+
+                try
+                {
+                    conexaoHana.Connection();
+
+                    return PopularDadosHana(query, conexaoHana);
+                }
+                catch (Exception er)
+                {
+                    throw new Exception("Erro no banco de dados: " + er.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
+                }
+            }
+            else
+            {
+                SqlCommand cmd = new SqlCommand();
+
+                StringBuilder stb = new StringBuilder();
+                stb.Append(queryPadrao);
+
+                if (tipoEnvioDTO != null)
+                {
+                    if (tipoEnvioDTO.UserSign != 0)
+                    {
+                        stb.Append("WHERE ");
+                        stb.Append("UserSign = @UserSign ");
+
+                        cmd.Parameters.AddWithValue("@UserSign", tipoEnvioDTO.UserSign);
+                    }
+                }
+
+                stb.Append("ORDER BY TrnspName");
+
+                try
+                {
+                    cmd.CommandText = stb.ToString();
+                    cmd.Connection = conexao.Conexao;
+
+                    conexao.Conectar();
+
+                    return PopularDados(ref cmd);
+                }
+                catch (SqlException er)
+                {
+                    throw new Exception("Erro no banco de dados: " + er.Message);
+                }
+                finally
+                {
+                    conexao.Desconectar();
+                    cmd.Dispose();
                 }
             }
 
-            stb.Append("ORDER BY TrnspName");
-
-            try
-            {
-                cmd.CommandText = stb.ToString();
-                cmd.Connection = conexao.Conexao;
-
-                conexao.Conectar();
-
-                return PopularDados(ref cmd);
-            }
-            catch(SqlException er)
-            {
-                throw new Exception("Erro no banco de dados: " + er.Message);
-            }
-            finally
-            {
-                conexao.Desconectar();
-                cmd.Dispose();
-            }
         }
 
         private IList<TipoEnvioDTO> PopularDados(ref SqlCommand cmd)
@@ -60,9 +96,9 @@ namespace SAPB1.SqlServerDAL.TiposEnvio
 
             IList<TipoEnvioDTO> listTipoEnvio = new List<TipoEnvioDTO>();
 
-            if(rdr.HasRows)
+            if (rdr.HasRows)
             {
-                while(rdr.Read())
+                while (rdr.Read())
                 {
                     TipoEnvioDTO tipoEnvioDTO = new TipoEnvioDTO();
                     tipoEnvioDTO.TrnspCode = Convert.ToInt32(rdr["TrnspCode"].ToString());
@@ -75,6 +111,29 @@ namespace SAPB1.SqlServerDAL.TiposEnvio
 
                 rdr.Close();
                 rdr.Dispose();
+            }
+
+            return listTipoEnvio;
+        }
+
+
+        private IList<TipoEnvioDTO> PopularDadosHana(string query, HanaConexao conexaoHana)
+        {
+            DataTable dt = conexaoHana.ExecuteDataTable(query);
+            IList<TipoEnvioDTO> listTipoEnvio = new List<TipoEnvioDTO>();
+
+            if (dt.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    TipoEnvioDTO tipoEnvioDTO = new TipoEnvioDTO();
+                    tipoEnvioDTO.TrnspCode = Convert.ToInt32(dr["TrnspCode"].ToString());
+                    tipoEnvioDTO.TrnspName = dr["TrnspName"].ToString();
+                    tipoEnvioDTO.UserSign = Convert.ToInt32(dr["UserSign"].ToString());
+                    tipoEnvioDTO.WebSite = dr["WebSite"].ToString();
+
+                    listTipoEnvio.Add(tipoEnvioDTO);
+                }
             }
 
             return listTipoEnvio;
