@@ -5,9 +5,10 @@
     "\\Arquitetura\\SAPB1.SqlServerDAL",
     "\\Arquitetura\\SAPB1.SqlServerDAL\\Concessionario",
     "\\Arquitetura\\SAPB1.SqlServerDAL\\ParceiroNegocio",
+    "\\Arquitetura\\SAPB1.SqlServerDAL\\PedidoVenda",
     "\\Front End",
     "\\Front End\\SAPB1.WebForm"
   ],
-  "SelectedNode": "\\Arquitetura\\SAPB1.sln",
+  "SelectedNode": "\\Arquitetura\\SAPB1.SqlServerDAL\\PedidoVenda\\CotacaoDAL.cs",
   "PreviewInSolutionExplorer": false
 }

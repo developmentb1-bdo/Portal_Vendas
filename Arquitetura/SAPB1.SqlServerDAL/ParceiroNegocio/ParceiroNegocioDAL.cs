@@ -577,7 +577,7 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
                     if (!parceiroNegocioDTO.CardType.Contains("-"))
                     {
 
-                        query += $@"WHERE ""CardType"" = {parceiroNegocioDTO.CardType} ";
+                        query += $@"WHERE ""CardType"" = '{parceiroNegocioDTO.CardType}' ";
                     }
                     else
                     {
@@ -599,12 +599,12 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
 
                     if (parceiroNegocioDTO.validFor != null)
                     {
-                        query += $@"AND ""validFor"" = {parceiroNegocioDTO.validFor} ";
+                        query += $@"AND ""validFor"" = '{parceiroNegocioDTO.validFor}' ";
                     }
 
                     if (parceiroNegocioDTO.SlpCode > 0)
                     {
-                        query += $@"AND ""SlpCode"" = {parceiroNegocioDTO.SlpCode} ";
+                        query += $@"AND ""SlpCode"" = '{parceiroNegocioDTO.SlpCode}' ";
                     }
 
                     query += $@"ORDER BY ""CardName""";
@@ -886,192 +886,228 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
                     conexaoHana.Dispose();
                 }
             }
-
-            SqlCommand comando = new SqlCommand();
-            try
+            else
             {
-                conexao.Conectar();
-
-                StringBuilder stb = new StringBuilder();
-                stb.Append(tSQLBase);
-
-                if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardCode) ||
-                   !string.IsNullOrEmpty(parceiroNegocioDTO.CardName) ||
-                   !string.IsNullOrEmpty(parceiroNegocioDTO.CardType) ||
-                   !string.IsNullOrEmpty(parceiroNegocioDTO.E_Mail) ||
-                   !string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ) ||
-                   parceiroNegocioDTO.GroupCode > 0 ||
-                   parceiroNegocioDTO.SlpCode > 0)
+                SqlCommand comando = new SqlCommand();
+                try
                 {
-                    stb.Append("WHERE ");
+                    conexao.Conectar();
 
-                    if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardCode))
+                    StringBuilder stb = new StringBuilder();
+                    stb.Append(tSQLBase);
+
+                    if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardCode) ||
+                       !string.IsNullOrEmpty(parceiroNegocioDTO.CardName) ||
+                       !string.IsNullOrEmpty(parceiroNegocioDTO.CardType) ||
+                       !string.IsNullOrEmpty(parceiroNegocioDTO.E_Mail) ||
+                       !string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ) ||
+                       parceiroNegocioDTO.GroupCode > 0 ||
+                       parceiroNegocioDTO.SlpCode > 0)
                     {
-                        stb.Append("CardCode LIKE @CardCode ");
-                        comando.Parameters.AddWithValue("@CardCode", "%" + parceiroNegocioDTO.CardCode + "%");
+                        stb.Append("WHERE ");
 
-                        if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardName) ||
-                            !string.IsNullOrEmpty(parceiroNegocioDTO.CardType) ||
-                            !string.IsNullOrEmpty(parceiroNegocioDTO.E_Mail) ||
-                            !string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ) ||
-                            parceiroNegocioDTO.GroupCode > 0 ||
-                            parceiroNegocioDTO.SlpCode > 0)
+                        if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardCode))
                         {
-                            stb.Append("AND ");
-                        }
-                    }
+                            stb.Append("CardCode LIKE @CardCode ");
+                            comando.Parameters.AddWithValue("@CardCode", "%" + parceiroNegocioDTO.CardCode + "%");
 
-                    if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardName))
-                    {
-                        stb.Append("CardName LIKE @CardName ");
-
-                        comando.Parameters.AddWithValue("@CardName", "%" + parceiroNegocioDTO.CardName + "%");
-
-                        if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardType) ||
-                            !string.IsNullOrEmpty(parceiroNegocioDTO.E_Mail) ||
-                            !string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ) ||
-                            parceiroNegocioDTO.GroupCode > 0 ||
-                            parceiroNegocioDTO.SlpCode > 0)
-                        {
-                            stb.Append("AND ");
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardType))
-                    {
-                        if (parceiroNegocioDTO.CardType.Contains("-"))
-                        {
-                            string[] dados = parceiroNegocioDTO.CardType.Split('-');
-
-                            stb.Append("(");
-
-                            for (int i = 0; i < dados.Length; i++)
+                            if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardName) ||
+                                !string.IsNullOrEmpty(parceiroNegocioDTO.CardType) ||
+                                !string.IsNullOrEmpty(parceiroNegocioDTO.E_Mail) ||
+                                !string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ) ||
+                                parceiroNegocioDTO.GroupCode > 0 ||
+                                parceiroNegocioDTO.SlpCode > 0)
                             {
-                                stb.Append("CardType = @CardType" + i + " ");
+                                stb.Append("AND ");
+                            }
+                        }
 
-                                comando.Parameters.AddWithValue("@CardType" + i, dados[i].Trim());
+                        if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardName))
+                        {
+                            stb.Append("CardName LIKE @CardName ");
 
-                                if (i < (dados.Length - 1))
+                            comando.Parameters.AddWithValue("@CardName", "%" + parceiroNegocioDTO.CardName + "%");
+
+                            if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardType) ||
+                                !string.IsNullOrEmpty(parceiroNegocioDTO.E_Mail) ||
+                                !string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ) ||
+                                parceiroNegocioDTO.GroupCode > 0 ||
+                                parceiroNegocioDTO.SlpCode > 0)
+                            {
+                                stb.Append("AND ");
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardType))
+                        {
+                            if (parceiroNegocioDTO.CardType.Contains("-"))
+                            {
+                                string[] dados = parceiroNegocioDTO.CardType.Split('-');
+
+                                stb.Append("(");
+
+                                for (int i = 0; i < dados.Length; i++)
                                 {
-                                    stb.Append("OR ");
+                                    stb.Append("CardType = @CardType" + i + " ");
+
+                                    comando.Parameters.AddWithValue("@CardType" + i, dados[i].Trim());
+
+                                    if (i < (dados.Length - 1))
+                                    {
+                                        stb.Append("OR ");
+                                    }
                                 }
+
+                                stb.Append(") ");
+                            }
+                            else
+                            {
+                                stb.Append("CardType = @CardType ");
+                                comando.Parameters.AddWithValue("@CardType", parceiroNegocioDTO.CardType);
                             }
 
-                            stb.Append(") ");
+                            if (!string.IsNullOrEmpty(parceiroNegocioDTO.E_Mail) ||
+                                !string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ) ||
+                                parceiroNegocioDTO.GroupCode > 0 ||
+                                parceiroNegocioDTO.SlpCode > 0)
+                            {
+                                stb.Append("AND ");
+                            }
                         }
-                        else
+
+                        if (!string.IsNullOrEmpty(parceiroNegocioDTO.E_Mail))
                         {
-                            stb.Append("CardType = @CardType ");
-                            comando.Parameters.AddWithValue("@CardType", parceiroNegocioDTO.CardType);
+                            stb.Append("E_Mail LIKE @E_Mail ");
+
+                            comando.Parameters.AddWithValue("@E_Mail", "%" + parceiroNegocioDTO.E_Mail + "%");
+
+                            if (!string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ) || parceiroNegocioDTO.GroupCode > 0 || parceiroNegocioDTO.SlpCode > 0)
+                                stb.Append("AND ");
                         }
 
-                        if (!string.IsNullOrEmpty(parceiroNegocioDTO.E_Mail) ||
-                            !string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ) ||
-                            parceiroNegocioDTO.GroupCode > 0 ||
-                            parceiroNegocioDTO.SlpCode > 0)
+                        if (!string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ))
                         {
-                            stb.Append("AND ");
+                            stb.Append("U_CNPJ LIKE @Cnpj ");
+                            comando.Parameters.AddWithValue("@Cnpj", "%" + parceiroNegocioDTO.U_CNPJ + "%");
+
+                            if (parceiroNegocioDTO.GroupCode > 0 || parceiroNegocioDTO.SlpCode > 0)
+                                stb.Append("AND ");
                         }
-                    }
 
-                    if (!string.IsNullOrEmpty(parceiroNegocioDTO.E_Mail))
-                    {
-                        stb.Append("E_Mail LIKE @E_Mail ");
+                        if (parceiroNegocioDTO.GroupCode > 0)
+                        {
+                            stb.Append("GroupCode = @GroupCode ");
+                            comando.Parameters.AddWithValue("@GroupCode", parceiroNegocioDTO.GroupCode);
 
-                        comando.Parameters.AddWithValue("@E_Mail", "%" + parceiroNegocioDTO.E_Mail + "%");
-
-                        if (!string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ) || parceiroNegocioDTO.GroupCode > 0 || parceiroNegocioDTO.SlpCode > 0)
-                            stb.Append("AND ");
-                    }
-
-                    if (!string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ))
-                    {
-                        stb.Append("U_CNPJ LIKE @Cnpj ");
-                        comando.Parameters.AddWithValue("@Cnpj", "%" + parceiroNegocioDTO.U_CNPJ + "%");
-
-                        if (parceiroNegocioDTO.GroupCode > 0 || parceiroNegocioDTO.SlpCode > 0)
-                            stb.Append("AND ");
-                    }
-
-                    if (parceiroNegocioDTO.GroupCode > 0)
-                    {
-                        stb.Append("GroupCode = @GroupCode ");
-                        comando.Parameters.AddWithValue("@GroupCode", parceiroNegocioDTO.GroupCode);
+                            if (parceiroNegocioDTO.SlpCode > 0)
+                                stb.Append("AND ");
+                        }
 
                         if (parceiroNegocioDTO.SlpCode > 0)
-                            stb.Append("AND ");
+                        {
+                            stb.Append("SlpCode = @SlpCode ");
+                            comando.Parameters.AddWithValue("@SlpCode", parceiroNegocioDTO.SlpCode);
+                        }
                     }
 
-                    if (parceiroNegocioDTO.SlpCode > 0)
+
+                    stb.Append("ORDER BY CardName");
+
+                    comando.CommandText = stb.ToString();
+                    comando.Connection = conexao.Conexao;
+
+                    SqlDataReader dataReader = comando.ExecuteReader();
+
+                    while (dataReader.Read())
                     {
-                        stb.Append("SlpCode = @SlpCode ");
-                        comando.Parameters.AddWithValue("@SlpCode", parceiroNegocioDTO.SlpCode);
+                        ParceiroNegocioDTO parceiroNegocioDTOParametro = new ParceiroNegocioDTO();
+                        parceiroNegocioDTOParametro = ObterParceiroNegocioDTO(dataReader);
+
+                        listParceiroNegocioDTO.Add(parceiroNegocioDTOParametro);
                     }
+                    dataReader.Close();
+
+                    return listParceiroNegocioDTO;
                 }
-
-
-                stb.Append("ORDER BY CardName");
-
-                comando.CommandText = stb.ToString();
-                comando.Connection = conexao.Conexao;
-
-                SqlDataReader dataReader = comando.ExecuteReader();
-
-                while (dataReader.Read())
+                catch (SqlException erro)
                 {
-                    ParceiroNegocioDTO parceiroNegocioDTOParametro = new ParceiroNegocioDTO();
-                    parceiroNegocioDTOParametro = ObterParceiroNegocioDTO(dataReader);
-
-                    listParceiroNegocioDTO.Add(parceiroNegocioDTOParametro);
+                    throw new Exception(erro.Message);
                 }
-                dataReader.Close();
+                finally
+                {
+                    conexao.Desconectar();
+                }
+            }
 
-                return listParceiroNegocioDTO;
-            }
-            catch (SqlException erro)
-            {
-                throw new Exception(erro.Message);
-            }
-            finally
-            {
-                conexao.Desconectar();
-            }
         }
 
         public ParceiroNegocioDTO RetornarParceiroNegocioPorCnpjESenha(string cpnj, string senha)
         {
             ParceiroNegocioDTO parceiroNegocioDTO = new ParceiroNegocioDTO();
 
-            try
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
+
+            if (tipoBD == "Hana")
             {
-                StringBuilder tSQL = new StringBuilder();
-                tSQL.Append(tSQLBase);
-                tSQL.Append("WHERE U_CNPJ = @U_CNPJ AND U_SenhaPortal = @U_SenhaPortal");
+                HanaConexao conexaoHana = new HanaConexao();
+                string query = $@"SELECT * FROM OCRD ";
+                query += $@"WHERE ""U_CNPJ"" = '{cpnj}' AND ""U_SenhaPortal"" = '{senha}'";
 
-                conexao.Conectar();
-
-                SqlCommand comando = new SqlCommand(tSQL.ToString(), conexao.Conexao);
-                comando.Parameters.Add(new SqlParameter("@U_CNPJ", cpnj));
-                comando.Parameters.Add(new SqlParameter("@U_SenhaPortal", senha));
-
-                SqlDataReader dataReader = comando.ExecuteReader();
-
-                if (dataReader.HasRows)
+                try
                 {
-                    dataReader.Read();
-                    parceiroNegocioDTO = ObterParceiroNegocioDTO(dataReader);
-                }
-                dataReader.Close();
+                    conexaoHana.Connection();
+                    DataTable dt = conexaoHana.ExecuteDataTable(query);
 
-                return parceiroNegocioDTO;
+                    if (dt.Rows.Count > 0)
+                    {
+                        foreach (DataRow dr in dt.Rows)
+                            parceiroNegocioDTO = ObterParceiroNegocioHanaDTO(dr);
+                    }
+
+                    return parceiroNegocioDTO;
+                }
+                catch (Exception err)
+                {
+                    throw new Exception(err.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
+                }
             }
-            catch (SqlException erro)
+            else
             {
-                throw new Exception(erro.Message);
-            }
-            finally
-            {
-                conexao.Desconectar();
+                try
+                {
+                    StringBuilder tSQL = new StringBuilder();
+                    tSQL.Append(tSQLBase);
+                    tSQL.Append("WHERE U_CNPJ = @U_CNPJ AND U_SenhaPortal = @U_SenhaPortal");
+
+                    conexao.Conectar();
+
+                    SqlCommand comando = new SqlCommand(tSQL.ToString(), conexao.Conexao);
+                    comando.Parameters.Add(new SqlParameter("@U_CNPJ", cpnj));
+                    comando.Parameters.Add(new SqlParameter("@U_SenhaPortal", senha));
+
+                    SqlDataReader dataReader = comando.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        dataReader.Read();
+                        parceiroNegocioDTO = ObterParceiroNegocioDTO(dataReader);
+                    }
+                    dataReader.Close();
+
+                    return parceiroNegocioDTO;
+                }
+                catch (SqlException erro)
+                {
+                    throw new Exception(erro.Message);
+                }
+                finally
+                {
+                    conexao.Desconectar();
+                }
             }
         }
 
@@ -1079,36 +1115,71 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
         {
             ParceiroNegocioDTO parceiroNegocioDTO = new ParceiroNegocioDTO();
 
-            try
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
+
+            if (tipoBD == "Hana")
             {
-                StringBuilder tSQL = new StringBuilder();
-                tSQL.Append(tSQLBase);
-                tSQL.Append("WHERE U_CPF = @U_CPF AND U_SenhaPortal = @U_SenhaPortal");
+                HanaConexao conexaoHana = new HanaConexao();
+                string query = $@"SELECT * FROM OCRD ";
+                query += $@"WHERE ""U_CPF"" = '{cpf}' AND ""U_SenhaPortal"" = '{senha}'";
 
-                conexao.Conectar();
-
-                SqlCommand comando = new SqlCommand(tSQL.ToString(), conexao.Conexao);
-                comando.Parameters.Add(new SqlParameter("@U_CPF", cpf));
-                comando.Parameters.Add(new SqlParameter("@U_SenhaPortal", senha));
-
-                SqlDataReader dataReader = comando.ExecuteReader();
-
-                if (dataReader.HasRows)
+                try
                 {
-                    dataReader.Read();
-                    parceiroNegocioDTO = ObterParceiroNegocioDTO(dataReader);
-                }
-                dataReader.Close();
+                    conexaoHana.Connection();
+                    DataTable dt = conexaoHana.ExecuteDataTable(query);
 
-                return parceiroNegocioDTO;
+                    if (dt.Rows.Count > 0)
+                    {
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            parceiroNegocioDTO = ObterParceiroNegocioHanaDTO(dr);
+                        }
+                    }
+
+                    return parceiroNegocioDTO;
+                }
+                catch (Exception err)
+                {
+                    throw new Exception(err.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
+                }
             }
-            catch (SqlException erro)
+            else
             {
-                throw new Exception(erro.Message);
-            }
-            finally
-            {
-                conexao.Desconectar();
+                try
+                {
+                    StringBuilder tSQL = new StringBuilder();
+                    tSQL.Append(tSQLBase);
+                    tSQL.Append("WHERE U_CPF = @U_CPF AND U_SenhaPortal = @U_SenhaPortal");
+
+                    conexao.Conectar();
+
+                    SqlCommand comando = new SqlCommand(tSQL.ToString(), conexao.Conexao);
+                    comando.Parameters.Add(new SqlParameter("@U_CPF", cpf));
+                    comando.Parameters.Add(new SqlParameter("@U_SenhaPortal", senha));
+
+                    SqlDataReader dataReader = comando.ExecuteReader();
+
+                    if (dataReader.HasRows)
+                    {
+                        dataReader.Read();
+                        parceiroNegocioDTO = ObterParceiroNegocioDTO(dataReader);
+                    }
+                    dataReader.Close();
+
+                    return parceiroNegocioDTO;
+                }
+                catch (SqlException erro)
+                {
+                    throw new Exception(erro.Message);
+                }
+                finally
+                {
+                    conexao.Desconectar();
+                }
             }
         }
     }

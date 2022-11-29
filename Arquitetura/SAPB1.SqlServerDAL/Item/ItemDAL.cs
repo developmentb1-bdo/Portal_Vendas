@@ -5,6 +5,8 @@ using System.Text;
 using SAPB1.DTO.Item;
 using SAPB1.IDAL.Item;
 using System.Data.SqlClient;
+using System.Configuration;
+using System.Data;
 
 namespace SAPB1.SqlServerDAL.Item
 {
@@ -14,39 +16,74 @@ namespace SAPB1.SqlServerDAL.Item
 
         public IList<ItemDTO> Listar(ItemDTO itemDTO)
         {
-            SqlCommand cmd = new SqlCommand();
 
-            StringBuilder stb = new StringBuilder();
-            stb.Append("SELECT i.ItemCode, i.ItemName, i.DfltWH, COALESCE(t1.WhsName,'') AS 'WhsName' FROM OITM i LEFT JOIN OWHS t1 ON i.DfltWH = t1.WhsCode WHERE ");
-            stb.Append("i.SellItem = @SellItem ");
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
 
-            if (!string.IsNullOrEmpty(itemDTO.validFor))
+            if (tipoBD == "Hana")
             {
-                stb.Append("AND i.validFor = @ValidFor ");
-                cmd.Parameters.AddWithValue("@ValidFor", itemDTO.validFor);
+                HanaConexao conexaoHana = new HanaConexao();
+                string query = $@"SELECT i.""ItemCode"", i.""ItemName"", i.""DfltWH"", COALESCE(t1.""WhsName"", '') AS WhsName FROM OITM i LEFT JOIN OWHS t1 ON i.""DfltWH"" = t1.""WhsCode"" WHERE ";
+                query += $@"i.""SellItem"" = '{itemDTO.SellItem}' ";
+
+                if (!string.IsNullOrEmpty(itemDTO.validFor))
+                {
+                    query += $@"AND i.""validFor"" = '{itemDTO.validFor}' ";
+                }
+
+                query += $@"ORDER BY i.""ItemName""";
+                try
+                {
+                    conexaoHana.Connection();
+                    return PopularDadosHana(query, conexaoHana);
+
+                }
+                catch (Exception err)
+                {
+                    throw new Exception(err.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
+                }
+            }
+            else
+            {
+                SqlCommand cmd = new SqlCommand();
+
+                StringBuilder stb = new StringBuilder();
+                stb.Append("SELECT i.ItemCode, i.ItemName, i.DfltWH, COALESCE(t1.WhsName,'') AS 'WhsName' FROM OITM i LEFT JOIN OWHS t1 ON i.DfltWH = t1.WhsCode WHERE ");
+                stb.Append("i.SellItem = @SellItem ");
+
+                if (!string.IsNullOrEmpty(itemDTO.validFor))
+                {
+                    stb.Append("AND i.validFor = @ValidFor ");
+                    cmd.Parameters.AddWithValue("@ValidFor", itemDTO.validFor);
+                }
+
+                stb.Append("ORDER BY i.ItemName");
+
+                cmd.Parameters.AddWithValue("@SellItem", itemDTO.SellItem);
+
+                try
+                {
+                    cmd.Connection = conexao.Conexao;
+                    cmd.CommandText = stb.ToString();
+
+                    conexao.Conectar();
+
+                    return PopularDados(ref cmd);
+                }
+                catch (Exception er)
+                {
+                    throw new Exception("Erro no banco de dados: " + er.Message);
+                }
+                finally
+                {
+                    conexao.Desconectar();
+                }
             }
 
-            stb.Append("ORDER BY i.ItemName");
 
-            cmd.Parameters.AddWithValue("@SellItem", itemDTO.SellItem);
-
-            try
-            {
-                cmd.Connection = conexao.Conexao;
-                cmd.CommandText = stb.ToString();
-
-                conexao.Conectar();
-
-                return PopularDados(ref cmd);
-            }
-            catch (Exception er)
-            {
-                throw new Exception("Erro no banco de dados: " + er.Message);
-            }
-            finally
-            {
-                conexao.Desconectar();
-            }
         }
 
         private IList<ItemDTO> PopularDados(ref SqlCommand cmd)
@@ -70,6 +107,29 @@ namespace SAPB1.SqlServerDAL.Item
             }
 
             rdr.Close();
+
+            return listItem;
+        }
+
+        private IList<ItemDTO> PopularDadosHana(string query, HanaConexao conexaoHana)
+        {
+            DataTable dt = conexaoHana.ExecuteDataTable(query);
+
+            IList<ItemDTO> listItem = new List<ItemDTO>();
+
+            if (dt.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    ItemDTO itemDTO = new ItemDTO();
+                    itemDTO.ItemCode = dr["ItemCode"].ToString();
+                    itemDTO.ItemName = dr["ItemName"].ToString();
+                    itemDTO.DfltWH = dr["DfltWH"].ToString();
+                    itemDTO.WareHouseName = dr["WhsName"].ToString();
+
+                    listItem.Add(itemDTO);
+                }
+            }
 
             return listItem;
         }
@@ -262,7 +322,7 @@ namespace SAPB1.SqlServerDAL.Item
             IList<ItemDTO> listItem = new List<ItemDTO>();
 
 
-            if(itemDTO.Pecas>0 && itemDTO.Comprimento > 0)
+            if (itemDTO.Pecas > 0 && itemDTO.Comprimento > 0)
             {
                 string QtdMetros = $@"SELECT CONVERT(float,{itemDTO.Pecas.ToString()}) * CONVERT (float,{itemDTO.Comprimento.ToString()})/1000";
 

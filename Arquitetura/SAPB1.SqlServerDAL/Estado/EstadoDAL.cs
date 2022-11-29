@@ -18,12 +18,12 @@ namespace SAPB1.SqlServerDAL.Estado
             string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
             if (tipoBD == "Hana")
             {
-                string query = $@"SELECT * FROM OCST WHERE ""Country"" = {estadoDTO.Pais.Name} ";
+                string query = $@"SELECT * FROM OCST WHERE ""Country"" = '{estadoDTO.Pais.Name}' ";
                 HanaConexao conexaoHana = new HanaConexao();
 
                 if (!string.IsNullOrEmpty(estadoDTO.Code))
                 {
-                    query += $@"AND ""Code"" = {estadoDTO.Code} ";
+                    query += $@"AND ""Code"" = '{estadoDTO.Code}' ";
                 }
 
                 query += $@"ORDER BY ""Name""";
