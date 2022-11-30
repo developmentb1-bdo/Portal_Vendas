@@ -12,7 +12,7 @@ namespace SAPB1.SqlServerDAL.Empregado
 {
     public class EmpregadoDAL : IEmpregado
     {
-        string queryPadrao = "SELECT empID, Active, lastName, firstName, position FROM OHEM ";
+        string queryPadrao = $@"SELECT ""empID"", ""Active"", ""lastName"", ""firstName"", ""position"" FROM OHEM ";
 
         SqlCommand cmd = new SqlCommand();
 
@@ -22,16 +22,15 @@ namespace SAPB1.SqlServerDAL.Empregado
 
             if (tipoBD == "Hana")
             {
-                queryPadrao += $@"WHERE Active = '{empregadoDTO.Active}' ";
+                queryPadrao += $@"WHERE ""Active"" = '{empregadoDTO.Active}' ";
 
                 if (empregadoDTO.Posicao != null)
                 {
                     if (empregadoDTO.Posicao.PosId != 0)
                     {
-                        queryPadrao += $@"AND position = '{empregadoDTO.Posicao.PosId}' ";
+                        queryPadrao += $@"AND ""position"" = '{empregadoDTO.Posicao.PosId}'";
                     }
                 }
-
 
                 HanaConexao conexaoHana = new HanaConexao();
 

@@ -23,6 +23,7 @@ namespace SAPB1.SqlServerDAL.Funcionario
                 HanaConexao conexaoHana = new HanaConexao();
                 try
                 {
+                    conexaoHana.Connection();
                     var retornoQuery = conexaoHana.ExecuteDataTable(query);
 
                     foreach (DataRow dr in retornoQuery.Rows)
@@ -114,6 +115,7 @@ namespace SAPB1.SqlServerDAL.Funcionario
                 HanaConexao conexaoHana = new HanaConexao();
                 try
                 {
+                    conexaoHana.Connection();
                     var retornoQuery = conexaoHana.ExecuteDataTable(query);
 
                     foreach (DataRow dr in retornoQuery.Rows)
