@@ -12,6 +12,7 @@ using SAPB1.BLL.ParceiroNegocio;
 using SAPB1.WebForm.App_Code;
 using SAPB1.BLL.Services.Cep;
 using SAPB1.BLL.Administracao.Configuracao;
+using System.Configuration;
 
 namespace SAPB1.WebForm
 {
@@ -287,7 +288,7 @@ namespace SAPB1.WebForm
                 parceiroNegocioDTO.E_Mail = txtEmail.Text.Trim();
                 parceiroNegocioDTO.Fax = txtFax.Text.Trim();
                 parceiroNegocioDTO.Cellular = txtDddCelular.Text + txtCelular.Text;
-                parceiroNegocioDTO.Series = ((ddlTipo.SelectedValue == "C" || ddlTipo.SelectedValue == "L") ? 62 : 63);
+                parceiroNegocioDTO.Series = Convert.ToInt32(ConfigurationManager.AppSettings["SeriesPNCliente"].ToString());
                 parceiroNegocioDTO.CreditLine = (!string.IsNullOrEmpty(txtLimiteCredito.Text) ? Convert.ToDecimal(txtLimiteCredito.Text) : decimal.Zero);
                 parceiroNegocioDTO.Free_Text = txtObservacoes.Text;
                 parceiroNegocioDTO.IntrntSite = txtWebSite.Text;

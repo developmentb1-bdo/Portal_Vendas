@@ -16,7 +16,7 @@ namespace SAPB1.SqlServerDAL.Administracao.Configuracao
         {
             string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
             StringBuilder stb = new StringBuilder();
-            stb.Append($@"SELECT * from OLNG ORDER BY ""Name""");
+            stb.Append($@"SELECT * FROM OLNG ORDER BY ""Name""");
 
             if (tipoBD == "Hana")
             {

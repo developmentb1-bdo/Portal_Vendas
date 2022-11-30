@@ -53,7 +53,7 @@ namespace SAPB1.SqlServerDAL.Empresa.Filial
                     conexaoHana.Connection();
                     return PopularDadosHana(query);
                 }
-                catch (SqlException err)
+                catch (Exception err)
                 {
                     throw new Exception("Erro no banco de dados: " + err.Message);
                 }

@@ -18,8 +18,6 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
         public ParceiroNegocioDAL() { }
 
         string tSQLBase = "SELECT * FROM OCRD ";
-        HanaConexao conexaoHana = new HanaConexao();
-        SqlServerConexao conexao = new SqlServerConexao();
 
 
         public IList<ParceiroNegocioDTO> ListarHana(string query)
@@ -40,13 +38,9 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
                 }
 
             }
-            catch (SqlException erro)
+            catch (Exception erro)
             {
                 throw new Exception(erro.Message);
-            }
-            finally
-            {
-                conexaoHana.Dispose();
             }
 
             return listParceiroNegocioDTO;
@@ -58,9 +52,9 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
             // tSQLBase += $@"ORDER BY ""CardName""";
             string query = $@"SELECT * FROM OCRD WHERE ""CardType"" <> 'S' ORDER BY ""CardName""";
             string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
+            IList<ParceiroNegocioDTO> listParceiroNegocioDTO = new List<ParceiroNegocioDTO>();
             if (tipoBD == "Hana")
             {
-                IList<ParceiroNegocioDTO> listParceiroNegocioDTO = new List<ParceiroNegocioDTO>();
                 HanaConexao conexaoHana = new HanaConexao();
                 try
                 {
@@ -74,10 +68,8 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
 
                         listParceiroNegocioDTO.Add(parceiroNegocioDTO);
                     }
-
-                    return listParceiroNegocioDTO;
                 }
-                catch (SqlException erro)
+                catch (Exception erro)
                 {
                     throw new Exception(erro.Message);
                 }
@@ -85,12 +77,10 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
                 {
                     conexaoHana.Dispose();
                 }
-
-
             }
             else
             {
-                IList<ParceiroNegocioDTO> listParceiroNegocioDTO = new List<ParceiroNegocioDTO>();
+                SqlServerConexao conexao = new SqlServerConexao();
                 try
                 {
                     conexao.Conectar();
@@ -107,7 +97,7 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
                     }
                     dataReader.Close();
 
-                    return listParceiroNegocioDTO;
+
                 }
                 catch (SqlException erro)
                 {
@@ -117,7 +107,9 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
                 {
                     conexao.Desconectar();
                 }
+
             }
+            return listParceiroNegocioDTO;
         }
 
         public ParceiroNegocioDTO Selecionar(string cardCode)
@@ -128,9 +120,9 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
             if (tipoBD == "Hana")
             {
                 HanaConexao conexaoHana = new HanaConexao();
+                string query = $@"SELECT * FROM OCRD WHERE ""CardCode"" = '{cardCode}'";
                 try
                 {
-                    string query = $@"SELECT * FROM OCRD WHERE ""CardCode"" = '{cardCode}'";
                     conexaoHana.Connection();
 
                     DataTable dt = conexaoHana.ExecuteDataTable(query);
@@ -143,7 +135,6 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
                         }
                     }
 
-                    return parceiroNegocioDTO;
                 }
                 catch (Exception err)
                 {
@@ -156,6 +147,7 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
             }
             else
             {
+                SqlServerConexao conexao = new SqlServerConexao();
                 try
                 {
                     StringBuilder tSQL = new StringBuilder();
@@ -175,7 +167,6 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
                     }
                     dataReader.Close();
 
-                    return parceiroNegocioDTO;
                 }
                 catch (SqlException erro)
                 {
@@ -186,6 +177,8 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
                     conexao.Desconectar();
                 }
             }
+            return parceiroNegocioDTO;
+
         }
 
         private ParceiroNegocioDTO ObterParceiroNegocioHanaDTO(DataRow dataReader)
@@ -636,6 +629,7 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
             }
             else
             {
+                SqlServerConexao conexao = new SqlServerConexao();
                 SqlCommand comando = new SqlCommand();
                 try
                 {
@@ -715,32 +709,39 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
         {
             string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
             string query = $@"SELECT COALESCE(COUNT(*), 0) FROM OCRD WHERE ""CardType"" = '{parceiroNegocioDTO.CardType}'";
-            try
+            if (tipoBD == "Hana")
             {
+                HanaConexao conexaoHana = new HanaConexao();
 
-                if (tipoBD == "Hana")
+                conexaoHana.Connection();
+                try
                 {
                     return Convert.ToInt32(conexaoHana.ExecuteScalar(query));
                 }
-                else
+                catch (Exception err)
+                {
+                    throw new Exception(err.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
+                }
+            }
+            else
+            {
+                SqlServerConexao conexao = new SqlServerConexao();
+                try
                 {
                     conexao.Conectar();
                     SqlCommand comando = new SqlCommand(query, conexao.Conexao);
 
                     return Convert.ToInt32(comando.ExecuteScalar());
                 }
-            }
-            catch (SqlException erro)
-            {
-                throw new Exception(erro.Message);
-            }
-            finally
-            {
-                if (tipoBD == "Hana")
+                catch (SqlException err)
                 {
-                    conexaoHana.Dispose();
+                    throw new Exception(err.Message);
                 }
-                else
+                finally
                 {
                     conexao.Desconectar();
                 }
@@ -755,113 +756,115 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
             if (tipoBD == "Hana")
             {
                 HanaConexao conexaoHana = new HanaConexao();
-                try
+
+                string query = "SELECT * FROM OCRD ";
+
+                if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardCode) ||
+                !string.IsNullOrEmpty(parceiroNegocioDTO.CardName) ||
+                !string.IsNullOrEmpty(parceiroNegocioDTO.CardType) ||
+                !string.IsNullOrEmpty(parceiroNegocioDTO.E_Mail) ||
+                !string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ) ||
+                parceiroNegocioDTO.GroupCode > 0 ||
+                parceiroNegocioDTO.SlpCode > 0)
                 {
-                    string query = "SELECT * FROM OCRD ";
+                    query += "WHERE ";
 
-                    if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardCode) ||
-                    !string.IsNullOrEmpty(parceiroNegocioDTO.CardName) ||
-                    !string.IsNullOrEmpty(parceiroNegocioDTO.CardType) ||
-                    !string.IsNullOrEmpty(parceiroNegocioDTO.E_Mail) ||
-                    !string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ) ||
-                    parceiroNegocioDTO.GroupCode > 0 ||
-                    parceiroNegocioDTO.SlpCode > 0)
+                    if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardCode))
                     {
-                        query += "WHERE ";
+                        query += $@"""CardCode"" LIKE '%{parceiroNegocioDTO.CardCode}%' ";
 
-                        if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardCode))
+                        if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardName) ||
+                            !string.IsNullOrEmpty(parceiroNegocioDTO.CardType) ||
+                            !string.IsNullOrEmpty(parceiroNegocioDTO.E_Mail) ||
+                            !string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ) ||
+                            parceiroNegocioDTO.GroupCode > 0 ||
+                            parceiroNegocioDTO.SlpCode > 0)
                         {
-                            query += $@"""CardCode"" LIKE '%{parceiroNegocioDTO.CardCode}%' ";
-
-                            if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardName) ||
-                                !string.IsNullOrEmpty(parceiroNegocioDTO.CardType) ||
-                                !string.IsNullOrEmpty(parceiroNegocioDTO.E_Mail) ||
-                                !string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ) ||
-                                parceiroNegocioDTO.GroupCode > 0 ||
-                                parceiroNegocioDTO.SlpCode > 0)
-                            {
-                                query += "AND ";
-                            }
-                        }
-
-                        if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardName))
-                        {
-                            query += $@"""CardName"" LIKE '%{parceiroNegocioDTO.CardName}%' ";
-
-                            if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardType) ||
-                                !string.IsNullOrEmpty(parceiroNegocioDTO.E_Mail) ||
-                                !string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ) ||
-                                parceiroNegocioDTO.GroupCode > 0 ||
-                                parceiroNegocioDTO.SlpCode > 0)
-                            {
-                                query += "AND ";
-                            }
-                        }
-
-                        if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardType))
-                        {
-                            if (parceiroNegocioDTO.CardType.Contains("-"))
-                            {
-                                string[] dados = parceiroNegocioDTO.CardType.Split('-');
-
-                                query += "(";
-
-                                for (int i = 0; i < dados.Length; i++)
-                                {
-                                    query += $@"""CardType"" = '{dados[i].Trim()}' ";
-
-                                    if (i < (dados.Length - 1))
-                                    {
-                                        query += "OR ";
-                                    }
-                                }
-                                query += ") ";
-                            }
-                            else
-                            {
-                                query += $@"""CardType"" = {parceiroNegocioDTO.CardType} ";
-                            }
-
-                            if (!string.IsNullOrEmpty(parceiroNegocioDTO.E_Mail) ||
-                                !string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ) ||
-                                parceiroNegocioDTO.GroupCode > 0 ||
-                                parceiroNegocioDTO.SlpCode > 0)
-                            {
-                                query += "AND ";
-                            }
-                        }
-
-                        if (!string.IsNullOrEmpty(parceiroNegocioDTO.E_Mail))
-                        {
-                            query += $@"""E_Mail"" LIKE '%{parceiroNegocioDTO.E_Mail}%' ";
-
-                            if (!string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ) || parceiroNegocioDTO.GroupCode > 0 || parceiroNegocioDTO.SlpCode > 0)
-                                query += "AND ";
-                        }
-
-                        if (!string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ))
-                        {
-                            query += $@"""U_CNPJ"" LIKE '%{parceiroNegocioDTO.U_CNPJ}%'";
-
-                            if (parceiroNegocioDTO.GroupCode > 0 || parceiroNegocioDTO.SlpCode > 0)
-                                query += "AND ";
-                        }
-
-                        if (parceiroNegocioDTO.GroupCode > 0)
-                        {
-                            query = $@"""GroupCode"" = {parceiroNegocioDTO.GroupCode} ";
-
-                            if (parceiroNegocioDTO.SlpCode > 0)
-                                query += "AND ";
-                        }
-
-                        if (parceiroNegocioDTO.SlpCode > 0)
-                        {
-                            query += $@"""SlpCode"" = {parceiroNegocioDTO.SlpCode} ";
+                            query += "AND ";
                         }
                     }
 
-                    query += $@"ORDER BY ""CardName""";
+                    if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardName))
+                    {
+                        query += $@"""CardName"" LIKE '%{parceiroNegocioDTO.CardName}%' ";
+
+                        if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardType) ||
+                            !string.IsNullOrEmpty(parceiroNegocioDTO.E_Mail) ||
+                            !string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ) ||
+                            parceiroNegocioDTO.GroupCode > 0 ||
+                            parceiroNegocioDTO.SlpCode > 0)
+                        {
+                            query += "AND ";
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(parceiroNegocioDTO.CardType))
+                    {
+                        if (parceiroNegocioDTO.CardType.Contains("-"))
+                        {
+                            string[] dados = parceiroNegocioDTO.CardType.Split('-');
+
+                            query += "(";
+
+                            for (int i = 0; i < dados.Length; i++)
+                            {
+                                query += $@"""CardType"" = '{dados[i].Trim()}' ";
+
+                                if (i < (dados.Length - 1))
+                                {
+                                    query += "OR ";
+                                }
+                            }
+                            query += ") ";
+                        }
+                        else
+                        {
+                            query += $@"""CardType"" = {parceiroNegocioDTO.CardType} ";
+                        }
+
+                        if (!string.IsNullOrEmpty(parceiroNegocioDTO.E_Mail) ||
+                            !string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ) ||
+                            parceiroNegocioDTO.GroupCode > 0 ||
+                            parceiroNegocioDTO.SlpCode > 0)
+                        {
+                            query += "AND ";
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(parceiroNegocioDTO.E_Mail))
+                    {
+                        query += $@"""E_Mail"" LIKE '%{parceiroNegocioDTO.E_Mail}%' ";
+
+                        if (!string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ) || parceiroNegocioDTO.GroupCode > 0 || parceiroNegocioDTO.SlpCode > 0)
+                            query += "AND ";
+                    }
+
+                    if (!string.IsNullOrEmpty(parceiroNegocioDTO.U_CNPJ))
+                    {
+                        query += $@"""U_CNPJ"" LIKE '%{parceiroNegocioDTO.U_CNPJ}%'";
+
+                        if (parceiroNegocioDTO.GroupCode > 0 || parceiroNegocioDTO.SlpCode > 0)
+                            query += "AND ";
+                    }
+
+                    if (parceiroNegocioDTO.GroupCode > 0)
+                    {
+                        query = $@"""GroupCode"" = {parceiroNegocioDTO.GroupCode} ";
+
+                        if (parceiroNegocioDTO.SlpCode > 0)
+                            query += "AND ";
+                    }
+
+                    if (parceiroNegocioDTO.SlpCode > 0)
+                    {
+                        query += $@"""SlpCode"" = {parceiroNegocioDTO.SlpCode} ";
+                    }
+                }
+
+                query += $@"ORDER BY ""CardName""";
+
+                try
+                {
 
                     conexaoHana.Connection();
 
@@ -888,6 +891,7 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
             }
             else
             {
+                SqlServerConexao conexao = new SqlServerConexao();
                 SqlCommand comando = new SqlCommand();
                 try
                 {
@@ -1077,6 +1081,7 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
             }
             else
             {
+                SqlServerConexao conexao = new SqlServerConexao();
                 try
                 {
                     StringBuilder tSQL = new StringBuilder();
@@ -1149,6 +1154,7 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
             }
             else
             {
+                SqlServerConexao conexao = new SqlServerConexao();
                 try
                 {
                     StringBuilder tSQL = new StringBuilder();

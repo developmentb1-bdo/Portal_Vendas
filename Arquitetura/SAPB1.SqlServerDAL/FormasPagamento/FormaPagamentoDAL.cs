@@ -14,7 +14,7 @@ namespace SAPB1.SqlServerDAL.FormasPagamento
     {
         SqlServerConexao conexao = new SqlServerConexao();
 
-        string queryPadrao = "SELECT PayMethCod, Descript, Active, Type FROM OPYM ";
+        string queryPadrao = $@"SELECT ""PayMethCod"", ""Descript"", ""Active"", ""Type"" FROM OPYM ";
 
         public IList<FormaPagamentoDTO> Listar(FormaPagamentoDTO formaPagamentoDTO)
         {

@@ -10,6 +10,7 @@ using SAPB1.WebForm.App_Code;
 using SAPB1.DTO.Mensagens;
 using SAPB1.BLL.Funcionario;
 using SAPB1.DTO.Funcionario;
+using System.Configuration;
 
 namespace SAPB1.WebForm
 {
@@ -78,6 +79,8 @@ namespace SAPB1.WebForm
                 parceiroNegocioDTO.CardName = txtRazaoSocial.Text.Replace("@", "").Replace("&", "").Replace("%", "");
                 parceiroNegocioDTO.CardType = "cLid";
                 parceiroNegocioDTO.U_CNPJ = ((!string.IsNullOrEmpty(txtCpfCnpj.Text)) ? txtCpfCnpj.Text.Replace("@", "").Replace("&", "").Replace("%", "") : "tNO");
+                parceiroNegocioDTO.Series = Convert.ToInt32(ConfigurationManager.AppSettings["SeriePNLead"].ToString());
+                parceiroNegocioDTO.SlpCode = -1;
 
                 EnderecoDTO ShipTo = new EnderecoDTO();
                 EnderecoDTO BillTo = new EnderecoDTO();

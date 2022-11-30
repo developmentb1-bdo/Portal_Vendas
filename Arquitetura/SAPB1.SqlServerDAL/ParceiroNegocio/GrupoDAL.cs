@@ -4,6 +4,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 using SAPB1.DTO.ParceiroNegocio;
@@ -19,49 +21,89 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
         public GrupoDAL() { }
 
         string tSQLBase = "SELECT GroupCode, GroupName, GroupType, Locked, DataSource, UserSign, PriceList, DiscRel FROM OCRG ";
-        SqlServerConexao conexao = new SqlServerConexao();
+        
 
         public IList<GrupoDTO> Listar(GroupType groupType)
         {
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
             IList<GrupoDTO> listGrupoDTO = new List<GrupoDTO>();
 
-            try
+            if (tipoBD == "Hana")
             {
-                StringBuilder tSQL = new StringBuilder();
-                tSQL.Append(tSQLBase);
-
+                HanaConexao conexaoHana = new HanaConexao();
+                string query = $@"SELECT ""GroupCode"", ""GroupName"", ""GroupType"", ""Locked"", ""DataSource"", ""UserSign"", ""PriceList"", ""DiscRel"" FROM OCRG ";
                 if (groupType == GroupType.Client)
-                    tSQL.Append("WHERE GroupType = 'C'");
+                    query += $@"WHERE ""GroupType"" = 'C'";
 
                 if (groupType == GroupType.Supplier)
-                    tSQL.Append("WHERE GroupType = 'S'");
+                    query += $@"WHERE ""GroupType"" = 'S'";
 
                 if (groupType == GroupType.Lead)
-                    tSQL.Append("WHERE GroupType = 'L'");
-
-                conexao.Conectar();
-
-                SqlCommand comando = new SqlCommand(tSQL.ToString(), conexao.Conexao);
-                SqlDataReader dataReader = comando.ExecuteReader();
-
-                while (dataReader.Read())
+                    query += $@"WHERE ""GroupType"" = 'L'";
+                try
                 {
-                    GrupoDTO grupoDTO = new GrupoDTO();
-                    grupoDTO = ObterGrupoDTO(dataReader);
+                    conexaoHana.Connection();
+                    DataTable dt = conexaoHana.ExecuteDataTable(query);
 
-                    listGrupoDTO.Add(grupoDTO);
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        GrupoDTO grupoDTO = new GrupoDTO();
+                        grupoDTO = ObterGrupoHanaDTO(dr);
+
+                        listGrupoDTO.Add(grupoDTO);
+                    }
                 }
-                dataReader.Close();
+                catch (Exception erro)
+                {
+                    throw new Exception(erro.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
+                }
             }
-            catch (SqlException erro)
+            else
             {
-                throw new Exception(erro.Message);
-            }
-            finally
-            {
-                conexao.Desconectar();
+                SqlServerConexao conexao = new SqlServerConexao();
+                try
+                {
+                    StringBuilder tSQL = new StringBuilder();
+                    tSQL.Append(tSQLBase);
+
+                    if (groupType == GroupType.Client)
+                        tSQL.Append("WHERE GroupType = 'C'");
+
+                    if (groupType == GroupType.Supplier)
+                        tSQL.Append("WHERE GroupType = 'S'");
+
+                    if (groupType == GroupType.Lead)
+                        tSQL.Append("WHERE GroupType = 'L'");
+
+                    conexao.Conectar();
+
+                    SqlCommand comando = new SqlCommand(tSQL.ToString(), conexao.Conexao);
+                    SqlDataReader dataReader = comando.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        GrupoDTO grupoDTO = new GrupoDTO();
+                        grupoDTO = ObterGrupoDTO(dataReader);
+
+                        listGrupoDTO.Add(grupoDTO);
+                    }
+                    dataReader.Close();
+                }
+                catch (SqlException erro)
+                {
+                    throw new Exception(erro.Message);
+                }
+                finally
+                {
+                    conexao.Desconectar();
+                }
             }
             return listGrupoDTO;
+
         }
 
         private GrupoDTO ObterGrupoDTO(SqlDataReader dataReader)
@@ -79,6 +121,22 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
                 grupoDTO.PriceList = ((!dataReader["PriceList"].Equals(DBNull.Value)) ? Convert.ToInt32(dataReader["PriceList"]) : 0);
                 grupoDTO.DiscRel = Convert.ToChar(dataReader["DiscRel"]);
             }
+            return grupoDTO;
+        }
+
+        private GrupoDTO ObterGrupoHanaDTO(DataRow dr)
+        {
+            GrupoDTO grupoDTO = new GrupoDTO();
+
+            grupoDTO.GroupCode = Convert.ToInt32(dr["GroupCode"]);
+            grupoDTO.GroupName = Convert.ToString(dr["GroupName"]);
+            grupoDTO.GroupType = Convert.ToChar(dr["GroupType"]);
+            grupoDTO.Locked = Convert.ToChar(dr["Locked"]);
+            grupoDTO.DataSource = Convert.ToChar(dr["DataSource"]);
+            grupoDTO.UserSign = Convert.ToInt32(dr["UserSign"]);
+            grupoDTO.PriceList = ((!dr["PriceList"].Equals(DBNull.Value)) ? Convert.ToInt32(dr["PriceList"]) : 0);
+            grupoDTO.DiscRel = Convert.ToChar(dr["DiscRel"]);
+
             return grupoDTO;
         }
     }

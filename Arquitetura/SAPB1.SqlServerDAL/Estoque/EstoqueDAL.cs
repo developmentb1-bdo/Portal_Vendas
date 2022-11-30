@@ -8,10 +8,11 @@ using SAPB1.DTO.Item;
 using SAPB1.DTO.Deposito;
 using System.Data;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace SAPB1.SqlServerDAL.Estoque
 {
-    public class EstoqueDAL2: IEstoqueConsulta
+    public class EstoqueDAL2 : IEstoqueConsulta
     {
         SqlServerConexao conexao = new SqlServerConexao();
 
@@ -107,70 +108,150 @@ namespace SAPB1.SqlServerDAL.Estoque
 
         public IList<EstoqueConsulta> Listar(EstoqueDTO estoqueDTO)
         {
-            SqlCommand cmd = new SqlCommand();
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
 
-            StringBuilder stb = new StringBuilder();
-            stb.Append("EXEC [ConsultaPortal] @ItemCode,@WhsCode,@ItemName ");
-
-            if (estoqueDTO != null)
+            if (tipoBD == "Hana")
             {
-                if (estoqueDTO.Deposito != null)
+                HanaConexao conexaoHana = new HanaConexao();
+                string query = $@"EXEC [ConsultaPortal]  ";
+
+                if (estoqueDTO != null)
                 {
-                    if (!string.IsNullOrEmpty(estoqueDTO.Deposito.WhsCode))
+                    if (estoqueDTO.Deposito != null)
                     {
-                        //stb.Append("AND e.WhsCode = @WhsCode ");
-                        cmd.Parameters.AddWithValue("@WhsCode", estoqueDTO.Deposito.WhsCode);
+                        if (!string.IsNullOrEmpty(estoqueDTO.Deposito.WhsCode))
+                        {
+                            query += $@"{estoqueDTO.Deposito.WhsCode}, ";
+                        }
+                        else
+                        {
+                            query += $@"{null}, ";
+                        }
+
+                    }
+                    else
+                    {
+                        query += $@"{null}, ";
+                    }
+
+                    if (estoqueDTO.Item != null)
+                    {
+                        if (!string.IsNullOrEmpty(estoqueDTO.Item.ItemCode))
+                        {
+                            query += $@"'%{estoqueDTO.Item.ItemCode}%', ";
+                        }
+                        else
+                        {
+                            query += $@"{null}, ";
+                        }
+
+                        if (!string.IsNullOrEmpty(estoqueDTO.Item.ItemName))
+                        {
+                            query += $@"'%{estoqueDTO.Item.ItemName}%'";
+                        }
+                        else
+                        {
+                            query += $@"{null}";
+                        }
+                    }
+                    else
+                    {
+                        query += $@"{null}, {null}";
+                    }
+                }
+                else
+                {
+                    query += $@"{null}, {null}, {null}";
+                }
+
+                try
+                {
+                    conexaoHana.Connection();
+
+                    return PopularDadosHana(query, conexaoHana);
+                }
+                catch (Exception er)
+                {
+                    throw new Exception("Erro no banco de dados: " + er.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
+                }
+
+            }
+            else
+            {
+                SqlCommand cmd = new SqlCommand();
+
+                StringBuilder stb = new StringBuilder();
+                stb.Append("EXEC [ConsultaPortal] @ItemCode,@WhsCode,@ItemName ");
+
+                if (estoqueDTO != null)
+                {
+                    if (estoqueDTO.Deposito != null)
+                    {
+                        if (!string.IsNullOrEmpty(estoqueDTO.Deposito.WhsCode))
+                        {
+                            //stb.Append("AND e.WhsCode = @WhsCode ");
+                            cmd.Parameters.AddWithValue("@WhsCode", estoqueDTO.Deposito.WhsCode);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@WhsCode", DBNull.Value);
+                        }
+                        //else
+                        //{
+                        //    if (!string.IsNullOrEmpty(estoqueDTO.Deposito.WhsName))
+                        //    {
+                        //        //stb.Append("AND d.WhsName LIKE @WhsName ");
+                        //        cmd.Parameters.AddWithValue("@WhsName", ("%" + estoqueDTO.Deposito.WhsName + "%"));
+                        //    }
+
+                        //}
+
                     }
                     else
                     {
                         cmd.Parameters.AddWithValue("@WhsCode", DBNull.Value);
                     }
-                    //else
-                    //{
-                    //    if (!string.IsNullOrEmpty(estoqueDTO.Deposito.WhsName))
-                    //    {
-                    //        //stb.Append("AND d.WhsName LIKE @WhsName ");
-                    //        cmd.Parameters.AddWithValue("@WhsName", ("%" + estoqueDTO.Deposito.WhsName + "%"));
-                    //    }
 
-                    //}
-
-                }
-                else
-                {
-                    cmd.Parameters.AddWithValue("@WhsCode", DBNull.Value);
-                }
-
-                if (estoqueDTO.Item != null)
-                {
-                    //stb.Append("AND ");
-
-                    if (!string.IsNullOrEmpty(estoqueDTO.Item.ItemCode))
+                    if (estoqueDTO.Item != null)
                     {
-                        estoqueDTO.Item.ItemCode = "%" + estoqueDTO.Item.ItemCode + "%";
+                        //stb.Append("AND ");
 
-                        //stb.Append("i.ItemCode LIKE @ItemCode ");
-                        cmd.Parameters.AddWithValue("@ItemCode", estoqueDTO.Item.ItemCode);
+                        if (!string.IsNullOrEmpty(estoqueDTO.Item.ItemCode))
+                        {
+                            estoqueDTO.Item.ItemCode = "%" + estoqueDTO.Item.ItemCode + "%";
 
-                        //if (!string.IsNullOrEmpty(estoqueDTO.Item.ItemName))
-                        //{
-                        //    stb.Append("AND ");
-                        //}
+                            //stb.Append("i.ItemCode LIKE @ItemCode ");
+                            cmd.Parameters.AddWithValue("@ItemCode", estoqueDTO.Item.ItemCode);
+
+                            //if (!string.IsNullOrEmpty(estoqueDTO.Item.ItemName))
+                            //{
+                            //    stb.Append("AND ");
+                            //}
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@ItemCode", DBNull.Value);
+                        }
+
+                        if (!string.IsNullOrEmpty(estoqueDTO.Item.ItemName))
+                        {
+                            estoqueDTO.Item.ItemName = "%" + estoqueDTO.Item.ItemName + "%";
+
+                            //stb.Append("i.ItemName LIKE @ItemName ");
+                            cmd.Parameters.AddWithValue("@ItemName", "%" + estoqueDTO.Item.ItemName + "%");
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@ItemName", DBNull.Value);
+                        }
                     }
                     else
                     {
                         cmd.Parameters.AddWithValue("@ItemCode", DBNull.Value);
-                    }
-
-                    if (!string.IsNullOrEmpty(estoqueDTO.Item.ItemName))
-                    {
-                        estoqueDTO.Item.ItemName = "%" + estoqueDTO.Item.ItemName + "%";
-
-                        //stb.Append("i.ItemName LIKE @ItemName ");
-                        cmd.Parameters.AddWithValue("@ItemName", "%" + estoqueDTO.Item.ItemName + "%");
-                    }
-                    else
-                    {
                         cmd.Parameters.AddWithValue("@ItemName", DBNull.Value);
                     }
                 }
@@ -178,35 +259,31 @@ namespace SAPB1.SqlServerDAL.Estoque
                 {
                     cmd.Parameters.AddWithValue("@ItemCode", DBNull.Value);
                     cmd.Parameters.AddWithValue("@ItemName", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@WhsCode", DBNull.Value);
+                }
+
+                //stb.Append("ORDER BY i.ItemCode DESC");
+
+                cmd.CommandText = stb.ToString();
+                cmd.Connection = conexao.Conexao;
+
+                try
+                {
+                    conexao.Conectar();
+
+                    return PopularDados(ref cmd);
+                }
+                catch (SqlException er)
+                {
+                    throw new Exception("Erro no banco de dados: " + er.Message);
+                }
+                finally
+                {
+                    cmd.Dispose();
+                    conexao.Desconectar();
                 }
             }
-            else
-            {
-                cmd.Parameters.AddWithValue("@ItemCode", DBNull.Value);
-                cmd.Parameters.AddWithValue("@ItemName", DBNull.Value);
-                cmd.Parameters.AddWithValue("@WhsCode", DBNull.Value);
-            }
 
-            //stb.Append("ORDER BY i.ItemCode DESC");
-
-            cmd.CommandText = stb.ToString();
-            cmd.Connection = conexao.Conexao;
-
-            try
-            {
-                conexao.Conectar();
-
-                return PopularDados(ref cmd);
-            }
-            catch (SqlException er)
-            {
-                throw new Exception("Erro no banco de dados: " + er.Message);
-            }
-            finally
-            {
-                cmd.Dispose();
-                conexao.Desconectar();
-            }
         }
 
         private IList<EstoqueDTO> PopularDados_old(ref SqlCommand cmd)
@@ -283,27 +360,84 @@ namespace SAPB1.SqlServerDAL.Estoque
             return listEstoque;
         }
 
+        private IList<EstoqueConsulta> PopularDadosHana(string query, HanaConexao conexaoHana)
+        {
+            DataTable dt = conexaoHana.ExecuteDataTable(query);
+
+            IList<EstoqueConsulta> listEstoque = new List<EstoqueConsulta>();
+
+            if (dt.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+
+                    EstoqueConsulta estoqueDTO = new EstoqueConsulta();
+
+                    estoqueDTO.ItemCode = dr["Cód. Item"].ToString();
+                    estoqueDTO.WhsCode = dr["Depósito"].ToString();
+                    estoqueDTO.ItemName = dr["Nome do Item"].ToString();
+                    estoqueDTO.Comprimento = Convert.ToInt32(dr["Comprimento(mm)"].ToString());
+                    estoqueDTO.TotalPecas = Convert.ToInt32(dr["Total Peças"].ToString());
+                    estoqueDTO.EstoqueDisponivel = Convert.ToDouble(dr["Estoque Disponivel"].ToString());
+                    estoqueDTO.EstoqueReservado = Convert.ToDouble(dr["Estoque Reservado"].ToString());
+                    estoqueDTO.PesoUnitario = Convert.ToDouble(dr["Peso Unitário"].ToString());
+                    estoqueDTO.PrecoMinimo = dr["Preço Mínimo"].ToString();
+                    estoqueDTO.PrecoMaximo = dr["Preço Máximo"].ToString();
+                    estoqueDTO.Lote = dr["Lote"].ToString();
+                    estoqueDTO.GrupoItem = dr["Grupo Item"].ToString();
+                    estoqueDTO.EntradaPrevista = Convert.ToDouble(dr["Entrada Prevista(kg)"].ToString());
+
+                    listEstoque.Add(estoqueDTO);
+                }
+            }
+
+            return listEstoque;
+        }
+
         public double RetornarTotalValorEstoque()
         {
-            StringBuilder stb = new StringBuilder();
-            stb.Append("SELECT SUM(((OnHand - IsCommited) + OnOrder) * AvgPrice) AS 'TOTAL' FROM OITW");
-
-            try
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
+            if (tipoBD == "Hana")
             {
-                conexao.Conectar();
-
-                SqlCommand comando = new SqlCommand(stb.ToString(), conexao.Conexao);
-
-                return Convert.ToDouble(comando.ExecuteScalar());
+                HanaConexao conexaoHana = new HanaConexao();
+                string query = $@"SELECT SUM(((""OnHand"" - ""IsCommited"") + ""OnOrder"") * ""AvgPrice"") AS ""TOTAL"" FROM OITW";
+                try
+                {
+                    conexaoHana.Connection();
+                    return Convert.ToDouble(conexaoHana.ExecuteScalar(query));
+                }
+                catch (Exception err)
+                {
+                    throw new Exception(err.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
+                }
             }
-            catch (SqlException erro)
+            else
             {
-                throw new Exception(erro.Message);
+                StringBuilder stb = new StringBuilder();
+                stb.Append("SELECT SUM(((OnHand - IsCommited) + OnOrder) * AvgPrice) AS 'TOTAL' FROM OITW");
+
+                try
+                {
+                    conexao.Conectar();
+
+                    SqlCommand comando = new SqlCommand(stb.ToString(), conexao.Conexao);
+
+                    return Convert.ToDouble(comando.ExecuteScalar());
+                }
+                catch (SqlException erro)
+                {
+                    throw new Exception(erro.Message);
+                }
+                finally
+                {
+                    conexao.Desconectar();
+                }
             }
-            finally
-            {
-                conexao.Desconectar();
-            }
+
         }
 
         public IList<EstoqueDTO> ListarEstoquePorProduto(string itemCode)
@@ -374,98 +508,169 @@ namespace SAPB1.SqlServerDAL.Estoque
         }
     }
 
-    public class EstoqueDAL:IEstoque
+    public class EstoqueDAL : IEstoque
     {
         SqlServerConexao conexao = new SqlServerConexao();
 
         public IList<EstoqueDTO> Listar(EstoqueDTO estoqueDTO)
         {
-            SqlCommand cmd = new SqlCommand();
 
-            StringBuilder stb = new StringBuilder();
-            stb.Append("SELECT TOP 500 ");
-            stb.Append("e.OnOrder, ");
-            stb.Append("e.OnHand, ");
-            stb.Append("e.IsCommited, ");
-            stb.Append("i.ItemName, ");
-            stb.Append("e.ItemCode, ");
-            stb.Append("e.WhsCode, ");
-            stb.Append("d.WhsName ");
-            stb.Append("FROM OITW e ");
-            stb.Append("INNER JOIN OITM i ON i.ItemCode = e.ItemCode ");
-            stb.Append("INNER JOIN OWHS d ON d.WhsCode = e.WhsCode ");
-            stb.Append("WHERE 1 = 1 ");
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
 
-            if (estoqueDTO != null)
+            if (tipoBD == "Hana")
             {
-                if (estoqueDTO.Deposito != null)
+                HanaConexao conexaoHana = new HanaConexao();
+
+                string query = $@"SELECT TOP 500 e.""OnOrder"", e.""OnHand"", e.""IsCommited"", i.""ItemName"", e.""ItemCode"", e.""WhsCode"", d.""WhsName"" FROM OITW e INNER JOIN OITM i ON i.""ItemCode"" = e.""ItemCode"" INNER JOIN OWHS d ON d.""WhsCode"" = e.""WhsCode"" WHERE 1 = 1 ";
+
+                if (estoqueDTO != null)
                 {
-                    //stb.Append("AND d.WhsName LIKE @WhsName ");
-                    //cmd.Parameters.AddWithValue("@WhsName", ("%" + estoqueDTO.Deposito.WhsName + "%"));
-                    if (!string.IsNullOrEmpty(estoqueDTO.Deposito.WhsCode))
+                    if (estoqueDTO.Deposito != null)
                     {
-                        stb.Append("AND e.WhsCode = @WhsCode ");
-                        cmd.Parameters.AddWithValue("@WhsCode", estoqueDTO.Deposito.WhsCode);
-                    }
-                    else
-                    {
-                        if (!string.IsNullOrEmpty(estoqueDTO.Deposito.WhsName))
+                        //stb.Append("AND d.WhsName LIKE @WhsName ");
+                        //cmd.Parameters.AddWithValue("@WhsName", ("%" + estoqueDTO.Deposito.WhsName + "%"));
+                        if (!string.IsNullOrEmpty(estoqueDTO.Deposito.WhsCode))
                         {
-                            stb.Append("AND d.WhsName LIKE @WhsName ");
-                            cmd.Parameters.AddWithValue("@WhsName", ("%" + estoqueDTO.Deposito.WhsName + "%"));
+                            query += $@"AND e.""WhsCode"" = '{estoqueDTO.Deposito.WhsCode}' ";
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrEmpty(estoqueDTO.Deposito.WhsName))
+                            {
+                                query += $@"AND d.""WhsName"" LIKE '%{estoqueDTO.Deposito.WhsName}%' ";
+                            }
+
                         }
 
                     }
-                    
-                }
 
-                if (estoqueDTO.Item != null)
-                {
-                    stb.Append("AND ");
-
-                    if (!string.IsNullOrEmpty(estoqueDTO.Item.ItemCode))
+                    if (estoqueDTO.Item != null)
                     {
-                        estoqueDTO.Item.ItemCode = "%" + estoqueDTO.Item.ItemCode + "%";
+                        query += "AND ";
 
-                        stb.Append("i.ItemCode LIKE @ItemCode ");
-                        cmd.Parameters.AddWithValue("@ItemCode", estoqueDTO.Item.ItemCode);
+                        if (!string.IsNullOrEmpty(estoqueDTO.Item.ItemCode))
+                        {
+
+                            query += $@"i.""ItemCode"" LIKE '%{estoqueDTO.Item.ItemCode}%' ";
+
+                            if (!string.IsNullOrEmpty(estoqueDTO.Item.ItemName))
+                            {
+                                query += "AND ";
+                            }
+                        }
 
                         if (!string.IsNullOrEmpty(estoqueDTO.Item.ItemName))
                         {
-                            stb.Append("AND ");
+                            query += $@"i.""ItemName"" LIKE '%{estoqueDTO.Item.ItemName}%' ";
                         }
                     }
+                }
 
-                    if (!string.IsNullOrEmpty(estoqueDTO.Item.ItemName))
-                    {
-                        estoqueDTO.Item.ItemName = "%" + estoqueDTO.Item.ItemName + "%";
-
-                        stb.Append("i.ItemName LIKE @ItemName ");
-                        cmd.Parameters.AddWithValue("@ItemName", "%" + estoqueDTO.Item.ItemName + "%");
-                    }
+                query += $@"ORDER BY i.""ItemCode"" DESC";
+                try
+                {
+                    conexaoHana.Connection();
+                    return PopularDadosHana(query, conexaoHana);
+                }
+                catch (Exception err)
+                {
+                    throw new Exception(err.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
                 }
             }
-            
-            stb.Append("ORDER BY i.ItemCode DESC");
+            else
+            {
+                SqlCommand cmd = new SqlCommand();
 
-            cmd.CommandText = stb.ToString();
-            cmd.Connection = conexao.Conexao;
-           
-            try
-            {
-                conexao.Conectar();
+                StringBuilder stb = new StringBuilder();
+                stb.Append("SELECT TOP 500 ");
+                stb.Append("e.OnOrder, ");
+                stb.Append("e.OnHand, ");
+                stb.Append("e.IsCommited, ");
+                stb.Append("i.ItemName, ");
+                stb.Append("e.ItemCode, ");
+                stb.Append("e.WhsCode, ");
+                stb.Append("d.WhsName ");
+                stb.Append("FROM OITW e ");
+                stb.Append("INNER JOIN OITM i ON i.ItemCode = e.ItemCode ");
+                stb.Append("INNER JOIN OWHS d ON d.WhsCode = e.WhsCode ");
+                stb.Append("WHERE 1 = 1 ");
 
-                return PopularDados(ref cmd);
+                if (estoqueDTO != null)
+                {
+                    if (estoqueDTO.Deposito != null)
+                    {
+                        //stb.Append("AND d.WhsName LIKE @WhsName ");
+                        //cmd.Parameters.AddWithValue("@WhsName", ("%" + estoqueDTO.Deposito.WhsName + "%"));
+                        if (!string.IsNullOrEmpty(estoqueDTO.Deposito.WhsCode))
+                        {
+                            stb.Append("AND e.WhsCode = @WhsCode ");
+                            cmd.Parameters.AddWithValue("@WhsCode", estoqueDTO.Deposito.WhsCode);
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrEmpty(estoqueDTO.Deposito.WhsName))
+                            {
+                                stb.Append("AND d.WhsName LIKE @WhsName ");
+                                cmd.Parameters.AddWithValue("@WhsName", ("%" + estoqueDTO.Deposito.WhsName + "%"));
+                            }
+
+                        }
+
+                    }
+
+                    if (estoqueDTO.Item != null)
+                    {
+                        stb.Append("AND ");
+
+                        if (!string.IsNullOrEmpty(estoqueDTO.Item.ItemCode))
+                        {
+                            estoqueDTO.Item.ItemCode = "%" + estoqueDTO.Item.ItemCode + "%";
+
+                            stb.Append("i.ItemCode LIKE @ItemCode ");
+                            cmd.Parameters.AddWithValue("@ItemCode", estoqueDTO.Item.ItemCode);
+
+                            if (!string.IsNullOrEmpty(estoqueDTO.Item.ItemName))
+                            {
+                                stb.Append("AND ");
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(estoqueDTO.Item.ItemName))
+                        {
+                            estoqueDTO.Item.ItemName = "%" + estoqueDTO.Item.ItemName + "%";
+
+                            stb.Append("i.ItemName LIKE @ItemName ");
+                            cmd.Parameters.AddWithValue("@ItemName", "%" + estoqueDTO.Item.ItemName + "%");
+                        }
+                    }
+                }
+
+                stb.Append("ORDER BY i.ItemCode DESC");
+
+                cmd.CommandText = stb.ToString();
+                cmd.Connection = conexao.Conexao;
+
+                try
+                {
+                    conexao.Conectar();
+
+                    return PopularDados(ref cmd);
+                }
+                catch (SqlException er)
+                {
+                    throw new Exception("Erro no banco de dados: " + er.Message);
+                }
+                finally
+                {
+                    cmd.Dispose();
+                    conexao.Desconectar();
+                }
             }
-            catch (SqlException er)
-            {
-                throw new Exception("Erro no banco de dados: " + er.Message);
-            }
-            finally
-            {
-                cmd.Dispose();
-                conexao.Desconectar();
-            }
+
         }
 
         //public IList<EstoqueConsulta> Listar(EstoqueDTO estoqueDTO)
@@ -577,9 +782,9 @@ namespace SAPB1.SqlServerDAL.Estoque
 
             IList<EstoqueDTO> listEstoque = new List<EstoqueDTO>();
 
-            if(rdr.HasRows)
+            if (rdr.HasRows)
             {
-                while(rdr.Read())
+                while (rdr.Read())
                 {
                     DepositoDTO depositoDTO = new DepositoDTO();
                     depositoDTO.WhsCode = rdr["WhsCode"].ToString();
@@ -603,6 +808,38 @@ namespace SAPB1.SqlServerDAL.Estoque
             rdr.Close();
             rdr.Dispose();
             cmd.Dispose();
+
+            return listEstoque;
+        }
+
+        private IList<EstoqueDTO> PopularDadosHana(string query, HanaConexao conexaoHana)
+        {
+            DataTable dt = conexaoHana.ExecuteDataTable(query);
+
+            IList<EstoqueDTO> listEstoque = new List<EstoqueDTO>();
+
+            if (dt.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    DepositoDTO depositoDTO = new DepositoDTO();
+                    depositoDTO.WhsCode = dr["WhsCode"].ToString();
+                    depositoDTO.WhsName = dr["WhsName"].ToString();
+
+                    ItemDTO itemDTO = new ItemDTO();
+                    itemDTO.ItemCode = dr["ItemCode"].ToString();
+                    itemDTO.ItemName = dr["ItemName"].ToString();
+
+                    EstoqueDTO estoqueDTO = new EstoqueDTO();
+                    estoqueDTO.Deposito = depositoDTO;
+                    estoqueDTO.Item = itemDTO;
+                    estoqueDTO.OnHand = Convert.ToDouble(dr["OnHand"].ToString());
+                    estoqueDTO.OnOrder = Convert.ToDouble(dr["OnOrder"].ToString());
+                    estoqueDTO.IsCommited = Convert.ToDouble(dr["IsCommited"].ToString());
+
+                    listEstoque.Add(estoqueDTO);
+                }
+            }
 
             return listEstoque;
         }
@@ -647,92 +884,167 @@ namespace SAPB1.SqlServerDAL.Estoque
 
         public double RetornarTotalValorEstoque()
         {
-            StringBuilder stb = new StringBuilder();
-            stb.Append("SELECT SUM(((OnHand - IsCommited) + OnOrder) * AvgPrice) AS 'TOTAL' FROM OITW");
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
+            if (tipoBD == "Hana")
+            {
+                HanaConexao conexaoHana = new HanaConexao();
+                string query = $@"SELECT SUM(((""OnHand"" - ""IsCommited"") + ""OnOrder"") * ""AvgPrice"") AS ""TOTAL"" FROM OITW";
+                try
+                {
+                    conexaoHana.Connection();
+                    return Convert.ToDouble(conexaoHana.ExecuteScalar(query));
+                }
+                catch (Exception err)
+                {
+                    throw new Exception(err.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
+                }
+            }
+            else
+            {
+                StringBuilder stb = new StringBuilder();
+                stb.Append("SELECT SUM(((OnHand - IsCommited) + OnOrder) * AvgPrice) AS 'TOTAL' FROM OITW");
 
-            try
-            {
-                conexao.Conectar();
+                try
+                {
+                    conexao.Conectar();
 
-                SqlCommand comando = new SqlCommand(stb.ToString(), conexao.Conexao);
-                
-                return Convert.ToDouble(comando.ExecuteScalar());
+                    SqlCommand comando = new SqlCommand(stb.ToString(), conexao.Conexao);
+
+                    return Convert.ToDouble(comando.ExecuteScalar());
+                }
+                catch (SqlException erro)
+                {
+                    throw new Exception(erro.Message);
+                }
+                finally
+                {
+                    conexao.Desconectar();
+                }
             }
-            catch (SqlException erro)
-            {
-                throw new Exception(erro.Message);
-            }
-            finally
-            {
-                conexao.Desconectar();
-            }
+
         }
 
         public IList<EstoqueDTO> ListarEstoquePorProduto(string itemCode)
         {
-            StringBuilder stb = new StringBuilder();
-            stb.Append("SELECT ");
-            stb.Append("e.OnOrder, ");
-            stb.Append("e.OnHand, ");
-            stb.Append("e.IsCommited, ");
-            stb.Append("i.ItemName, ");
-            stb.Append("e.ItemCode, ");
-            stb.Append("e.WhsCode, ");
-            stb.Append("d.WhsName, ");
-            stb.Append("d.BPLid ");
-            stb.Append("FROM OITW e ");
-            stb.Append("INNER JOIN OITM i ON i.ItemCode = e.ItemCode AND e.ItemCode = @ItemCode ");
-            stb.Append("INNER JOIN OWHS d ON d.WhsCode = e.WhsCode ");
-
-            SqlCommand comando = new SqlCommand(stb.ToString(), conexao.Conexao);
-            comando.Parameters.AddWithValue("@ItemCode", itemCode);
-
-            try
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
+            if (tipoBD == "Hana")
             {
-                conexao.Conectar();
-
-                SqlDataReader rdr = comando.ExecuteReader();
-
-                IList<EstoqueDTO> listEstoque = new List<EstoqueDTO>();
-
-                if (rdr.HasRows)
+                HanaConexao conexaoHana = new HanaConexao();
+                string query = $@"SELECT e.""OnOrder"", e.""OnHand"", e.""IsCommited"", i.""ItemName"", e.""ItemCode"", e.""WhsCode"", d.""WhsName"", d.""BPLid"" FROM OITW e INNER JOIN OITM i ON i.""ItemCode"" = e.""ItemCode"" AND e.""ItemCode"" = '{itemCode}' INNER JOIN OWHS d ON d.""WhsCode"" = e.""WhsCode""";
+                try
                 {
-                    while (rdr.Read())
+                    conexaoHana.Connection();
+
+                    DataTable dt = conexaoHana.ExecuteDataTable(query);
+
+                    IList<EstoqueDTO> listEstoque = new List<EstoqueDTO>();
+
+                    if (dt.Rows.Count > 0)
                     {
-                        DepositoDTO depositoDTO = new DepositoDTO();
-                        depositoDTO.WhsCode = rdr["WhsCode"].ToString();
-                        depositoDTO.WhsName = rdr["WhsName"].ToString();
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            DepositoDTO depositoDTO = new DepositoDTO();
+                            depositoDTO.WhsCode = dr["WhsCode"].ToString();
+                            depositoDTO.WhsName = dr["WhsName"].ToString();
 
-                        ItemDTO itemDTO = new ItemDTO();
-                        itemDTO.ItemCode = rdr["ItemCode"].ToString();
-                        itemDTO.ItemName = rdr["ItemName"].ToString();
+                            ItemDTO itemDTO = new ItemDTO();
+                            itemDTO.ItemCode = dr["ItemCode"].ToString();
+                            itemDTO.ItemName = dr["ItemName"].ToString();
 
-                        EstoqueDTO estoqueDTO = new EstoqueDTO();
-                        estoqueDTO.Deposito = depositoDTO;
-                        estoqueDTO.Item = itemDTO;
-                        estoqueDTO.OnHand = Convert.ToDouble(rdr["OnHand"].ToString());
-                        estoqueDTO.OnOrder = Convert.ToDouble(rdr["OnOrder"].ToString());
-                        estoqueDTO.IsCommited = Convert.ToDouble(rdr["IsCommited"].ToString());
-                        estoqueDTO.BPLid = rdr["BPLid"].ToString();
+                            EstoqueDTO estoqueDTO = new EstoqueDTO();
+                            estoqueDTO.Deposito = depositoDTO;
+                            estoqueDTO.Item = itemDTO;
+                            estoqueDTO.OnHand = Convert.ToDouble(dr["OnHand"].ToString());
+                            estoqueDTO.OnOrder = Convert.ToDouble(dr["OnOrder"].ToString());
+                            estoqueDTO.IsCommited = Convert.ToDouble(dr["IsCommited"].ToString());
+                            estoqueDTO.BPLid = dr["BPLid"].ToString();
 
-                        listEstoque.Add(estoqueDTO);
+                            listEstoque.Add(estoqueDTO);
+                        }
                     }
+
+                    return listEstoque;
                 }
-
-                rdr.Close();
-                rdr.Dispose();
-
-                return listEstoque;
+                catch (Exception er)
+                {
+                    throw new Exception("Erro no banco de dados: " + er.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
+                }
             }
-            catch (SqlException er)
+            else
             {
-                throw new Exception("Erro no banco de dados: " + er.Message);
+                StringBuilder stb = new StringBuilder();
+                stb.Append("SELECT ");
+                stb.Append("e.OnOrder, ");
+                stb.Append("e.OnHand, ");
+                stb.Append("e.IsCommited, ");
+                stb.Append("i.ItemName, ");
+                stb.Append("e.ItemCode, ");
+                stb.Append("e.WhsCode, ");
+                stb.Append("d.WhsName, ");
+                stb.Append("d.BPLid ");
+                stb.Append("FROM OITW e ");
+                stb.Append("INNER JOIN OITM i ON i.ItemCode = e.ItemCode AND e.ItemCode = @ItemCode ");
+                stb.Append("INNER JOIN OWHS d ON d.WhsCode = e.WhsCode ");
+
+                SqlCommand comando = new SqlCommand(stb.ToString(), conexao.Conexao);
+                comando.Parameters.AddWithValue("@ItemCode", itemCode);
+
+                try
+                {
+                    conexao.Conectar();
+
+                    SqlDataReader rdr = comando.ExecuteReader();
+
+                    IList<EstoqueDTO> listEstoque = new List<EstoqueDTO>();
+
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            DepositoDTO depositoDTO = new DepositoDTO();
+                            depositoDTO.WhsCode = rdr["WhsCode"].ToString();
+                            depositoDTO.WhsName = rdr["WhsName"].ToString();
+
+                            ItemDTO itemDTO = new ItemDTO();
+                            itemDTO.ItemCode = rdr["ItemCode"].ToString();
+                            itemDTO.ItemName = rdr["ItemName"].ToString();
+
+                            EstoqueDTO estoqueDTO = new EstoqueDTO();
+                            estoqueDTO.Deposito = depositoDTO;
+                            estoqueDTO.Item = itemDTO;
+                            estoqueDTO.OnHand = Convert.ToDouble(rdr["OnHand"].ToString());
+                            estoqueDTO.OnOrder = Convert.ToDouble(rdr["OnOrder"].ToString());
+                            estoqueDTO.IsCommited = Convert.ToDouble(rdr["IsCommited"].ToString());
+                            estoqueDTO.BPLid = rdr["BPLid"].ToString();
+
+                            listEstoque.Add(estoqueDTO);
+                        }
+                    }
+
+                    rdr.Close();
+                    rdr.Dispose();
+
+                    return listEstoque;
+                }
+                catch (SqlException er)
+                {
+                    throw new Exception("Erro no banco de dados: " + er.Message);
+                }
+                finally
+                {
+                    comando.Dispose();
+                    conexao.Desconectar();
+                }
             }
-            finally
-            {
-                comando.Dispose();
-                conexao.Desconectar();
-            }
+
         }
     }
 }
