@@ -26,7 +26,7 @@ namespace SAPB1.SqlServerDAL.Concessionario
             if (tipoBD == "Hana")
             {
                 HanaConexao conexaoHana = new HanaConexao();
-                string query = $@"SELECT * FROM OCRD (NOLOCK) WHERE ""U_LOGIN_PORTAL"" = '{usuario}' AND ""U_SENHA_PORTAL"" = '{senha}'";
+                string query = $@"SELECT * FROM OCRD WHERE ""U_LOGIN_PORTAL"" = '{usuario}' AND ""U_SENHA_PORTAL"" = '{senha}'";
                 try
                 {
                     conexaoHana.Connection();
@@ -116,7 +116,7 @@ namespace SAPB1.SqlServerDAL.Concessionario
                 try
                 {
                     conexaoHana.Connection();
-                    string query = $@"SELECT * FROM OCRD (NOLOCK) WHERE ""CardCode"" = '{cardCode}'";
+                    string query = $@"SELECT * FROM OCRD WHERE ""CardCode"" = '{cardCode}'";
                     ConcessionarioDTO concessionarioDTO = new ConcessionarioDTO();
 
                     DataTable dt = conexaoHana.ExecuteDataTable(query);
@@ -201,7 +201,7 @@ namespace SAPB1.SqlServerDAL.Concessionario
             {
                 HanaConexao conexaoHana = new HanaConexao();
 
-                string query = $@"SELECT * FROM OCRD (NOLOCK) ORDER BY ""CardName""";
+                string query = $@"SELECT * FROM OCRD ORDER BY ""CardName""";
                 try
                 {
                     conexaoHana.Connection();
@@ -287,7 +287,7 @@ namespace SAPB1.SqlServerDAL.Concessionario
             if (tipoBD == "Hana")
             {
                 HanaConexao conexaoHana = new HanaConexao();
-                string query = $@"SELECT * FROM OCRD (NOLOCK) WHERE ""GroupCode"" = '{groupCode}' ORDER BY ""CardName""";
+                string query = $@"SELECT * FROM OCRD WHERE ""GroupCode"" = '{groupCode}' ORDER BY ""CardName""";
 
                 try
                 {

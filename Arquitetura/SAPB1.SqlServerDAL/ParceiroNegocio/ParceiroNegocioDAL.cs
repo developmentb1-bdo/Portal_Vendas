@@ -20,32 +20,6 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
         string tSQLBase = "SELECT * FROM OCRD ";
 
 
-        public IList<ParceiroNegocioDTO> ListarHana(string query)
-        {
-            IList<ParceiroNegocioDTO> listParceiroNegocioDTO = new List<ParceiroNegocioDTO>();
-            HanaConexao conexaoHana = new HanaConexao();
-            try
-            {
-                conexaoHana.Connection();
-                var dataReader = conexaoHana.ExecuteDataTable(query);
-
-                foreach (DataRow dr in dataReader.Rows)
-                {
-                    ParceiroNegocioDTO parceiroNegocioDTO = new ParceiroNegocioDTO();
-                    parceiroNegocioDTO = ObterParceiroNegocioHanaDTO(dr);
-
-                    listParceiroNegocioDTO.Add(parceiroNegocioDTO);
-                }
-
-            }
-            catch (Exception erro)
-            {
-                throw new Exception(erro.Message);
-            }
-
-            return listParceiroNegocioDTO;
-        }
-
         public IList<ParceiroNegocioDTO> Listar()
         {
             // tSQLBase += $@"WHERE ""CardType"" <> 'S' ";
@@ -819,7 +793,7 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
                         }
                         else
                         {
-                            query += $@"""CardType"" = {parceiroNegocioDTO.CardType} ";
+                            query += $@"""CardType"" = '{parceiroNegocioDTO.CardType}' ";
                         }
 
                         if (!string.IsNullOrEmpty(parceiroNegocioDTO.E_Mail) ||
@@ -849,7 +823,7 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
 
                     if (parceiroNegocioDTO.GroupCode > 0)
                     {
-                        query = $@"""GroupCode"" = {parceiroNegocioDTO.GroupCode} ";
+                        query = $@"""GroupCode"" = '{parceiroNegocioDTO.GroupCode}' ";
 
                         if (parceiroNegocioDTO.SlpCode > 0)
                             query += "AND ";
@@ -857,7 +831,7 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
 
                     if (parceiroNegocioDTO.SlpCode > 0)
                     {
-                        query += $@"""SlpCode"" = {parceiroNegocioDTO.SlpCode} ";
+                        query += $@"""SlpCode"" = '{parceiroNegocioDTO.SlpCode}' ";
                     }
                 }
 

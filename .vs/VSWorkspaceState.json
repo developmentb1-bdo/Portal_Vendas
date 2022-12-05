@@ -2,8 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\Arquitetura",
-    "\\Arquitetura\\SAPB1.DTO",
-    "\\Arquitetura\\SAPB1.DTO\\Servico",
+    "\\Arquitetura\\SAPB1.BLL",
+    "\\Arquitetura\\SAPB1.BLL\\ParceiroNegocio",
     "\\Arquitetura\\SAPB1.SqlServerDAL",
     "\\Arquitetura\\SAPB1.SqlServerDAL\\Item",
     "\\Arquitetura\\SAPB1.SqlServerDAL\\PedidoVenda",
@@ -11,6 +11,6 @@
     "\\Front End",
     "\\Front End\\SAPB1.WebForm"
   ],
-  "SelectedNode": "\\Arquitetura\\SAPB1.SqlServerDAL\\Item\\ItemDAL.cs",
+  "SelectedNode": "\\Front End\\SAPB1.WebForm\\ParceiroNegocio.aspx.cs",
   "PreviewInSolutionExplorer": false
 }

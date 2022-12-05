@@ -15,8 +15,6 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
 {
     public sealed class IdentificacaoFiscalDAL : IIdentificacaoFiscal
     {
-        public IdentificacaoFiscalDAL() { }
-
 
         public IList<IdentificacaoFiscalDTO> Listar(string cardCode)
         {
@@ -38,7 +36,7 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
                         foreach (DataRow dr in dt.Rows)
                         {
                             IdentificacaoFiscalDTO identificacaoFiscalDTO = new IdentificacaoFiscalDTO();
-                            identificacaoFiscalDTO = ObterIdentificacaoFiscalHanaDTO(dr, conexaoHana);
+                            identificacaoFiscalDTO = ObterIdentificacaoFiscalHanaDTO(dr);
 
                             listIdentificacaoFiscalDTO.Add(identificacaoFiscalDTO);
                         }
@@ -127,7 +125,7 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
             return identificacaoFiscalDTO;
         }
 
-        private IdentificacaoFiscalDTO ObterIdentificacaoFiscalHanaDTO(DataRow dr, HanaConexao conexaoHana)
+        private IdentificacaoFiscalDTO ObterIdentificacaoFiscalHanaDTO(DataRow dr)
         {
             IdentificacaoFiscalDTO identificacaoFiscalDTO = new IdentificacaoFiscalDTO();
 

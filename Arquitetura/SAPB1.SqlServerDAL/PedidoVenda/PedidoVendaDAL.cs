@@ -9,14 +9,13 @@ using System.Data.SqlClient;
 using SAPB1.DTO.Empresa.Filial;
 using SAPB1.DTO.Funcionario.Vendedor;
 using SAPB1.DTO.TiposEnvio;
+using System.Configuration;
+using System.Data;
 
 namespace SAPB1.SqlServerDAL.PedidoVenda
 {
-    public class PedidoVendaDAL:IPedidoVenda
+    public class PedidoVendaDAL : IPedidoVenda
     {
-        string queryPadrao = "SELECT /*TOP 100*/ p.DocEntry, p.DocNum, p.CardCode, p.CardName, DocCur, p.DocStatus, p.DocDate, p.DocDueDate, p.TaxDate, p.DocTotalSy, p.DocTotal, p.CANCELED, p.NumAtCard, p.BPLId, p.VATRegNum, p.SlpCode, p.JrnlMemo, p.Address, p.Address2, p.TrnspCode, p.Confirmed, p.PartSupply, p.PoPrss, p.LangCode, p.Pick, p.PickRmrk, p.AgentCode, p.OwnerCode, c.CardName, c.U_CNPJ, p.PeyMethod, p.GroupNum, p.VatSum, p.Comments, " +
-                             "p.U_S7_CobrarFrete, p.U_S7_TaxaFrete, p.U_S7_ValorFrete  FROM ORDR p LEFT JOIN OCRD c ON c.CardCode = p.CardCode ";
-
         /// <summary>
         /// Lista os pedidos de venda
         /// </summary>
@@ -24,65 +23,122 @@ namespace SAPB1.SqlServerDAL.PedidoVenda
         /// <returns></returns>
         public IList<PedidoVendaDTO> Listar(PedidoVendaDTO pedidoVendaDTO)
         {
-            SqlCommand cmd = new SqlCommand();
-
-            StringBuilder stb = new StringBuilder();
-            stb.Append(queryPadrao);
-
-            if (pedidoVendaDTO != null && string.IsNullOrEmpty(pedidoVendaDTO.OwnerCode))
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
+            if (tipoBD == "Hana")
             {
-                if (pedidoVendaDTO.DocNum != 0 || pedidoVendaDTO.Vendedor != null)
-                    stb.Append("WHERE ");
+                string query = $@"SELECT /*TOP 100*/ p.""DocEntry"", p.""DocNum"", p.""CardCode"", p.""CardName"", ""DocCur"", p.""DocStatus"", p.""DocDate"", p.""DocDueDate"", p.""TaxDate"", p.""DocTotalSy"", p.""DocTotal"", p.""CANCELED"", p.""NumAtCard"", p.""BPLId"", p.""VATRegNum"", p.""SlpCode"", p.""JrnlMemo"", p.""Address"", p.""Address2"", p.""TrnspCode"", p.""Confirmed"", p.""PartSupply"", p.""PoPrss"", p.""LangCode"", p.""Pick"", p.""PickRmrk"", p.""AgentCode"", p.""OwnerCode"", c.""CardName"", c.""U_CNPJ"", p.""PeyMethod"", p.""GroupNum"", p.""VatSum"", p.""Comments"", " +
+                             $@"p.""U_S7_CobrarFrete"", p.""U_S7_TaxaFrete"", p.""U_S7_ValorFrete""  FROM ORDR p LEFT JOIN OCRD c ON c.""CardCode"" = p.""CardCode"" ";
 
-                if (pedidoVendaDTO.DocNum != 0)
+                if (pedidoVendaDTO != null && string.IsNullOrEmpty(pedidoVendaDTO.OwnerCode))
                 {
-                    stb.Append("p.DocNum = @DocNum ");
+                    if (pedidoVendaDTO.DocNum != 0 || pedidoVendaDTO.Vendedor != null)
+                        query += "WHERE ";
 
-                    cmd.Parameters.AddWithValue("@DocNum", pedidoVendaDTO.DocNum);
+                    if (pedidoVendaDTO.DocNum != 0)
+                    {
+                        query += $@"p.""DocNum"" = '{pedidoVendaDTO.DocNum}' ";
+
+
+                        if (pedidoVendaDTO.Vendedor != null)
+                            query += "AND ";
+                    }
 
                     if (pedidoVendaDTO.Vendedor != null)
-                        stb.Append("AND ");
+                    {
+                        query += $@"p.""SlpCode"" = '{pedidoVendaDTO.Vendedor.SlpCode}' ";
+                    }
                 }
-
-                if (pedidoVendaDTO.Vendedor != null)
+                else
                 {
-                    stb.Append("p.SlpCode = @SlpCode ");
+                    if (pedidoVendaDTO != null && !string.IsNullOrEmpty(pedidoVendaDTO.OwnerCode))
+                    {
+                        query += $@"WHERE p.""OwnerCode"" = '{pedidoVendaDTO.OwnerCode}' ";
+                    }
+                }
+                query += $@"ORDER BY p.""DocNum"" DESC";
 
-                    cmd.Parameters.AddWithValue("@SlpCode", pedidoVendaDTO.Vendedor.SlpCode);
+                HanaConexao conexaoHana = new HanaConexao();
+
+                try
+                {
+                    conexaoHana.Connection();
+
+                    return PopularDadosHana(query, conexaoHana);
+                }
+                catch (Exception er)
+                {
+                    throw new Exception("Erro no banco de dados: " + er.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
                 }
             }
             else
             {
-                if (pedidoVendaDTO != null && !string.IsNullOrEmpty(pedidoVendaDTO.OwnerCode))
+                string queryPadrao = "SELECT /*TOP 100*/ p.DocEntry, p.DocNum, p.CardCode, p.CardName, DocCur, p.DocStatus, p.DocDate, p.DocDueDate, p.TaxDate, p.DocTotalSy, p.DocTotal, p.CANCELED, p.NumAtCard, p.BPLId, p.VATRegNum, p.SlpCode, p.JrnlMemo, p.Address, p.Address2, p.TrnspCode, p.Confirmed, p.PartSupply, p.PoPrss, p.LangCode, p.Pick, p.PickRmrk, p.AgentCode, p.OwnerCode, c.CardName, c.U_CNPJ, p.PeyMethod, p.GroupNum, p.VatSum, p.Comments, " +
+                             "p.U_S7_CobrarFrete, p.U_S7_TaxaFrete, p.U_S7_ValorFrete  FROM ORDR p LEFT JOIN OCRD c ON c.CardCode = p.CardCode ";
+                SqlCommand cmd = new SqlCommand();
+
+                StringBuilder stb = new StringBuilder();
+                stb.Append(queryPadrao);
+
+                if (pedidoVendaDTO != null && string.IsNullOrEmpty(pedidoVendaDTO.OwnerCode))
                 {
-                    stb.Append("WHERE p.OwnerCode = @OwnerCode ");
-                    cmd.Parameters.AddWithValue("@OwnerCode", pedidoVendaDTO.OwnerCode);
+                    if (pedidoVendaDTO.DocNum != 0 || pedidoVendaDTO.Vendedor != null)
+                        stb.Append("WHERE ");
+
+                    if (pedidoVendaDTO.DocNum != 0)
+                    {
+                        stb.Append("p.DocNum = @DocNum ");
+
+                        cmd.Parameters.AddWithValue("@DocNum", pedidoVendaDTO.DocNum);
+
+                        if (pedidoVendaDTO.Vendedor != null)
+                            stb.Append("AND ");
+                    }
+
+                    if (pedidoVendaDTO.Vendedor != null)
+                    {
+                        stb.Append("p.SlpCode = @SlpCode ");
+
+                        cmd.Parameters.AddWithValue("@SlpCode", pedidoVendaDTO.Vendedor.SlpCode);
+                    }
+                }
+                else
+                {
+                    if (pedidoVendaDTO != null && !string.IsNullOrEmpty(pedidoVendaDTO.OwnerCode))
+                    {
+                        stb.Append("WHERE p.OwnerCode = @OwnerCode ");
+                        cmd.Parameters.AddWithValue("@OwnerCode", pedidoVendaDTO.OwnerCode);
+                    }
+                }
+
+                stb.Append("ORDER BY p.DocNum DESC");
+
+
+                SqlServerConexao conexao = new SqlServerConexao();
+
+                try
+                {
+                    cmd.CommandText = stb.ToString();
+                    cmd.Connection = conexao.Conexao;
+
+                    conexao.Conectar();
+
+                    return PopularDados(ref cmd);
+                }
+                catch (SqlException er)
+                {
+                    throw new Exception("Erro no banco de dados: " + er.Message);
+                }
+                finally
+                {
+                    conexao.Desconectar();
+                    cmd.Dispose();
                 }
             }
 
-            stb.Append("ORDER BY p.DocNum DESC");
-
-            
-            SqlServerConexao conexao = new SqlServerConexao();
-
-            try
-            {
-                cmd.CommandText = stb.ToString();
-                cmd.Connection = conexao.Conexao;
-
-                conexao.Conectar();
-
-                return PopularDados(ref cmd);
-            }
-            catch(SqlException er)
-            {
-                throw new Exception("Erro no banco de dados: " + er.Message);
-            }
-            finally
-            {
-                conexao.Desconectar();
-                cmd.Dispose();
-            }
         }
 
         /// <summary>
@@ -94,11 +150,11 @@ namespace SAPB1.SqlServerDAL.PedidoVenda
         {
             SqlDataReader rdr = cmd.ExecuteReader();
 
-            if(rdr.HasRows)
+            if (rdr.HasRows)
             {
                 IList<PedidoVendaDTO> listPedidos = new List<PedidoVendaDTO>();
 
-                while(rdr.Read())
+                while (rdr.Read())
                 {
                     PedidoVendaDTO pedidoVendaDTO = new PedidoVendaDTO();
                     pedidoVendaDTO.DocEntry = Convert.ToInt32(rdr["DocEntry"]);
@@ -161,198 +217,431 @@ namespace SAPB1.SqlServerDAL.PedidoVenda
             }
         }
 
+
+        private IList<PedidoVendaDTO> PopularDadosHana(string query, HanaConexao conexaoHana)
+        {
+            DataTable dt = conexaoHana.ExecuteDataTable(query);
+
+            if (dt.Rows.Count > 0)
+            {
+                IList<PedidoVendaDTO> listPedidos = new List<PedidoVendaDTO>();
+
+                foreach (DataRow rdr in dt.Rows)
+                {
+                    PedidoVendaDTO pedidoVendaDTO = new PedidoVendaDTO();
+                    pedidoVendaDTO.DocEntry = Convert.ToInt32(rdr["DocEntry"]);
+                    pedidoVendaDTO.DocNum = Convert.ToInt32(rdr["DocNum"].ToString());
+                    pedidoVendaDTO.DocStatus = rdr["DocStatus"].ToString();
+                    pedidoVendaDTO.DocDate = Convert.ToDateTime(rdr["DocDate"].ToString());
+                    pedidoVendaDTO.DocDueDate = Convert.ToDateTime(rdr["DocDueDate"].ToString());
+                    pedidoVendaDTO.DocTotalSy = Convert.ToDouble(rdr["DocTotalSy"].ToString());
+                    pedidoVendaDTO.TaxDate = Convert.ToDateTime(rdr["TaxDate"]);
+                    pedidoVendaDTO.Canceled = rdr["CANCELED"].ToString();
+                    pedidoVendaDTO.JrnlMemo = rdr["JrnlMemo"].ToString();
+                    pedidoVendaDTO.Address = rdr["Address"].ToString();
+                    pedidoVendaDTO.Address2 = rdr["Address2"].ToString();
+                    pedidoVendaDTO.Confirmed = rdr["Confirmed"].ToString();
+                    pedidoVendaDTO.PartSupply = rdr["PartSupply"].ToString();
+                    pedidoVendaDTO.PoPrss = rdr["PoPrss"].ToString();
+                    pedidoVendaDTO.LangCode = rdr["LangCode"].ToString();
+                    pedidoVendaDTO.Pick = rdr["Pick"].ToString();
+                    pedidoVendaDTO.PickRmrk = rdr["PickRmrk"].ToString();
+                    pedidoVendaDTO.AgentCode = rdr["AgentCode"].ToString();
+                    pedidoVendaDTO.CardCode = rdr["CardCode"].ToString();
+                    pedidoVendaDTO.CardName = rdr["CardName"].ToString();
+                    pedidoVendaDTO.DocCur = rdr["DocCur"].ToString();
+                    pedidoVendaDTO.OwnerCode = rdr["OwnerCode"].ToString();
+                    pedidoVendaDTO.PeyMethod = rdr["PeyMethod"].ToString();
+                    pedidoVendaDTO.GroupNum = rdr["GroupNum"].ToString();
+                    pedidoVendaDTO.DocTotal = Convert.ToDouble(rdr["DocTotal"]);
+                    pedidoVendaDTO.VatSum = Convert.ToDouble(rdr["VatSum"]);
+                    pedidoVendaDTO.Comments = rdr["Comments"].ToString();
+                    pedidoVendaDTO.TemFrete = rdr["U_S7_CobrarFrete"].ToString();
+                    pedidoVendaDTO.PercentualFrete = rdr["U_S7_TaxaFrete"].ToString().Equals("") ? 0 : Convert.ToDouble(rdr["U_S7_TaxaFrete"]);
+                    pedidoVendaDTO.ValorFreteCab = rdr["U_S7_ValorFrete"].ToString().Equals("") ? 0 : Convert.ToDouble(rdr["U_S7_ValorFrete"]);
+
+                    FilialDTO filialDTO = new FilialDTO();
+                    filialDTO.BPLId = Convert.ToInt32(rdr["BPLId"].ToString().Equals("") ? "0" : rdr["BPLId"].ToString());
+                    filialDTO.TaxIdNum = rdr["VATRegNum"].ToString();
+                    pedidoVendaDTO.Filial = filialDTO;
+
+                    VendedorDTO vendedorDTO = new VendedorDTO();
+                    vendedorDTO.SlpCode = Convert.ToInt32(rdr["SlpCode"].ToString());
+                    pedidoVendaDTO.Vendedor = vendedorDTO;
+
+                    TipoEnvioDTO tipoEnvioDTO = new TipoEnvioDTO();
+                    tipoEnvioDTO.TrnspCode = Convert.ToInt32(rdr["TrnspCode"].ToString());
+                    pedidoVendaDTO.TipoEnvio = tipoEnvioDTO;
+
+                    pedidoVendaDTO.CardName = rdr["CardName"].ToString();
+                    pedidoVendaDTO.U_CNPJ = rdr["U_CNPJ"].ToString();
+                    listPedidos.Add(pedidoVendaDTO);
+                }
+
+                return listPedidos;
+            }
+            else
+            {
+                return new List<PedidoVendaDTO>();
+            }
+        }
+
         public double RetornarValorTotalPorMes(DateTime dataInicial, DateTime dataFinal)
         {
-            StringBuilder stb = new StringBuilder();
-            stb.Append("SELECT SUM(DocTotal) FROM ORDR WHERE DocStatus = 'C'");
-
-            SqlServerConexao conexao = new SqlServerConexao();
-
-            try
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
+            if (tipoBD == "Hana")
             {
-                conexao.Conectar();
+                string query = $@"SELECT SUM(""DocTotal"") FROM ORDR WHERE ""DocStatus"" = 'C'";
+                HanaConexao conexaoHana = new HanaConexao();
 
-                SqlCommand comando = new SqlCommand(stb.ToString(), conexao.Conexao);
+                try
+                {
+                    conexaoHana.Connection();
 
-                return Convert.ToDouble(comando.ExecuteScalar());
+                    return Convert.ToDouble(conexaoHana.ExecuteScalar(query));
+                }
+                catch (Exception erro)
+                {
+                    throw new Exception(erro.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
+                }
             }
-            catch (SqlException erro)
+            else
             {
-                throw new Exception(erro.Message);
+                StringBuilder stb = new StringBuilder();
+                stb.Append("SELECT SUM(DocTotal) FROM ORDR WHERE DocStatus = 'C'");
+
+                SqlServerConexao conexao = new SqlServerConexao();
+
+                try
+                {
+                    conexao.Conectar();
+
+                    SqlCommand comando = new SqlCommand(stb.ToString(), conexao.Conexao);
+
+                    return Convert.ToDouble(comando.ExecuteScalar());
+                }
+                catch (SqlException erro)
+                {
+                    throw new Exception(erro.Message);
+                }
+                finally
+                {
+                    conexao.Desconectar();
+                }
             }
-            finally
-            {
-                conexao.Desconectar();
-            }
+
         }
 
         public IList<PedidoVendaDTO> BuscarPedidoVenda(PedidoVendaDTO pedidoVendaDTO)
         {
-            SqlCommand cmd = new SqlCommand();
-
-            StringBuilder stb = new StringBuilder();
-            stb.Append("SELECT p.DocEntry, p.DocNum, p.CardCode, p.CardName, DocCur, p.DocStatus, p.DocDate, p.DocDueDate, p.TaxDate, p.DocTotalSy, p.CANCELED, p.NumAtCard, p.BPLId, ");
-            stb.Append("p.VATRegNum, p.SlpCode, p.JrnlMemo, p.Address, p.Address2, p.TrnspCode, p.Confirmed, p.PartSupply, p.PoPrss, p.LangCode, p.Pick, p.PickRmrk, p.AgentCode,");
-            stb.Append("p.OwnerCode, c.CardName, c.U_CNPJ, p.PeyMethod, p.GroupNum, p.VatSum, p.DocTotal, p.Comments, p.U_S7_CobrarFrete, p.U_S7_TaxaFrete, p.U_S7_ValorFrete FROM ORDR p LEFT JOIN OCRD c ON c.CardCode = p.CardCode ");
-
-            if (pedidoVendaDTO != null)
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
+            if (tipoBD == "Hana")
             {
-                if (pedidoVendaDTO.DocNum != 0 ||
-                    (pedidoVendaDTO.DocDate != DateTime.MinValue && pedidoVendaDTO.DocDueDate != DateTime.MinValue) ||
-                    !string.IsNullOrEmpty(pedidoVendaDTO.CardName) ||
-                    !string.IsNullOrEmpty(pedidoVendaDTO.U_CNPJ) || pedidoVendaDTO.Vendedor != null)
+                string query = $@"SELECT p.""DocEntry"", p.""DocNum"", p.""CardCode"", p.""CardName"", ""DocCur"", p.""DocStatus"", p.""DocDate"", p.""DocDueDate"", p.""TaxDate"", p.""DocTotalSy"", p.""CANCELED"", p.""NumAtCard"", p.""BPLId"",  p.""VATRegNum"", p.""SlpCode"", p.""JrnlMemo"", p.""Address"", p.""Address2"", p.""TrnspCode"", p.""Confirmed"", p.""PartSupply"", p.""PoPrss"", p.""LangCode"", p.""Pick"", p.""PickRmrk"", p.""AgentCode"", p.""OwnerCode"", c.""CardName"", c.""U_CNPJ"", p.""PeyMethod"", p.""GroupNum"", p.""VatSum"", p.""DocTotal"", p.""Comments"", p.""U_S7_CobrarFrete"", p.""U_S7_TaxaFrete"", p.""U_S7_ValorFrete"" FROM ORDR p LEFT JOIN OCRD c ON c.""CardCode"" = p.""CardCode"" ";
+
+                if (pedidoVendaDTO != null)
                 {
-                    stb.Append("WHERE ");
-
-                    if (pedidoVendaDTO.DocNum != 0)
+                    if (pedidoVendaDTO.DocNum != 0 ||
+                        (pedidoVendaDTO.DocDate != DateTime.MinValue && pedidoVendaDTO.DocDueDate != DateTime.MinValue) ||
+                        !string.IsNullOrEmpty(pedidoVendaDTO.CardName) ||
+                        !string.IsNullOrEmpty(pedidoVendaDTO.U_CNPJ) || pedidoVendaDTO.Vendedor != null)
                     {
-                        stb.Append("p.DocNum = @DocNum ");
-                        cmd.Parameters.AddWithValue("@DocNum", pedidoVendaDTO.DocNum);
+                        query += "WHERE ";
 
-                        if ((pedidoVendaDTO.DocDate != DateTime.MinValue && pedidoVendaDTO.DocDueDate != DateTime.MinValue) ||
-                            !string.IsNullOrEmpty(pedidoVendaDTO.CardName) ||
-                            !string.IsNullOrEmpty(pedidoVendaDTO.U_CNPJ) || pedidoVendaDTO.Vendedor != null)
+                        if (pedidoVendaDTO.DocNum != 0)
                         {
-                            stb.Append("AND ");
+                            query += $@"p.""DocNum"" = '{pedidoVendaDTO.DocNum}' ";
+
+                            if ((pedidoVendaDTO.DocDate != DateTime.MinValue && pedidoVendaDTO.DocDueDate != DateTime.MinValue) ||
+                                !string.IsNullOrEmpty(pedidoVendaDTO.CardName) ||
+                                !string.IsNullOrEmpty(pedidoVendaDTO.U_CNPJ) || pedidoVendaDTO.Vendedor != null)
+                            {
+                                query += "AND ";
+                            }
+                        }
+
+                        if (pedidoVendaDTO.DocDate != DateTime.MinValue && pedidoVendaDTO.DocDueDate != DateTime.MinValue)
+                        {
+                            query += $@"(p.""DocDate"" BETWEEN '{pedidoVendaDTO.DocDate.ToString("yyyy-MM-dd") + " 00:00:00"}' AND '{pedidoVendaDTO.DocDueDate.ToString("yyyy-MM-dd") + " 23:59:59"}') ";
+
+                            if (!string.IsNullOrEmpty(pedidoVendaDTO.CardName) ||
+                               !string.IsNullOrEmpty(pedidoVendaDTO.U_CNPJ))
+                            {
+                                query += "AND ";
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(pedidoVendaDTO.CardName))
+                        {
+                            query += $@"c.""CardName"" LIKE '{pedidoVendaDTO.CardName}%' ";
+
+                            if (!string.IsNullOrEmpty(pedidoVendaDTO.U_CNPJ) || pedidoVendaDTO.Vendedor != null)
+                            {
+                                query += "AND ";
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(pedidoVendaDTO.U_CNPJ))
+                        {
+                            query += $@"c.""U_CNPJ"" = '{pedidoVendaDTO.U_CNPJ}' ";
+
+                            if (pedidoVendaDTO.Vendedor != null)
+                                query += "AND ";
+                        }
+
+                        if (pedidoVendaDTO.Vendedor != null)
+                        {
+                            query += $@"p.""SlpCode"" = '{pedidoVendaDTO.Vendedor.SlpCode}' ";
+                        }
+
+                        if (!string.IsNullOrEmpty(pedidoVendaDTO.OwnerCode))
+                        {
+                            query += $@"AND p.""OwnerCode"" = '{pedidoVendaDTO.OwnerCode}' ";
                         }
                     }
+                }
+                query += $@"ORDER BY p.""DocNum"" DESC";
+                HanaConexao conexaoHana = new HanaConexao();
 
-                    if (pedidoVendaDTO.DocDate != DateTime.MinValue && pedidoVendaDTO.DocDueDate != DateTime.MinValue)
+                try
+                {
+                    conexaoHana.Connection();
+
+                    return PopularDadosHana(query, conexaoHana);
+                }
+                catch (Exception er)
+                {
+                    throw new Exception("Erro no banco de dados: " + er.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
+                }
+            }
+            else
+            {
+                SqlCommand cmd = new SqlCommand();
+
+                StringBuilder stb = new StringBuilder();
+                stb.Append("SELECT p.DocEntry, p.DocNum, p.CardCode, p.CardName, DocCur, p.DocStatus, p.DocDate, p.DocDueDate, p.TaxDate, p.DocTotalSy, p.CANCELED, p.NumAtCard, p.BPLId, ");
+                stb.Append("p.VATRegNum, p.SlpCode, p.JrnlMemo, p.Address, p.Address2, p.TrnspCode, p.Confirmed, p.PartSupply, p.PoPrss, p.LangCode, p.Pick, p.PickRmrk, p.AgentCode,");
+                stb.Append("p.OwnerCode, c.CardName, c.U_CNPJ, p.PeyMethod, p.GroupNum, p.VatSum, p.DocTotal, p.Comments, p.U_S7_CobrarFrete, p.U_S7_TaxaFrete, p.U_S7_ValorFrete FROM ORDR p LEFT JOIN OCRD c ON c.CardCode = p.CardCode ");
+
+                if (pedidoVendaDTO != null)
+                {
+                    if (pedidoVendaDTO.DocNum != 0 ||
+                        (pedidoVendaDTO.DocDate != DateTime.MinValue && pedidoVendaDTO.DocDueDate != DateTime.MinValue) ||
+                        !string.IsNullOrEmpty(pedidoVendaDTO.CardName) ||
+                        !string.IsNullOrEmpty(pedidoVendaDTO.U_CNPJ) || pedidoVendaDTO.Vendedor != null)
                     {
-                        stb.Append("(p.DocDate BETWEEN @DataInicial AND @DataFinal) ");
-                        cmd.Parameters.AddWithValue("@DataInicial", pedidoVendaDTO.DocDate.ToString("yyyy-MM-dd") + " 00:00:00");
-                        cmd.Parameters.AddWithValue("@DataFinal", pedidoVendaDTO.DocDueDate.ToString("yyyy-MM-dd") + " 23:59:59");
+                        stb.Append("WHERE ");
 
-                        if (!string.IsNullOrEmpty(pedidoVendaDTO.CardName) ||
-                           !string.IsNullOrEmpty(pedidoVendaDTO.U_CNPJ))
+                        if (pedidoVendaDTO.DocNum != 0)
                         {
-                            stb.Append("AND ");
+                            stb.Append("p.DocNum = @DocNum ");
+                            cmd.Parameters.AddWithValue("@DocNum", pedidoVendaDTO.DocNum);
+
+                            if ((pedidoVendaDTO.DocDate != DateTime.MinValue && pedidoVendaDTO.DocDueDate != DateTime.MinValue) ||
+                                !string.IsNullOrEmpty(pedidoVendaDTO.CardName) ||
+                                !string.IsNullOrEmpty(pedidoVendaDTO.U_CNPJ) || pedidoVendaDTO.Vendedor != null)
+                            {
+                                stb.Append("AND ");
+                            }
+                        }
+
+                        if (pedidoVendaDTO.DocDate != DateTime.MinValue && pedidoVendaDTO.DocDueDate != DateTime.MinValue)
+                        {
+                            stb.Append("(p.DocDate BETWEEN @DataInicial AND @DataFinal) ");
+                            cmd.Parameters.AddWithValue("@DataInicial", pedidoVendaDTO.DocDate.ToString("yyyy-MM-dd") + " 00:00:00");
+                            cmd.Parameters.AddWithValue("@DataFinal", pedidoVendaDTO.DocDueDate.ToString("yyyy-MM-dd") + " 23:59:59");
+
+                            if (!string.IsNullOrEmpty(pedidoVendaDTO.CardName) ||
+                               !string.IsNullOrEmpty(pedidoVendaDTO.U_CNPJ))
+                            {
+                                stb.Append("AND ");
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(pedidoVendaDTO.CardName))
+                        {
+                            stb.Append("c.CardName LIKE @CardName ");
+                            cmd.Parameters.AddWithValue("@CardName", pedidoVendaDTO.CardName + "%");
+
+                            if (!string.IsNullOrEmpty(pedidoVendaDTO.U_CNPJ) || pedidoVendaDTO.Vendedor != null)
+                            {
+                                stb.Append("AND ");
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(pedidoVendaDTO.U_CNPJ))
+                        {
+                            stb.Append("c.U_CNPJ = @U_CNPJ ");
+                            cmd.Parameters.AddWithValue("@U_CNPJ", pedidoVendaDTO.U_CNPJ);
+
+                            if (pedidoVendaDTO.Vendedor != null)
+                                stb.Append("AND ");
+                        }
+
+                        if (pedidoVendaDTO.Vendedor != null)
+                        {
+                            stb.Append("p.SlpCode = @SlpCode ");
+                            cmd.Parameters.AddWithValue("@SlpCode", pedidoVendaDTO.Vendedor.SlpCode);
+                        }
+
+                        if (!string.IsNullOrEmpty(pedidoVendaDTO.OwnerCode))
+                        {
+                            stb.Append(" AND p.OwnerCode = @OwnerCode ");
+                            cmd.Parameters.AddWithValue("@OwnerCode", pedidoVendaDTO.OwnerCode);
                         }
                     }
-                    
-                    if (!string.IsNullOrEmpty(pedidoVendaDTO.CardName))
-                    {
-                        stb.Append("c.CardName LIKE @CardName ");
-                        cmd.Parameters.AddWithValue("@CardName", pedidoVendaDTO.CardName + "%");
+                }
 
-                        if (!string.IsNullOrEmpty(pedidoVendaDTO.U_CNPJ) || pedidoVendaDTO.Vendedor != null)
-                        {
-                            stb.Append("AND ");
-                        }
-                    }
+                stb.Append("ORDER BY p.DocNum DESC");
 
-                    if (!string.IsNullOrEmpty(pedidoVendaDTO.U_CNPJ))
-                    {
-                        stb.Append("c.U_CNPJ = @U_CNPJ ");
-                        cmd.Parameters.AddWithValue("@U_CNPJ", pedidoVendaDTO.U_CNPJ);
 
-                        if(pedidoVendaDTO.Vendedor != null)
-                            stb.Append("AND ");
-                    }
+                SqlServerConexao conexao = new SqlServerConexao();
 
-                    if (pedidoVendaDTO.Vendedor !=null)
-                    {
-                        stb.Append("p.SlpCode = @SlpCode ");
-                        cmd.Parameters.AddWithValue("@SlpCode", pedidoVendaDTO.Vendedor.SlpCode);
-                    }
+                try
+                {
+                    cmd.CommandText = stb.ToString();
+                    cmd.Connection = conexao.Conexao;
 
-                    if (!string.IsNullOrEmpty(pedidoVendaDTO.OwnerCode))
-                    {
-                        stb.Append(" AND p.OwnerCode = @OwnerCode ");
-                        cmd.Parameters.AddWithValue("@OwnerCode", pedidoVendaDTO.OwnerCode);
-                    }
+                    conexao.Conectar();
+
+                    return PopularDados(ref cmd);
+                }
+                catch (SqlException er)
+                {
+                    throw new Exception("Erro no banco de dados: " + er.Message);
+                }
+                finally
+                {
+                    conexao.Desconectar();
+                    cmd.Dispose();
                 }
             }
 
-            stb.Append("ORDER BY p.DocNum DESC");
-
-            
-            SqlServerConexao conexao = new SqlServerConexao();
-
-            try
-            {
-                cmd.CommandText = stb.ToString();
-                cmd.Connection = conexao.Conexao;
-
-                conexao.Conectar();
-
-                return PopularDados(ref cmd);
-            }
-            catch(SqlException er)
-            {
-                throw new Exception("Erro no banco de dados: " + er.Message);
-            }
-            finally
-            {
-                conexao.Desconectar();
-                cmd.Dispose();
-            }
         }
 
         public string RetornarCodigoTransportadora(long docNum)
         {
-            StringBuilder stb = new StringBuilder();
-            stb.Append("SELECT Carrier FROM RDR12 WHERE DocEntry = @DocEntry");
-
-            SqlServerConexao conexao = new SqlServerConexao();
-
-            try
+            string codigoTransportadora = "";
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
+            if (tipoBD == "Hana")
             {
-                conexao.Conectar();
-
-                SqlCommand comando = new SqlCommand(stb.ToString(), conexao.Conexao);
-                comando.Parameters.AddWithValue("@DocEntry", docNum);
-
-                string codigoTransportadora = "";
-
-                SqlDataReader rdr = comando.ExecuteReader();
-
-                if(rdr.HasRows)
+                string query = $@"SELECT ""Carrier"" FROM RDR12 WHERE ""DocEntry"" = '{docNum}'";
+                HanaConexao conexaoHana = new HanaConexao();
+                try
                 {
-                    while(rdr.Read())
+                    conexaoHana.Connection();
+                    DataTable dt = conexaoHana.ExecuteDataTable(query);
+
+                    if (dt.Rows.Count > 0)
                     {
-                        codigoTransportadora = rdr["Carrier"].ToString();
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            codigoTransportadora = dr["Carrier"].ToString();
+                        }
                     }
                 }
-
-                rdr.Close();
-                rdr.Dispose();
-
-                return codigoTransportadora;
+                catch (Exception erro)
+                {
+                    throw new Exception(erro.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
+                }
             }
-            catch (SqlException erro)
+            else
             {
-                throw new Exception(erro.Message);
+                StringBuilder stb = new StringBuilder();
+                stb.Append("SELECT Carrier FROM RDR12 WHERE DocEntry = @DocEntry");
+
+                SqlServerConexao conexao = new SqlServerConexao();
+
+                try
+                {
+                    conexao.Conectar();
+
+                    SqlCommand comando = new SqlCommand(stb.ToString(), conexao.Conexao);
+                    comando.Parameters.AddWithValue("@DocEntry", docNum);
+                    SqlDataReader rdr = comando.ExecuteReader();
+
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            codigoTransportadora = rdr["Carrier"].ToString();
+                        }
+                    }
+
+                    rdr.Close();
+                    rdr.Dispose();
+                }
+                catch (SqlException erro)
+                {
+                    throw new Exception(erro.Message);
+                }
+                finally
+                {
+                    conexao.Desconectar();
+                }
             }
-            finally
-            {
-                conexao.Desconectar();
-            }
+            return codigoTransportadora;
         }
+
 
         public double RetornarValorDespesaFrete(long docNum)
         {
-            StringBuilder stb = new StringBuilder();
-            stb.Append("SELECT COALESCE(LineTotal, 0) FROM RDR3 WHERE DocEntry = @DocEntry AND ExpnsCode = 1");
-
-            SqlServerConexao conexao = new SqlServerConexao();
-
-            try
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
+            string query = $@"SELECT COALESCE(""LineTotal"", 0) FROM RDR3 WHERE ""DocEntry"" = '{docNum}' AND ""ExpnsCode"" = 1";
+            if (tipoBD == "Hana")
             {
-                conexao.Conectar();
+                HanaConexao conexaoHana = new HanaConexao();
 
-                SqlCommand comando = new SqlCommand(stb.ToString(), conexao.Conexao);
-                comando.Parameters.AddWithValue("@DocEntry", docNum);
-
-                return Convert.ToDouble(comando.ExecuteScalar());
+                try
+                {
+                    conexaoHana.Connection();
+                    return Convert.ToDouble(conexaoHana.ExecuteScalar(query));
+                }
+                catch (Exception err)
+                {
+                    throw new Exception(err.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
+                }
             }
-            catch (SqlException erro)
+            else
             {
-                throw new Exception(erro.Message);
-            }
-            finally
-            {
-                conexao.Desconectar();
+                StringBuilder stb = new StringBuilder();
+                stb.Append("SELECT COALESCE(LineTotal, 0) FROM RDR3 WHERE DocEntry = @DocEntry AND ExpnsCode = 1");
+
+                SqlServerConexao conexao = new SqlServerConexao();
+
+                try
+                {
+                    conexao.Conectar();
+
+                    SqlCommand comando = new SqlCommand(stb.ToString(), conexao.Conexao);
+                    comando.Parameters.AddWithValue("@DocEntry", docNum);
+
+                    return Convert.ToDouble(comando.ExecuteScalar());
+                }
+                catch (SqlException erro)
+                {
+                    throw new Exception(erro.Message);
+                }
+                finally
+                {
+                    conexao.Desconectar();
+                }
             }
         }
     }

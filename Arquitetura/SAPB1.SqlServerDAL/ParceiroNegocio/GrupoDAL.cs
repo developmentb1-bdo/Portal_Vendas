@@ -18,10 +18,7 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
     /// </summary>
     public sealed class GrupoDAL : IGrupo
     {
-        public GrupoDAL() { }
 
-        string tSQLBase = "SELECT GroupCode, GroupName, GroupType, Locked, DataSource, UserSign, PriceList, DiscRel FROM OCRG ";
-        
 
         public IList<GrupoDTO> Listar(GroupType groupType)
         {
@@ -64,6 +61,8 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
             }
             else
             {
+                string tSQLBase = "SELECT GroupCode, GroupName, GroupType, Locked, DataSource, UserSign, PriceList, DiscRel FROM OCRG ";
+
                 SqlServerConexao conexao = new SqlServerConexao();
                 try
                 {

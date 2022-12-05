@@ -18,10 +18,6 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
     /// </summary>
     public sealed class MoedaDAL : IMoeda
     {
-        public MoedaDAL() { }
-
-
-
         public IList<MoedaDTO> Listar()
         {
             IList<MoedaDTO> listMoedaDTO = new List<MoedaDTO>();

@@ -18,7 +18,7 @@ namespace SAPB1.SqlServerDAL.Projeto
             string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
             if (tipoBD == "Hana")
             {
-                string query = $@"SELECT ""PrjCode"", ""PrjName"", ""Active"", ""ValidTo"" FROM OPRJ WHERE ""Active"" = {projetoDTO.Active}";
+                string query = $@"SELECT ""PrjCode"", ""PrjName"", ""Active"", ""ValidTo"" FROM OPRJ WHERE ""Active"" = '{projetoDTO.Active}'";
                 HanaConexao conexaoHana = new HanaConexao();
 
                 try

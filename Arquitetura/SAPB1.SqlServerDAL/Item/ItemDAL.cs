@@ -218,7 +218,7 @@ namespace SAPB1.SqlServerDAL.Item
                 if (!string.IsNullOrEmpty(itemDTO.Lote))
                 {
 
-                    string queryNorma = $@"SELECT ""U_Norma"" AS ""Norma"" FROM[@ESSSBO_CERTIFICADO] WHERE ""U_RI"" = '{itemDTO.Lote}'";
+                    string queryNorma = $@"SELECT ""U_Norma"" AS ""Norma"" FROM [@ESSSBO_CERTIFICADO] WHERE ""U_RI"" = '{itemDTO.Lote}'";
 
                     try
                     {

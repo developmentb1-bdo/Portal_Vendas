@@ -25,7 +25,7 @@ namespace SAPB1.SqlServerDAL.Administracao
             if (tipoBD == "Hana")
             {
                 HanaConexao conexaoHana = new HanaConexao();
-                string query = $@"SELECT ""BPLId"", ""BPLName"", ""[Disabled]"" FROM OBPL WHERE ""[Disabled]"" = 'N';";
+                string query = $@"SELECT ""BPLId"", ""BPLName"", ""Disabled"" FROM OBPL WHERE ""Disabled"" = 'N';";
 
                 try
                 {

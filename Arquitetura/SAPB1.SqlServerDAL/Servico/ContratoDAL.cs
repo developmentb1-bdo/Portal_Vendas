@@ -1,6 +1,8 @@
 ﻿using SAPB1.DTO.Servico;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -13,47 +15,85 @@ namespace SAPB1.SqlServerDAL.Servico
 
         public IList<ContratoDTO> Listar()
         {
-            StringBuilder stb = new StringBuilder();
-            stb.Append("SELECT * FROM OTER");
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
+            IList<ContratoDTO> listContrato = new List<ContratoDTO>();
 
-            SqlCommand cmd = new SqlCommand();
 
-            try
+            if (tipoBD == "Hana")
             {
-                cmd.CommandText = stb.ToString();
-                cmd.Connection = conexao.Conexao;
+                HanaConexao conexaoHana = new HanaConexao();
+                string query = $@"SELECT * FROM OTER";
 
-                conexao.Conectar();
-
-                SqlDataReader rdr = cmd.ExecuteReader();
-
-                IList<ContratoDTO> listContrato = new List<ContratoDTO>();
-
-                if (rdr.HasRows)
+                try
                 {
-                    while (rdr.Read())
-                    {
-                        ContratoDTO transacaoDTO = new ContratoDTO();
-                        //territorioDTO.TerritryId = Convert.ToInt32(rdr["territryID"]);
-                        //territorioDTO.Descript = rdr["descript"].ToString();
+                    conexaoHana.Connection();
+                    DataTable dt = conexaoHana.ExecuteDataTable(query);
 
-                        listContrato.Add(transacaoDTO);
+                    if (dt.Rows.Count > 0)
+                    {
+                        foreach (DataRow rdr in dt.Rows)
+                        {
+                            ContratoDTO transacaoDTO = new ContratoDTO();
+                            //territorioDTO.TerritryId = Convert.ToInt32(rdr["territryID"]);
+                            //territorioDTO.Descript = rdr["descript"].ToString();
+
+                            listContrato.Add(transacaoDTO);
+                        }
                     }
                 }
-
-                rdr.Close();
-                rdr.Dispose();
-
-                return listContrato;
+                catch (Exception err)
+                {
+                    throw new Exception(err.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
+                }
             }
-            catch (SqlException er)
+            else
             {
-                throw new Exception(er.Message);
+                StringBuilder stb = new StringBuilder();
+                stb.Append("SELECT * FROM OTER");
+
+                SqlCommand cmd = new SqlCommand();
+
+                try
+                {
+                    cmd.CommandText = stb.ToString();
+                    cmd.Connection = conexao.Conexao;
+
+                    conexao.Conectar();
+
+                    SqlDataReader rdr = cmd.ExecuteReader();
+
+
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            ContratoDTO transacaoDTO = new ContratoDTO();
+                            //territorioDTO.TerritryId = Convert.ToInt32(rdr["territryID"]);
+                            //territorioDTO.Descript = rdr["descript"].ToString();
+
+                            listContrato.Add(transacaoDTO);
+                        }
+                    }
+
+                    rdr.Close();
+                    rdr.Dispose();
+
+                }
+                catch (SqlException er)
+                {
+                    throw new Exception(er.Message);
+                }
+                finally
+                {
+                    conexao.Desconectar();
+                }
             }
-            finally
-            {
-                conexao.Desconectar();
-            }
+            return listContrato;
         }
+
     }
 }

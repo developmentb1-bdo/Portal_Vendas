@@ -13,7 +13,6 @@ namespace SAPB1.SqlServerDAL.CondicaoPagamento
     public class CondicaoPagamentoDAL : ICondicaoPagamento
     {
         string queryPadrao = "SELECT cp.GroupNum, cp.PymntGroup, cp.UserSign FROM OCTG cp ";
-        SqlServerConexao conexao = new SqlServerConexao();
 
         public IList<CondicaoPagamentoDTO> Listar(CondicaoPagamentoDTO condicaoPagamentoDTO)
         {
@@ -60,6 +59,8 @@ namespace SAPB1.SqlServerDAL.CondicaoPagamento
             }
             else
             {
+                SqlServerConexao conexao = new SqlServerConexao();
+
                 StringBuilder stb = new StringBuilder();
                 stb.Append(queryPadrao);
 

@@ -15,9 +15,6 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
 {
     public sealed class EnderecoDAL : IEndereco
     {
-        public EnderecoDAL() { }
-
-        string tSQLBase = "SELECT Address, Street, Block, ZipCode, City, County, Country, State, Building, AdresType, AddrType, StreetNo, CardCode FROM CRD1 ";
 
         public IList<EnderecoDTO> Listar(string cardCode)
         {
@@ -55,6 +52,7 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
             }
             else
             {
+                string tSQLBase = "SELECT Address, Street, Block, ZipCode, City, County, Country, State, Building, AdresType, AddrType, StreetNo, CardCode FROM CRD1 ";
                 SqlServerConexao conexao = new SqlServerConexao();
                 try
                 {
@@ -118,21 +116,21 @@ namespace SAPB1.SqlServerDAL.ParceiroNegocio
         {
             EnderecoDTO enderecoDTO = new EnderecoDTO();
 
-         
-                enderecoDTO.Address = ((!dr["Address"].Equals(DBNull.Value)) ? Convert.ToString(dr["Address"]) : string.Empty);
-                enderecoDTO.Street = ((!dr["Street"].Equals(DBNull.Value)) ? Convert.ToString(dr["Street"]) : string.Empty);
-                enderecoDTO.Block = ((!dr["Block"].Equals(DBNull.Value)) ? Convert.ToString(dr["Block"]) : string.Empty);
-                enderecoDTO.ZipCode = ((!dr["ZipCode"].Equals(DBNull.Value)) ? Convert.ToString(dr["ZipCode"]) : string.Empty);
-                enderecoDTO.City = ((!dr["City"].Equals(DBNull.Value)) ? Convert.ToString(dr["City"]) : string.Empty);
-                enderecoDTO.County = ((!dr["County"].Equals(DBNull.Value)) ? Convert.ToString(dr["County"]) : string.Empty);
-                enderecoDTO.Country = ((!dr["Country"].Equals(DBNull.Value)) ? Convert.ToString(dr["Country"]) : string.Empty);
-                enderecoDTO.State = ((!dr["State"].Equals(DBNull.Value)) ? Convert.ToString(dr["State"]) : string.Empty);
-                enderecoDTO.Building = ((!dr["Building"].Equals(DBNull.Value)) ? Convert.ToString(dr["Building"]) : string.Empty);
-                enderecoDTO.AdresType = ((!dr["AdresType"].Equals(DBNull.Value)) ? Convert.ToChar(dr["AdresType"]) : char.MinValue);
-                enderecoDTO.AddrType = ((!dr["AddrType"].Equals(DBNull.Value)) ? Convert.ToString(dr["AddrType"]) : string.Empty);
-                enderecoDTO.StreetNo = ((!dr["StreetNo"].Equals(DBNull.Value)) ? Convert.ToString(dr["StreetNo"]) : string.Empty);
-                enderecoDTO.CardCode = ((!dr["CardCode"].Equals(DBNull.Value)) ? Convert.ToString(dr["CardCode"]) : string.Empty);
- 
+
+            enderecoDTO.Address = ((!dr["Address"].Equals(DBNull.Value)) ? Convert.ToString(dr["Address"]) : string.Empty);
+            enderecoDTO.Street = ((!dr["Street"].Equals(DBNull.Value)) ? Convert.ToString(dr["Street"]) : string.Empty);
+            enderecoDTO.Block = ((!dr["Block"].Equals(DBNull.Value)) ? Convert.ToString(dr["Block"]) : string.Empty);
+            enderecoDTO.ZipCode = ((!dr["ZipCode"].Equals(DBNull.Value)) ? Convert.ToString(dr["ZipCode"]) : string.Empty);
+            enderecoDTO.City = ((!dr["City"].Equals(DBNull.Value)) ? Convert.ToString(dr["City"]) : string.Empty);
+            enderecoDTO.County = ((!dr["County"].Equals(DBNull.Value)) ? Convert.ToString(dr["County"]) : string.Empty);
+            enderecoDTO.Country = ((!dr["Country"].Equals(DBNull.Value)) ? Convert.ToString(dr["Country"]) : string.Empty);
+            enderecoDTO.State = ((!dr["State"].Equals(DBNull.Value)) ? Convert.ToString(dr["State"]) : string.Empty);
+            enderecoDTO.Building = ((!dr["Building"].Equals(DBNull.Value)) ? Convert.ToString(dr["Building"]) : string.Empty);
+            enderecoDTO.AdresType = ((!dr["AdresType"].Equals(DBNull.Value)) ? Convert.ToChar(dr["AdresType"]) : char.MinValue);
+            enderecoDTO.AddrType = ((!dr["AddrType"].Equals(DBNull.Value)) ? Convert.ToString(dr["AddrType"]) : string.Empty);
+            enderecoDTO.StreetNo = ((!dr["StreetNo"].Equals(DBNull.Value)) ? Convert.ToString(dr["StreetNo"]) : string.Empty);
+            enderecoDTO.CardCode = ((!dr["CardCode"].Equals(DBNull.Value)) ? Convert.ToString(dr["CardCode"]) : string.Empty);
+
             return enderecoDTO;
         }
     }
