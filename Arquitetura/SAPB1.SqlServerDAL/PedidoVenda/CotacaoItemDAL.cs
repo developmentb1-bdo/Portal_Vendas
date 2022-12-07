@@ -146,6 +146,10 @@ namespace SAPB1.SqlServerDAL.PedidoVenda
                 }
 
             }
+            else
+            {
+                return listItens;
+            }
 
             return listItens;
         }

@@ -464,7 +464,7 @@ namespace SAPB1.SqlServerDAL.Item
                 HanaConexao conexaoHana = new HanaConexao();
                 if (itemDTO.Pecas > 0 && itemDTO.Comprimento > 0)
                 {
-                    string QtdMetros = $@"SELECT CONVERT(float,{itemDTO.Pecas.ToString()}) * CONVERT (float,{itemDTO.Comprimento.ToString()})/1000";
+                    string QtdMetros = $@"SELECT CAST({itemDTO.Pecas.ToString()} AS FLOAT) * CAST({itemDTO.Comprimento.ToString()} AS FLOAT)/1000 FROM DUMMY";
 
                     try
                     {
@@ -500,11 +500,11 @@ namespace SAPB1.SqlServerDAL.Item
 
                 if (itemDTO.QtdMetro > 0 && !string.IsNullOrEmpty(itemDTO.Lote) && !string.IsNullOrEmpty(itemDTO.ItemCode))
                 {
-                    string Peso = $@"SELECT DISTINCT MAX(ISNULL(CAST(REPLACE(T0.""SuppSerial"", ',', '.') AS DECIMAL(19,9)), 1) * CONVERT(float,{itemDTO.QtdMetro}))
-                                 FROM OIBT T0 
-                                 WHERE 
-                                 T0.""ItemCode"" = '{itemDTO.ItemCode}'
-                                 AND T0.""IntrSerial"" = '{itemDTO.Lote}'";
+                    string Peso = $@"SELECT DISTINCT IFNULL(MAX(IFNULL(CAST(REPLACE(T0.""SuppSerial"", ',', '.') AS DECIMAL(19,9)), 1) * CAST(REPLACE('0,001', ',', '.') AS FLOAT)), 0)
+                                 FROM OIBT T0
+                                 WHERE
+                                 T0.""ItemCode"" = 'CT00086'
+                                 AND T0.""IntrSerial"" = '1'";
 
                     try
                     {
