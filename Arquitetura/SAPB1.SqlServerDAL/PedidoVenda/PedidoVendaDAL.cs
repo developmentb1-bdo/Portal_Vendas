@@ -599,7 +599,7 @@ namespace SAPB1.SqlServerDAL.PedidoVenda
         public double RetornarValorDespesaFrete(long docNum)
         {
             string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
-            string query = $@"SELECT COALESCE(""LineTotal"", 0) FROM RDR3 WHERE ""DocEntry"" = '{docNum}' AND ""ExpnsCode"" = 1";
+            string query = $@"SELECT COALESCE(""LineTotal"", '0') FROM RDR3 WHERE ""DocEntry"" = '{docNum}' AND ""ExpnsCode"" = 1";
             if (tipoBD == "Hana")
             {
                 HanaConexao conexaoHana = new HanaConexao();
