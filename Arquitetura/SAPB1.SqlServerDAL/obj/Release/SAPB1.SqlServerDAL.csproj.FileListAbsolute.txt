@@ -7,3 +7,18 @@ C:\Portal Dev\SAPB1\Arquitetura\SAPB1.SqlServerDAL\bin\Release\SAPB1.IDAL.pdb
 C:\Portal Dev\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Release\SAPB1.SqlServerDAL.csprojResolveAssemblyReference.cache
 C:\Portal Dev\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Release\SAPB1.SqlServerDAL.dll
 C:\Portal Dev\SAPB1\Arquitetura\SAPB1.SqlServerDAL\obj\Release\SAPB1.SqlServerDAL.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\bin\Release\SAPB1.SqlServerDAL.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\bin\Release\SAPB1.SqlServerDAL.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\bin\Release\Sap.Data.Hana.v4.5.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\bin\Release\SAPB1.DTO.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\bin\Release\SAPB1.IDAL.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\bin\Release\SAPB1.DTO.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\bin\Release\SAPB1.IDAL.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\bin\Release\Sap.Data.Hana.v4.5.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\bin\Release\Sap.Data.Hana.v4.5.xml
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\bin\Release\Sap.Data.Hana.v4.5.dll.config
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\obj\Release\SAPB1.SqlServerDAL.csproj.AssemblyReference.cache
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\obj\Release\SAPB1.SqlServerDAL.csproj.CoreCompileInputs.cache
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\obj\Release\SAPB1.SqlServerDAL.csproj.CopyComplete
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\obj\Release\SAPB1.SqlServerDAL.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\obj\Release\SAPB1.SqlServerDAL.pdb

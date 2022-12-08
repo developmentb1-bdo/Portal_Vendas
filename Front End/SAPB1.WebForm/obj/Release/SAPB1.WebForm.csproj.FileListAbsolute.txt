@@ -30,3 +30,28 @@ C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\bin\en\CrystalDecisions.Windows.Form
 C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\obj\Release\SAPB1.WebForm.csprojResolveAssemblyReference.cache
 C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\obj\Release\SAPB1.WebForm.dll
 C:\Portal Dev\SAPB1\Front End\SAPB1.WebForm\obj\Release\SAPB1.WebForm.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\Css\StyleUiAutoComplete.css
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\SAPB1.WebForm.dll.config
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\SAPB1.WebForm.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\SAPB1.WebForm.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\SAPB1.BLL.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\SAPB1.DALFactory.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\SAPB1.DTO.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\SAPB1.IDAL.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\SAPB1.SqlServerDAL.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\Sap.Data.Hana.v4.5.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\stdole.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\SAPB1.BLL.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\SAPB1.BLL.dll.config
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\SAPB1.DALFactory.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\SAPB1.DTO.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\SAPB1.IDAL.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\SAPB1.SqlServerDAL.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\Sap.Data.Hana.v4.5.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\Sap.Data.Hana.v4.5.xml
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\Sap.Data.Hana.v4.5.dll.config
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\obj\Release\SAPB1.WebForm.csproj.AssemblyReference.cache
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\obj\Release\SAPB1.WebForm.csproj.CoreCompileInputs.cache
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\obj\Release\SAPB1.WebForm.csproj.CopyComplete
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\obj\Release\SAPB1.WebForm.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\obj\Release\SAPB1.WebForm.pdb

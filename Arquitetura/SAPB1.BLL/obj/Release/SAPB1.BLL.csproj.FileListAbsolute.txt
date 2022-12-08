@@ -10,3 +10,17 @@ C:\Portal Dev\SAPB1\Arquitetura\SAPB1.BLL\bin\Release\SAPB1.IDAL.pdb
 C:\Portal Dev\SAPB1\Arquitetura\SAPB1.BLL\obj\Release\SAPB1.BLL.csprojResolveAssemblyReference.cache
 C:\Portal Dev\SAPB1\Arquitetura\SAPB1.BLL\obj\Release\SAPB1.BLL.dll
 C:\Portal Dev\SAPB1\Arquitetura\SAPB1.BLL\obj\Release\SAPB1.BLL.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.BLL\obj\Release\SAPB1.BLL.csproj.AssemblyReference.cache
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.BLL\obj\Release\SAPB1.BLL.csproj.CoreCompileInputs.cache
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.BLL\obj\Release\SAPB1.BLL.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.BLL\obj\Release\SAPB1.BLL.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.BLL\bin\Release\SAPB1.BLL.dll.config
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.BLL\bin\Release\SAPB1.BLL.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.BLL\bin\Release\SAPB1.BLL.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.BLL\bin\Release\SAPB1.DALFactory.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.BLL\bin\Release\SAPB1.DTO.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.BLL\bin\Release\SAPB1.IDAL.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.BLL\bin\Release\SAPB1.DALFactory.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.BLL\bin\Release\SAPB1.DTO.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.BLL\bin\Release\SAPB1.IDAL.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.BLL\obj\Release\SAPB1.BLL.csproj.CopyComplete
