@@ -17,7 +17,7 @@ namespace SAPB1.SqlServerDAL.PedidoVenda
             string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
             if (tipoBD == "Hana")
             {
-                string query = $@"SELECT ""DocEntry"", ""AddrTypeS"", ""ZipCodeS"", ""StreetS"", ""StreetNoS"", ""BuildingS"", ""BlockS"", ""CityS"", ""StateS"", ""CountyS"", ""CountryS"", ""Address2S"", ""Address3S"", ""GlbLocNumS"", ""AddrTypeB"", ""ZipCodeB"", ""StreetB"", ""StreetNoB"", ""BuildingB"", ""BlockB"", ""CityB"", ""StateB"", ""CountyB"", ""CountryB"", ""Address2B"", ""Address3B"", ""GlbLocNumB"", ""State"", ""County"", ""Incoterms"", ""Vehicle"", ""VidState"", ""NfRef"", ""Carrier"", ""QoP"", ""PackDesc"", ""Brand"", ""NoSu"" FROM RDR12 WHERE ""DocEntry"" = '{pedidoVendaDTO.DocNum}'";
+                string query = $@"SELECT ""DocEntry"", ""AddrTypeS"", ""ZipCodeS"", ""StreetS"", ""StreetNoS"", ""BuildingS"", ""BlockS"", ""CityS"", ""StateS"", ""CountyS"", ""CountryS"", ""Address2S"", ""Address3S"", ""GlbLocNumS"", ""AddrTypeB"", ""ZipCodeB"", ""StreetB"", ""StreetNoB"", ""BuildingB"", ""BlockB"", ""CityB"", ""StateB"", ""CountyB"", ""CountryB"", ""Address2B"", ""Address3B"", ""GlbLocNumB"", ""State"", ""County"", ""Incoterms"", ""Vehicle"", ""VidState"", ""NfRef"", ""Carrier"", ""QoP"", ""PackDesc"", ""Brand"", ""NoSU"" FROM RDR12 WHERE ""DocEntry"" = '{pedidoVendaDTO.DocEntry}'";
                 HanaConexao conexaoHana = new HanaConexao();
                 try
                 {

@@ -31,12 +31,12 @@ namespace SAPB1.SqlServerDAL.PedidoVenda
 
                 if (pedidoVendaDTO != null && string.IsNullOrEmpty(pedidoVendaDTO.OwnerCode))
                 {
-                    if (pedidoVendaDTO.DocNum != 0 || pedidoVendaDTO.Vendedor != null)
+                    if (pedidoVendaDTO.DocEntry != 0 || pedidoVendaDTO.Vendedor != null)
                         query += "WHERE ";
 
-                    if (pedidoVendaDTO.DocNum != 0)
+                    if (pedidoVendaDTO.DocEntry != 0)
                     {
-                        query += $@"p.""DocNum"" = '{pedidoVendaDTO.DocNum}' ";
+                        query += $@"p.""DocEntry"" = '{pedidoVendaDTO.DocEntry}' ";
 
 
                         if (pedidoVendaDTO.Vendedor != null)

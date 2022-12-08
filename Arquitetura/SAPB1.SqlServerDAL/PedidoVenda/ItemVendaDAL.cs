@@ -20,7 +20,7 @@ namespace SAPB1.SqlServerDAL.PedidoVenda
             if (tipoBD == "Hana")
             {
                 HanaConexao conexaoHana = new HanaConexao();
-                query += $@"WHERE t0.""DocEntry"" = '{itemVendaDTO.DocEntry}' ORDER BY ""LineNum"" ASC";
+                query += $@"WHERE t0.""DocEntry"" = '{itemVendaDTO.DocEntry}' ORDER BY t0.""LineNum"" ASC";
 
                 try
                 {

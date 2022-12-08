@@ -116,7 +116,7 @@
                                 <ul class="treeview-menu">
                                     <li><a href="<%= Page.ResolveUrl("~/CotacaoVenda.aspx") %>"><i class="fa fa-circle-o"></i> Cotação de Venda</a></li>
                                     <li><a href="<%= Page.ResolveUrl("~/PedidoVenda.aspx") %>"><i class="fa fa-circle-o"></i> Pedido de Venda</a></li>
-                                    <li><a href="<%= Page.ResolveUrl("~/Estoque.aspx") %>"><i class="fa fa-circle-o"></i> Estoque</a></li>
+                                    <!--<li><a href="<%= Page.ResolveUrl("~/Estoque.aspx") %>"><i class="fa fa-circle-o"></i> Estoque</a></li>-->
                                 </ul>
                             </li>
                             <li class="treeview">

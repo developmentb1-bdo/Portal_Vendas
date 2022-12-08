@@ -308,7 +308,7 @@ namespace SAPB1.WebForm
         private void CarregarDados()
         {
             PedidoVendaDTO pedidoVendaDTO = new PedidoVendaDTO();
-            pedidoVendaDTO.DocNum = Convert.ToInt32(hfNumeroPedido.Value);
+            pedidoVendaDTO.DocEntry = Convert.ToInt32(hfNumeroPedido.Value);
 
             PedidoVendaBLL pedidoVendaBLL = new PedidoVendaBLL();
             pedidoVendaDTO = pedidoVendaBLL.Listar(pedidoVendaDTO)[0];

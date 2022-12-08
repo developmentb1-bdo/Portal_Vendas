@@ -3,7 +3,7 @@
     "",
     "\\Arquitetura",
     "\\Arquitetura\\SAPB1.BLL",
-    "\\Arquitetura\\SAPB1.BLL\\ParceiroNegocio",
+    "\\Arquitetura\\SAPB1.BLL\\PedidoVenda",
     "\\Arquitetura\\SAPB1.SqlServerDAL",
     "\\Arquitetura\\SAPB1.SqlServerDAL\\Item",
     "\\Arquitetura\\SAPB1.SqlServerDAL\\PedidoVenda",
@@ -11,6 +11,6 @@
     "\\Front End",
     "\\Front End\\SAPB1.WebForm"
   ],
-  "SelectedNode": "\\Front End\\SAPB1.WebForm\\ParceiroNegocio.aspx.cs",
+  "SelectedNode": "\\Arquitetura\\SAPB1.BLL\\PedidoVenda\\PedidoVendaXml.cs",
   "PreviewInSolutionExplorer": false
 }
