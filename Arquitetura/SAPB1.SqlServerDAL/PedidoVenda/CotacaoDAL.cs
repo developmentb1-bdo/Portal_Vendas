@@ -39,15 +39,7 @@ namespace SAPB1.SqlServerDAL.PedidoVenda
 
                     conexaoHana.Connection();
 
-                    DataTable dt = conexaoHana.ExecuteDataTable(query);
-
-                    CotacaoDTO cotacaoDTO = new CotacaoDTO();
-                    foreach (DataRow dr in dt.Rows)
-                    {
-                        cotacaoDTO = ObjetoCotacaoHanaDTO(dr);
-                    }
-
-                    listCotacaoDTO.Add(cotacaoDTO);
+                    return PopularDadosHana(query, conexaoHana);
 
                 }
                 catch (Exception erro)
@@ -74,14 +66,7 @@ namespace SAPB1.SqlServerDAL.PedidoVenda
                     SqlCommand comando = new SqlCommand(tSQL.ToString(), conexao.Conexao);
                     SqlDataReader dataReader = comando.ExecuteReader();
 
-                    while (dataReader.Read())
-                    {
-                        CotacaoDTO cotacaoDTO = new CotacaoDTO();
-                        cotacaoDTO = ObjetoCotacaoDTO(dataReader);
-
-                        listCotacaoDTO.Add(cotacaoDTO);
-                    }
-                    dataReader.Close();
+                    return PopularDados(dataReader);
                 }
                 catch (Exception erro)
                 {
@@ -95,9 +80,8 @@ namespace SAPB1.SqlServerDAL.PedidoVenda
             return listCotacaoDTO;
         }
 
-        public CotacaoDTO Selecionar(int docEntry)
+        public IList<CotacaoDTO> Selecionar(int docEntry)
         {
-            CotacaoDTO cotacaoDTO = new CotacaoDTO();
             string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
             if (tipoBD == "Hana")
             {
@@ -108,15 +92,7 @@ namespace SAPB1.SqlServerDAL.PedidoVenda
                 try
                 {
                     conexaoHana.Connection();
-                    DataTable dataReader = conexaoHana.ExecuteDataTable(query);
-                    if (dataReader.Rows.Count > 0)
-                    {
-
-                        foreach (DataRow dr in dataReader.Rows)
-                        {
-                            cotacaoDTO = ObjetoCotacaoHanaDTO(dr);
-                        }
-                    }
+                    return PopularDadosHana(query, conexaoHana);
                 }
                 catch (Exception err)
                 {
@@ -144,12 +120,8 @@ namespace SAPB1.SqlServerDAL.PedidoVenda
                     comando.Parameters.Add(new SqlParameter("@DocEntry", docEntry));
                     SqlDataReader dataReader = comando.ExecuteReader();
 
-                    if (dataReader.HasRows)
-                    {
-                        dataReader.Read();
-                        cotacaoDTO = ObjetoCotacaoDTO(dataReader);
-                    }
-                    dataReader.Close();
+                    return PopularDados(dataReader);
+                    
                 }
                 catch (Exception erro)
                 {
@@ -160,64 +132,95 @@ namespace SAPB1.SqlServerDAL.PedidoVenda
                     conexao.Desconectar();
                 }
             }
-
-
-            return cotacaoDTO;
         }
 
-        private CotacaoDTO ObjetoCotacaoDTO(SqlDataReader dataReader)
+        private IList<CotacaoDTO> PopularDados(SqlDataReader dataReader)
         {
-            CotacaoDTO cotacaoDTO = new CotacaoDTO();
+
+            IList<CotacaoDTO> listCotacao = new List<CotacaoDTO>();
 
             if (dataReader.HasRows)
             {
-                cotacaoDTO.DocEntry = Convert.ToInt32(dataReader["DocEntry"]);
-                cotacaoDTO.U_CNPJ = ((!DBNull.Value.Equals(dataReader["U_CNPJ"])) ? Convert.ToString(dataReader["U_CNPJ"]) : "");
-                cotacaoDTO.DocNum = Convert.ToInt32(dataReader["DocNum"]);
-                cotacaoDTO.DocType = ((!DBNull.Value.Equals(dataReader["DocType"])) ? Convert.ToChar(dataReader["DocType"]) : char.MinValue);
-                cotacaoDTO.CANCELED = ((!DBNull.Value.Equals(dataReader["CANCELED"])) ? Convert.ToChar(dataReader["CANCELED"]) : char.MinValue);
-                cotacaoDTO.Handwrtten = ((!DBNull.Value.Equals(dataReader["Handwrtten"])) ? Convert.ToChar(dataReader["Handwrtten"]) : char.MinValue);
-                cotacaoDTO.Printed = ((!DBNull.Value.Equals(dataReader["Printed"])) ? Convert.ToChar(dataReader["Printed"]) : char.MinValue);
-                cotacaoDTO.DocStatus = ((!DBNull.Value.Equals(dataReader["DocStatus"])) ? Convert.ToChar(dataReader["DocStatus"]) : char.MinValue);
-                cotacaoDTO.InvntSttus = ((!DBNull.Value.Equals(dataReader["InvntSttus"])) ? Convert.ToChar(dataReader["InvntSttus"]) : char.MinValue);
-                cotacaoDTO.ObjType = ((!DBNull.Value.Equals(dataReader["ObjType"])) ? Convert.ToString(dataReader["ObjType"]) : "");
-                cotacaoDTO.DocDate = ((!DBNull.Value.Equals(dataReader["DocDate"])) ? Convert.ToDateTime(dataReader["DocDate"]) : DateTime.MinValue);
-                cotacaoDTO.DocDueDate = ((!DBNull.Value.Equals(dataReader["DocDueDate"])) ? Convert.ToDateTime(dataReader["DocDueDate"]) : DateTime.MinValue);
-                cotacaoDTO.TaxDate = ((!DBNull.Value.Equals(dataReader["TaxDate"])) ? Convert.ToDateTime(dataReader["TaxDate"]) : DateTime.MinValue);
-                cotacaoDTO.CardCode = ((!DBNull.Value.Equals(dataReader["CardCode"])) ? Convert.ToString(dataReader["CardCode"]) : "");
-                cotacaoDTO.CardName = ((!DBNull.Value.Equals(dataReader["CardName"])) ? Convert.ToString(dataReader["CardName"]) : "");
-                cotacaoDTO.DocTotal = ((!DBNull.Value.Equals(dataReader["DocTotal"])) ? Convert.ToDecimal(dataReader["DocTotal"]) : 0m);
-                cotacaoDTO.GroupNum = ((!DBNull.Value.Equals(dataReader["GroupNum"])) ? Convert.ToInt16(dataReader["GroupNum"]) : (short)0);
-                cotacaoDTO.Comments = ((!DBNull.Value.Equals(dataReader["Comments"])) ? Convert.ToString(dataReader["Comments"]) : "");
+
+                while (dataReader.Read())
+                {
+                    CotacaoDTO cotacaoDTO = new CotacaoDTO();
+                    cotacaoDTO.DocEntry = Convert.ToInt32(dataReader["DocEntry"]);
+                    cotacaoDTO.U_CNPJ = ((!DBNull.Value.Equals(dataReader["U_CNPJ"])) ? Convert.ToString(dataReader["U_CNPJ"]) : "");
+                    cotacaoDTO.DocNum = Convert.ToInt32(dataReader["DocNum"]);
+                    cotacaoDTO.DocType = ((!DBNull.Value.Equals(dataReader["DocType"])) ? Convert.ToChar(dataReader["DocType"]) : char.MinValue);
+                    cotacaoDTO.CANCELED = ((!DBNull.Value.Equals(dataReader["CANCELED"])) ? Convert.ToChar(dataReader["CANCELED"]) : char.MinValue);
+                    cotacaoDTO.Handwrtten = ((!DBNull.Value.Equals(dataReader["Handwrtten"])) ? Convert.ToChar(dataReader["Handwrtten"]) : char.MinValue);
+                    cotacaoDTO.Printed = ((!DBNull.Value.Equals(dataReader["Printed"])) ? Convert.ToChar(dataReader["Printed"]) : char.MinValue);
+                    cotacaoDTO.DocStatus = ((!DBNull.Value.Equals(dataReader["DocStatus"])) ? Convert.ToChar(dataReader["DocStatus"]) : char.MinValue);
+                    cotacaoDTO.InvntSttus = ((!DBNull.Value.Equals(dataReader["InvntSttus"])) ? Convert.ToChar(dataReader["InvntSttus"]) : char.MinValue);
+                    cotacaoDTO.ObjType = ((!DBNull.Value.Equals(dataReader["ObjType"])) ? Convert.ToString(dataReader["ObjType"]) : "");
+                    cotacaoDTO.DocDate = ((!DBNull.Value.Equals(dataReader["DocDate"])) ? Convert.ToDateTime(dataReader["DocDate"]) : DateTime.MinValue);
+                    cotacaoDTO.DocDueDate = ((!DBNull.Value.Equals(dataReader["DocDueDate"])) ? Convert.ToDateTime(dataReader["DocDueDate"]) : DateTime.MinValue);
+                    cotacaoDTO.TaxDate = ((!DBNull.Value.Equals(dataReader["TaxDate"])) ? Convert.ToDateTime(dataReader["TaxDate"]) : DateTime.MinValue);
+                    cotacaoDTO.CardCode = ((!DBNull.Value.Equals(dataReader["CardCode"])) ? Convert.ToString(dataReader["CardCode"]) : "");
+                    cotacaoDTO.CardName = ((!DBNull.Value.Equals(dataReader["CardName"])) ? Convert.ToString(dataReader["CardName"]) : "");
+                    cotacaoDTO.DocTotal = ((!DBNull.Value.Equals(dataReader["DocTotal"])) ? Convert.ToDecimal(dataReader["DocTotal"]) : 0m);
+                    cotacaoDTO.GroupNum = ((!DBNull.Value.Equals(dataReader["GroupNum"])) ? Convert.ToInt16(dataReader["GroupNum"]) : (short)0);
+                    cotacaoDTO.Comments = ((!DBNull.Value.Equals(dataReader["Comments"])) ? Convert.ToString(dataReader["Comments"]) : "");
+
+                    listCotacao.Add(cotacaoDTO);
+                }
+
+                dataReader.Close();
+                dataReader.Dispose();
+
+    
+                return listCotacao;
+
+            } else
+            {
+                return new List<CotacaoDTO>();
             }
-            return cotacaoDTO;
         }
 
-        private CotacaoDTO ObjetoCotacaoHanaDTO(DataRow dataReader)
+
+
+        private IList<CotacaoDTO> PopularDadosHana(string query, HanaConexao conexaoHana)
         {
-            CotacaoDTO cotacaoDTO = new CotacaoDTO();
+            DataTable dt = conexaoHana.ExecuteDataTable(query);
 
+            if (dt.Rows.Count > 0)
+            {
+                IList<CotacaoDTO> listCotacao = new List<CotacaoDTO>();
 
-            cotacaoDTO.DocEntry = Convert.ToInt32(dataReader["DocEntry"]);
-            cotacaoDTO.U_CNPJ = ((!DBNull.Value.Equals(dataReader["U_CNPJ"])) ? Convert.ToString(dataReader["U_CNPJ"]) : "");
-            cotacaoDTO.DocNum = Convert.ToInt32(dataReader["DocNum"]);
-            cotacaoDTO.DocType = ((!DBNull.Value.Equals(dataReader["DocType"])) ? Convert.ToChar(dataReader["DocType"]) : char.MinValue);
-            cotacaoDTO.CANCELED = ((!DBNull.Value.Equals(dataReader["CANCELED"])) ? Convert.ToChar(dataReader["CANCELED"]) : char.MinValue);
-            cotacaoDTO.Handwrtten = ((!DBNull.Value.Equals(dataReader["Handwrtten"])) ? Convert.ToChar(dataReader["Handwrtten"]) : char.MinValue);
-            cotacaoDTO.Printed = ((!DBNull.Value.Equals(dataReader["Printed"])) ? Convert.ToChar(dataReader["Printed"]) : char.MinValue);
-            cotacaoDTO.DocStatus = ((!DBNull.Value.Equals(dataReader["DocStatus"])) ? Convert.ToChar(dataReader["DocStatus"]) : char.MinValue);
-            cotacaoDTO.InvntSttus = ((!DBNull.Value.Equals(dataReader["InvntSttus"])) ? Convert.ToChar(dataReader["InvntSttus"]) : char.MinValue);
-            cotacaoDTO.ObjType = ((!DBNull.Value.Equals(dataReader["ObjType"])) ? Convert.ToString(dataReader["ObjType"]) : "");
-            cotacaoDTO.DocDate = ((!DBNull.Value.Equals(dataReader["DocDate"])) ? Convert.ToDateTime(dataReader["DocDate"]) : DateTime.MinValue);
-            cotacaoDTO.DocDueDate = ((!DBNull.Value.Equals(dataReader["DocDueDate"])) ? Convert.ToDateTime(dataReader["DocDueDate"]) : DateTime.MinValue);
-            cotacaoDTO.TaxDate = ((!DBNull.Value.Equals(dataReader["TaxDate"])) ? Convert.ToDateTime(dataReader["TaxDate"]) : DateTime.MinValue);
-            cotacaoDTO.CardCode = ((!DBNull.Value.Equals(dataReader["CardCode"])) ? Convert.ToString(dataReader["CardCode"]) : "");
-            cotacaoDTO.CardName = ((!DBNull.Value.Equals(dataReader["CardName"])) ? Convert.ToString(dataReader["CardName"]) : "");
-            cotacaoDTO.DocTotal = ((!DBNull.Value.Equals(dataReader["DocTotal"])) ? Convert.ToDecimal(dataReader["DocTotal"]) : 0m);
-            cotacaoDTO.GroupNum = ((!DBNull.Value.Equals(dataReader["GroupNum"])) ? Convert.ToInt16(dataReader["GroupNum"]) : (short)0);
-            cotacaoDTO.Comments = ((!DBNull.Value.Equals(dataReader["Comments"])) ? Convert.ToString(dataReader["Comments"]) : "");
+                foreach (DataRow dataReader in dt.Rows)
+                {
+                    CotacaoDTO cotacaoDTO = new CotacaoDTO();
 
-            return cotacaoDTO;
+                    cotacaoDTO.DocEntry = Convert.ToInt32(dataReader["DocEntry"]);
+                    cotacaoDTO.U_CNPJ = ((!DBNull.Value.Equals(dataReader["U_CNPJ"])) ? Convert.ToString(dataReader["U_CNPJ"]) : "");
+                    cotacaoDTO.DocNum = Convert.ToInt32(dataReader["DocNum"]);
+                    cotacaoDTO.DocType = ((!DBNull.Value.Equals(dataReader["DocType"])) ? Convert.ToChar(dataReader["DocType"]) : char.MinValue);
+                    cotacaoDTO.CANCELED = ((!DBNull.Value.Equals(dataReader["CANCELED"])) ? Convert.ToChar(dataReader["CANCELED"]) : char.MinValue);
+                    cotacaoDTO.Handwrtten = ((!DBNull.Value.Equals(dataReader["Handwrtten"])) ? Convert.ToChar(dataReader["Handwrtten"]) : char.MinValue);
+                    cotacaoDTO.Printed = ((!DBNull.Value.Equals(dataReader["Printed"])) ? Convert.ToChar(dataReader["Printed"]) : char.MinValue);
+                    cotacaoDTO.DocStatus = ((!DBNull.Value.Equals(dataReader["DocStatus"])) ? Convert.ToChar(dataReader["DocStatus"]) : char.MinValue);
+                    cotacaoDTO.InvntSttus = ((!DBNull.Value.Equals(dataReader["InvntSttus"])) ? Convert.ToChar(dataReader["InvntSttus"]) : char.MinValue);
+                    cotacaoDTO.ObjType = ((!DBNull.Value.Equals(dataReader["ObjType"])) ? Convert.ToString(dataReader["ObjType"]) : "");
+                    cotacaoDTO.DocDate = ((!DBNull.Value.Equals(dataReader["DocDate"])) ? Convert.ToDateTime(dataReader["DocDate"]) : DateTime.MinValue);
+                    cotacaoDTO.DocDueDate = ((!DBNull.Value.Equals(dataReader["DocDueDate"])) ? Convert.ToDateTime(dataReader["DocDueDate"]) : DateTime.MinValue);
+                    cotacaoDTO.TaxDate = ((!DBNull.Value.Equals(dataReader["TaxDate"])) ? Convert.ToDateTime(dataReader["TaxDate"]) : DateTime.MinValue);
+                    cotacaoDTO.CardCode = ((!DBNull.Value.Equals(dataReader["CardCode"])) ? Convert.ToString(dataReader["CardCode"]) : "");
+                    cotacaoDTO.CardName = ((!DBNull.Value.Equals(dataReader["CardName"])) ? Convert.ToString(dataReader["CardName"]) : "");
+                    cotacaoDTO.DocTotal = ((!DBNull.Value.Equals(dataReader["DocTotal"])) ? Convert.ToDecimal(dataReader["DocTotal"]) : 0m);
+                    cotacaoDTO.GroupNum = ((!DBNull.Value.Equals(dataReader["GroupNum"])) ? Convert.ToInt16(dataReader["GroupNum"]) : (short)0);
+                    cotacaoDTO.Comments = ((!DBNull.Value.Equals(dataReader["Comments"])) ? Convert.ToString(dataReader["Comments"]) : "");
+
+                    listCotacao.Add(cotacaoDTO);
+                }
+
+                return listCotacao;
+            }
+            else
+            {
+                return new List<CotacaoDTO>();
+            }
         }
     }
 }

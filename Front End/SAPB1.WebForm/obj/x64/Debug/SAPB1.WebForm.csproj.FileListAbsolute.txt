@@ -65,9 +65,6 @@ D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\SAPB1.DALF
 D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\SAPB1.DTO.pdb
 D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\SAPB1.IDAL.pdb
 D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\SAPB1.SqlServerDAL.pdb
-D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\Sap.Data.Hana.v4.5.pdb
-D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\Sap.Data.Hana.v4.5.xml
-D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\Sap.Data.Hana.v4.5.dll.config
 D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\obj\x64\Debug\SAPB1.WebForm.csproj.AssemblyReference.cache
 D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\obj\x64\Debug\SAPB1.WebForm.csproj.CoreCompileInputs.cache
 D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\obj\x64\Debug\SAPB1.WebForm.csproj.CopyComplete

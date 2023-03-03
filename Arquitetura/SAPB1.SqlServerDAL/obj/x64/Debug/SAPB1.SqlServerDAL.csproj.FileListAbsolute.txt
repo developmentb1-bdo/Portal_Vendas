@@ -35,9 +35,6 @@ D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\bin\x64
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\bin\x64\Debug\SAPB1.IDAL.dll
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\bin\x64\Debug\SAPB1.DTO.pdb
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\bin\x64\Debug\SAPB1.IDAL.pdb
-D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\bin\x64\Debug\Sap.Data.Hana.v4.5.pdb
-D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\bin\x64\Debug\Sap.Data.Hana.v4.5.xml
-D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\bin\x64\Debug\Sap.Data.Hana.v4.5.dll.config
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\obj\x64\Debug\SAPB1.SqlServerDAL.csproj.AssemblyReference.cache
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\obj\x64\Debug\SAPB1.SqlServerDAL.csproj.CoreCompileInputs.cache
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.SqlServerDAL\obj\x64\Debug\SAPB1.SqlServerDAL.csproj.CopyComplete

@@ -3,12 +3,10 @@
     "",
     "\\Arquitetura",
     "\\Arquitetura\\SAPB1.BLL",
-    "\\Arquitetura\\SAPB1.SqlServerDAL",
-    "\\Arquitetura\\SAPB1.SqlServerDAL\\Item",
-    "\\Arquitetura\\SAPB1.SqlServerDAL\\PedidoVenda",
-    "\\Arquitetura\\SAPB1.SqlServerDAL\\Servico",
+    "\\Arquitetura\\SAPB1.BLL\\PedidoVenda",
     "\\Front End",
     "\\Front End\\SAPB1.WebForm"
   ],
+  "SelectedNode": "\\Front End\\SAPB1.WebForm\\CotacaoVenda_Action.aspx",
   "PreviewInSolutionExplorer": false
 }

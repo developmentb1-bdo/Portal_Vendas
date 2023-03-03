@@ -20,7 +20,6 @@ namespace SAPB1.WebForm
         void Carregar()
         {
             CotacaoBLL cotacaoBLL = new CotacaoBLL();
-
             gridCotacao.DataSource = cotacaoBLL.Listar();
             gridCotacao.DataBind();
         }
