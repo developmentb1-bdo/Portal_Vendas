@@ -13,11 +13,11 @@ namespace SAPB1.WebForm
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-                Carregar();
+            //if (!IsPostBack)
+            //    Carregar(sender, e);
         }
 
-        void Carregar()
+        protected void Carregar(object sender, EventArgs e)
         {
             CotacaoBLL cotacaoBLL = new CotacaoBLL();
             gridCotacao.DataSource = cotacaoBLL.Listar();
@@ -29,7 +29,7 @@ namespace SAPB1.WebForm
             
 
             if (true)
-                Carregar();
+                Carregar(sender, e);
 
             gridCotacao.PageIndex = e.NewPageIndex;
             gridCotacao.DataBind();
