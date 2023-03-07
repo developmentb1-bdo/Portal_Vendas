@@ -55,8 +55,8 @@ D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.WebForms.Abt\bin\SAP
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.WebForms.Abt\bin\SAPB1.DTO.pdb
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.WebForms.Abt\bin\SAPB1.IDAL.pdb
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.WebForms.Abt\bin\SAPB1.SqlServerDAL.pdb
-D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.WebForms.Abt\obj\x64\Debug\SAPB1.WebForms.Abt.csproj.AssemblyReference.cache
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.WebForms.Abt\obj\x64\Debug\SAPB1.WebForms.Abt.csproj.CoreCompileInputs.cache
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.WebForms.Abt\obj\x64\Debug\SAPB1.WebForms.Abt.csproj.CopyComplete
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.WebForms.Abt\obj\x64\Debug\SAPB1.WebForms.Abt.dll
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.WebForms.Abt\obj\x64\Debug\SAPB1.WebForms.Abt.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.WebForms.Abt\obj\x64\Debug\SAPB1.WebForms.Abt.csproj.AssemblyReference.cache

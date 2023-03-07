@@ -90,12 +90,13 @@
                 runat="server"
                 ID="btnPesquisar"
                 Text="Pesquisar"
-                CssClass="btn btn-warning" />
+                CssClass="btn btn-warning"
+                OnClick="Carregar" />
             <asp:Button
                 runat="server"
                 ID="btnListarTudo"
                 Text="Listar Tudo"
-                CssClass="btn btn-warning" />
+                CssClass="btn btn-warning"
                 OnClick="Carregar" />
         </div>
     </div>

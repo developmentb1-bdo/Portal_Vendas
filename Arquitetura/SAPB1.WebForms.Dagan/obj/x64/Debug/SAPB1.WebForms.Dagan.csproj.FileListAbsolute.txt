@@ -140,6 +140,7 @@ D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.WebForms.Dagan\bin\S
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.WebForms.Dagan\bin\SAPB1.IDAL.pdb
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.WebForms.Dagan\bin\SAPB1.SqlServerDAL.pdb
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.WebForms.Dagan\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.WebForms.Dagan\obj\x64\Debug\SAPB1.WebForms.Dagan.csproj.AssemblyReference.cache
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.WebForms.Dagan\obj\x64\Debug\SAPB1.WebForms.Dagan.csproj.CoreCompileInputs.cache
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.WebForms.Dagan\obj\x64\Debug\SAPB1.WebForms.Dagan.csproj.CopyComplete
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.WebForms.Dagan\obj\x64\Debug\SAPB1.WebForms.Dagan.dll

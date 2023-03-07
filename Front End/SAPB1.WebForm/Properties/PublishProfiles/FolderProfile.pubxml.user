@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>D:\Produtos\joao.avelino\portal-de-vendas\Front End\SAPB1.WebForm\bin\app.publish\</_PublishTargetUrl>
-    <History>True|2023-03-06T15:17:00.2073476Z;True|2023-02-02T17:01:35.7995891-03:00;True|2022-12-08T17:45:02.3482948-03:00;</History>
+    <History>True|2023-03-07T13:52:56.4828060Z;True|2023-03-06T13:30:29.0788345-03:00;True|2023-03-06T12:59:39.2387124-03:00;True|2023-03-06T12:50:18.4952367-03:00;True|2023-03-06T12:17:00.2073476-03:00;True|2023-02-02T17:01:35.7995891-03:00;True|2022-12-08T17:45:02.3482948-03:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="AreaCliente.aspx">
@@ -24,19 +24,19 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>06/12/2020 12:19:12</publishTime>
     </File>
     <File Include="bin/SAPB1.BLL.dll">
-      <publishTime>03/06/2023 12:16:50</publishTime>
+      <publishTime>03/07/2023 10:52:39</publishTime>
     </File>
     <File Include="bin/SAPB1.BLL.dll.config">
       <publishTime>11/14/2022 16:24:38</publishTime>
     </File>
     <File Include="bin/SAPB1.BLL.pdb">
-      <publishTime>03/06/2023 12:16:50</publishTime>
+      <publishTime>03/07/2023 10:52:39</publishTime>
     </File>
     <File Include="bin/SAPB1.DALFactory.dll">
-      <publishTime>03/06/2023 12:16:49</publishTime>
+      <publishTime>03/07/2023 10:52:38</publishTime>
     </File>
     <File Include="bin/SAPB1.DALFactory.pdb">
-      <publishTime>03/06/2023 12:16:49</publishTime>
+      <publishTime>03/07/2023 10:52:38</publishTime>
     </File>
     <File Include="bin/SAPB1.DTO.dll">
       <publishTime>03/06/2023 12:16:45</publishTime>
@@ -45,22 +45,22 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/06/2023 12:16:45</publishTime>
     </File>
     <File Include="bin/SAPB1.IDAL.dll">
-      <publishTime>03/06/2023 12:16:46</publishTime>
+      <publishTime>03/07/2023 10:52:37</publishTime>
     </File>
     <File Include="bin/SAPB1.IDAL.pdb">
-      <publishTime>03/06/2023 12:16:46</publishTime>
+      <publishTime>03/07/2023 10:52:37</publishTime>
     </File>
     <File Include="bin/SAPB1.SqlServerDAL.dll">
-      <publishTime>03/06/2023 12:16:52</publishTime>
+      <publishTime>03/07/2023 10:52:42</publishTime>
     </File>
     <File Include="bin/SAPB1.SqlServerDAL.pdb">
-      <publishTime>03/06/2023 12:16:52</publishTime>
+      <publishTime>03/07/2023 10:52:42</publishTime>
     </File>
     <File Include="bin/SAPB1.WebForm.dll">
-      <publishTime>03/06/2023 12:16:54</publishTime>
+      <publishTime>03/07/2023 10:52:43</publishTime>
     </File>
     <File Include="bin/SAPB1.WebForm.pdb">
-      <publishTime>03/06/2023 12:16:54</publishTime>
+      <publishTime>03/07/2023 10:52:43</publishTime>
     </File>
     <File Include="bin/stdole.dll">
       <publishTime>05/06/2021 15:41:24</publishTime>
@@ -357,7 +357,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/14/2022 16:24:40</publishTime>
     </File>
     <File Include="CotacaoVenda.aspx">
-      <publishTime>03/06/2023 12:16:38</publishTime>
+      <publishTime>03/06/2023 12:41:39</publishTime>
     </File>
     <File Include="CotacaoVenda_Action.aspx">
       <publishTime>11/14/2022 16:24:40</publishTime>

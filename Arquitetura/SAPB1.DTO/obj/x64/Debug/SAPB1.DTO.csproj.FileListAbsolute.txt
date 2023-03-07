@@ -6,6 +6,7 @@ D:\PortalVendas\SAPB1\Arquitetura\SAPB1.DTO\obj\x64\Debug\SAPB1.DTO.dll
 D:\PortalVendas\SAPB1\Arquitetura\SAPB1.DTO\obj\x64\Debug\SAPB1.DTO.pdb
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.DTO\bin\x64\Debug\SAPB1.DTO.dll
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.DTO\bin\x64\Debug\SAPB1.DTO.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.DTO\obj\x64\Debug\SAPB1.DTO.csproj.AssemblyReference.cache
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.DTO\obj\x64\Debug\SAPB1.DTO.csproj.CoreCompileInputs.cache
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.DTO\obj\x64\Debug\SAPB1.DTO.dll
 D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.DTO\obj\x64\Debug\SAPB1.DTO.pdb
