@@ -91,7 +91,7 @@
                 ID="btnPesquisar"
                 Text="Pesquisar"
                 CssClass="btn btn-warning"
-                OnClick="Carregar" />
+                OnClick="Selecionar" />
             <asp:Button
                 runat="server"
                 ID="btnListarTudo"
