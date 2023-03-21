@@ -7,3 +7,14 @@ C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DALFactory\bin\Release\SAPB1.DTO.pdb
 C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DALFactory\obj\Release\SAPB1.DALFactory.csprojResolveAssemblyReference.cache
 C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DALFactory\obj\Release\SAPB1.DALFactory.dll
 C:\Portal Dev\SAPB1\Arquitetura\SAPB1.DALFactory\obj\Release\SAPB1.DALFactory.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.DALFactory\bin\Release\SAPB1.DALFactory.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.DALFactory\bin\Release\SAPB1.DALFactory.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.DALFactory\bin\Release\SAPB1.IDAL.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.DALFactory\bin\Release\SAPB1.DTO.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.DALFactory\bin\Release\SAPB1.IDAL.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.DALFactory\bin\Release\SAPB1.DTO.pdb
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.DALFactory\obj\Release\SAPB1.DALFactory.csproj.AssemblyReference.cache
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.DALFactory\obj\Release\SAPB1.DALFactory.csproj.CoreCompileInputs.cache
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.DALFactory\obj\Release\SAPB1.DALFactory.csproj.CopyComplete
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.DALFactory\obj\Release\SAPB1.DALFactory.dll
+D:\Produtos\joao.avelino\portal-de-vendas\Arquitetura\SAPB1.DALFactory\obj\Release\SAPB1.DALFactory.pdb

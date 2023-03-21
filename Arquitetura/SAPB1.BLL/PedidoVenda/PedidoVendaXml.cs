@@ -68,7 +68,7 @@ namespace SAPB1.BLL.PedidoVenda
                         stb.Append("<ItemDescription>" + i.Dscription + "</ItemDescription>");
                         stb.Append("<Quantity>" + i.Quantity + "</Quantity>");
                         stb.Append("<UnitPrice>" + i.Price.ToString("n6").Replace(".", "").Replace(",", ".") + "</UnitPrice>");
-                        /*stb.Append("<DiscountPercent>" + i.DiscPrcnt.ToString("n6").Replace(".", "").Replace(",", ".") + "</DiscountPercent>");*/
+                        stb.Append("<DiscountPercent>" + i.DiscPrcnt.ToString("n6").Replace(".", "").Replace(",", ".") + "</DiscountPercent>");
                         stb.Append("<Usage>" + i.Usage + "</Usage>");
                         stb.Append("<WarehouseCode>" + new ItemBLL().Listar(new DTO.Item.ItemDTO() { SellItem = "Y" }).Where(x => x.ItemCode == i.ItemCode).ToList()[0].DfltWH + "</WarehouseCode>");
                         stb.Append("<U_Comprimento2>" + i.Comprimento.ToString("0.##").Replace(".", "").Replace(",", ".") + "</U_Comprimento2>");
@@ -83,6 +83,7 @@ namespace SAPB1.BLL.PedidoVenda
                         stb.Append("<U_SKILL_IP>" + i.ItemPedidoCompra + "</U_SKILL_IP>");
                         stb.Append("<FreeText>" + i.DescricaoAuxiliar + "</FreeText>");
                         stb.Append("<ShipDate>" + i.DataEntrega.ToString("yyyyMMdd") + "</ShipDate>");
+
                         stb.Append("</row>");
                     }
 

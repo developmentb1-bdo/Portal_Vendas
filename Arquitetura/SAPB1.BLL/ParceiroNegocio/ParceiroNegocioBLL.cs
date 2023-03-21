@@ -19,6 +19,7 @@ namespace SAPB1.BLL.ParceiroNegocio
 
         public string ErrorMessege { get; private set; }
 
+
         public bool Inserir(ParceiroNegocioDTO parceiroNegocioDTO)
         {
             try
@@ -26,15 +27,15 @@ namespace SAPB1.BLL.ParceiroNegocio
                 Message messege = new Message();
                 WsIntegraSoapClient wsIntegra = new WsIntegraSoapClient();
 
-                //string a = ConvertToXml(parceiroNegocioDTO, false);
+                string a = ConvertToXml(parceiroNegocioDTO, false);
                 messege = wsIntegra.AddBusinessPartner("1", ConvertToXml(parceiroNegocioDTO, false));
 
                 // Solução provisória, para inserir registros com referência em outras tabelas.
                 //if (!string.IsNullOrEmpty(messege.Result))
                 //{
-                    //parceiroNegocioDTO.CardCode = messege.Result;
-                    //messege = new Message();
-                    //messege = wsIntegra.AddBusinessPartner("1", ConvertToXml(parceiroNegocioDTO, true));
+                //parceiroNegocioDTO.CardCode = messege.Result;
+                //messege = new Message();
+                //messege = wsIntegra.AddBusinessPartner("1", ConvertToXml(parceiroNegocioDTO, true));
                 //}
 
                 ErrorMessege = ((messege.Error != null) ? messege.Error.ErrMsg : "");
@@ -57,7 +58,7 @@ namespace SAPB1.BLL.ParceiroNegocio
                 Message messege = new Message();
                 WsIntegraSoapClient wsIntegra = new WsIntegraSoapClient();
                 messege = wsIntegra.GetBusinessPartnerByKey("1", parceiroNegocioDTO.CardCode);
-                
+
                 //messege = wsIntegra.AddBusinessPartner("1", ConvertToXml(parceiroNegocioDTO, true));
 
                 ErrorMessege = ((messege.Error != null) ? messege.Error.ErrMsg : "");
@@ -88,12 +89,12 @@ namespace SAPB1.BLL.ParceiroNegocio
             {
                 IParceiroNegocio parceiroNegocioDAL = ParceiroNegocioFactory.ParceiroNegocioDAL();
                 listParceiroNegocioDTO = parceiroNegocioDAL.Listar();
+                return listParceiroNegocioDTO;
             }
             catch (Exception erro)
             {
                 throw new Exception(erro.Message);
             }
-            return listParceiroNegocioDTO;
         }
 
         public IList<ParceiroNegocioDTO> Listar(ParceiroNegocioDTO parceiroNegocioDTO)
@@ -126,6 +127,18 @@ namespace SAPB1.BLL.ParceiroNegocio
                 throw new Exception(erro.Message);
             }
             return parceiroNegocioDTO;
+        }
+
+        private string ReturnCardType(ParceiroNegocioDTO parceiroNegocioDTO)
+        {
+            if (parceiroNegocioDTO.CardType.ToString() != "cLid")
+            {
+                return parceiroNegocioDTO.SlpCode.ToString();
+            }
+            else
+            {
+                return "-1";
+            }
         }
 
         private string ConvertToXml(ParceiroNegocioDTO parceiroNegocioDTO, bool update)
@@ -254,8 +267,8 @@ namespace SAPB1.BLL.ParceiroNegocio
                     xml.Append("<row>");
                     xml.Append("<CardName>" + parceiroNegocioDTO.CardName + "</CardName>");
                     xml.Append("<CardType>" + parceiroNegocioDTO.CardType + "</CardType>");
-                    xml.Append("<Series>70</Series>");
-                    xml.Append("<SalesPersonCode>" + parceiroNegocioDTO.SlpCode.ToString() + "</SalesPersonCode>");
+                    xml.Append($@"<Series>{parceiroNegocioDTO.Series}</Series>");
+                    xml.Append($@"<SalesPersonCode>{ReturnCardType(parceiroNegocioDTO)}</SalesPersonCode>");
                     xml.Append("<Valid>tYES</Valid>");
                     xml.Append("</row>");
                     xml.Append("</BusinessPartners>");
@@ -441,15 +454,15 @@ namespace SAPB1.BLL.ParceiroNegocio
 
                 int contadorContato = 0;
 
-                foreach(XmlNode noContatoRow in listNodeContatos)
+                foreach (XmlNode noContatoRow in listNodeContatos)
                 {
-                    if(noContatoRow.NodeType == XmlNodeType.Element)
+                    if (noContatoRow.NodeType == XmlNodeType.Element)
                     {
-                        if(noContatoRow.Name.Equals("row"))
+                        if (noContatoRow.Name.Equals("row"))
                         {
                             XmlNodeList listNoContatoRow = noContatoRow.ChildNodes;
 
-                            foreach(XmlNode noCont in listNoContatoRow)
+                            foreach (XmlNode noCont in listNoContatoRow)
                             {
                                 if (noCont.NodeType == XmlNodeType.Element)
                                 {
@@ -476,7 +489,7 @@ namespace SAPB1.BLL.ParceiroNegocio
                     }
                 }
             }
-            
+
             return xmlDocument.InnerXml;
         }
 
@@ -512,14 +525,14 @@ namespace SAPB1.BLL.ParceiroNegocio
 
                 var resultado = new ParceiroNegocioDTO();
 
-                if(valor.Length == 14)
+                if (valor.Length == 14)
                     resultado = parceiroNegocioDAL.RetornarParceiroNegocioPorCnpjESenha(usuario, senha);
-                else if(valor.Length == 11)
+                else if (valor.Length == 11)
                     resultado = parceiroNegocioDAL.RetornarParceiroNegocioPorCpfESenha(usuario, senha);
                 else
                     retorno += "<li>Erro: CPF ou CNPJ inválido.";
 
-                if(retorno.Equals(""))
+                if (retorno.Equals(""))
                 {
                     if (string.IsNullOrEmpty(resultado.CardCode))
                         retorno += "Login inválido";

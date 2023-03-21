@@ -117,18 +117,18 @@ namespace SAPB1.WebForm
             try
             {
                 CotacaoBLL cotacaoBLL = new CotacaoBLL();
-                CotacaoDTO cotacaoDTO = cotacaoBLL.Selecionar(docEntry);
+                IList<CotacaoDTO> cotacaoDTO = cotacaoBLL.Selecionar(docEntry);
 
                 btnSalvar.Visible = false;
                 btnInserirItem.Visible = false;
                 btnImprimir.Visible = true;
 
-                txtCodigoPn.Text = cotacaoDTO.CardCode.Trim();
-                txtParceiroNegocio.Text = cotacaoDTO.CardName.Trim();
-                txtDataLancamento.Text = ((cotacaoDTO.DocDate > DateTime.MinValue) ? cotacaoDTO.DocDate.ToString("dd/MM/yyyy") : "");
-                txtDataDocumento.Text = ((cotacaoDTO.DocDueDate > DateTime.MinValue) ? cotacaoDTO.DocDueDate.ToString("dd/MM/yyyy") : "");
-                txtObservacoes.Text = cotacaoDTO.Comments.ToString().Trim();
-                Combo.CondicaoPagamento(ddlCondicoesPagamento, new CondicaoPagamentoDTO() { GroupNum = Convert.ToInt32(cotacaoDTO.GroupNum) });
+                txtCodigoPn.Text = cotacaoDTO[0].CardCode.Trim();
+                txtParceiroNegocio.Text = cotacaoDTO[0].CardName.Trim();
+                txtDataLancamento.Text = ((cotacaoDTO[0].DocDate > DateTime.MinValue) ? cotacaoDTO[0].DocDate.ToString("dd/MM/yyyy") : "");
+                txtDataDocumento.Text = ((cotacaoDTO[0].DocDueDate > DateTime.MinValue) ? cotacaoDTO[0].DocDueDate.ToString("dd/MM/yyyy") : "");
+                txtObservacoes.Text = cotacaoDTO[0].Comments.ToString().Trim();
+                Combo.CondicaoPagamento(ddlCondicoesPagamento, new CondicaoPagamentoDTO() { GroupNum = Convert.ToInt32(cotacaoDTO[0].GroupNum) });
 
                 //
 
@@ -136,18 +136,18 @@ namespace SAPB1.WebForm
 
                 #region Dados do cabeçalho
 
-                txtParceiroNegocio.Text = cotacaoDTO.CardName;
-                hfParceiroNegocio.Value = cotacaoDTO.CardCode;
+                txtParceiroNegocio.Text = cotacaoDTO[0].CardName;
+                hfParceiroNegocio.Value = cotacaoDTO[0].CardCode;
                 //hfListaPreco.Value = cotacaoDTO.ListNum.ToString();
-                txtCnpj.Text = cotacaoDTO.U_CNPJ;
+                txtCnpj.Text = cotacaoDTO[0].U_CNPJ;
 
-                txtCodigoPn.Text = cotacaoDTO.CardCode;
+                txtCodigoPn.Text = cotacaoDTO[0].CardCode;
                 //txtMoeda.Text = cotacaoDTO.DocCur;
-                txtNumero.Text = cotacaoDTO.DocNum.ToString();
-                txtStatus.Text = RetornarStatus(cotacaoDTO.DocStatus.ToString(), cotacaoDTO.CANCELED.ToString());
-                txtDataLancamento.Text = cotacaoDTO.DocDate.ToString("dd/MM/yyyy");
-                txtDataEntrega.Text = cotacaoDTO.DocDueDate.ToString("dd/MM/yyyy");
-                txtDataDocumento.Text = cotacaoDTO.TaxDate.ToString("dd/MM/yyyy");
+                txtNumero.Text = cotacaoDTO[0].DocNum.ToString();
+                txtStatus.Text = RetornarStatus(cotacaoDTO[0].DocStatus.ToString(), cotacaoDTO[0].CANCELED.ToString());
+                txtDataLancamento.Text = cotacaoDTO[0].DocDate.ToString("dd/MM/yyyy");
+                txtDataEntrega.Text = cotacaoDTO[0].DocDueDate.ToString("dd/MM/yyyy");
+                txtDataDocumento.Text = cotacaoDTO[0].TaxDate.ToString("dd/MM/yyyy");
                 //txtNumeroPedido.Text = cotacaoDTO.NumAtCard;
                 //ddlTitular.SelectedValue = cotacaoDTO.OwnerCode;
                 //txtDespesaAdicional.Text = cotacaoDTO.RetornarValorDespesaFrete(Convert.ToInt64(cotacaoDTO.DocEntry)).ToString("n6");
@@ -184,7 +184,7 @@ namespace SAPB1.WebForm
                 #endregion
 
                 PedidoVendaDTO pedidoVendaEnderecoLogistica = new PedidoVendaDTO();
-                pedidoVendaEnderecoLogistica.DocNum = cotacaoDTO.DocNum;
+                pedidoVendaEnderecoLogistica.DocNum = cotacaoDTO[0].DocNum;
 
                 SAPB1.BLL.PedidoVenda.EnderecoBLL enderecoBLL = new SAPB1.BLL.PedidoVenda.EnderecoBLL();
                 SAPB1.DTO.PedidoVenda.EnderecoDTO enderecoDTO = enderecoBLL.RetornarEndereco(pedidoVendaEnderecoLogistica);
@@ -211,7 +211,7 @@ namespace SAPB1.WebForm
                 #endregion
 
                 CotacaoItemDTO CotacaoItemDTO = new CotacaoItemDTO();
-                CotacaoItemDTO.DocEntry = cotacaoDTO.DocEntry;
+                CotacaoItemDTO.DocEntry = cotacaoDTO[0].DocEntry;
 
                 ItemCotacaoBLL itemCotacaoBLL = new ItemCotacaoBLL();
                 IList<CotacaoItemDTO> itens = itemCotacaoBLL.Listar(CotacaoItemDTO);

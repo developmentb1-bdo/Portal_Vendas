@@ -5,68 +5,118 @@ using System.Text;
 using SAPB1.DTO.FormasPagamento;
 using SAPB1.IDAL.FormasPagamento;
 using System.Data.SqlClient;
+using System.Configuration;
+using System.Data;
 
 namespace SAPB1.SqlServerDAL.FormasPagamento
 {
-    public class FormaPagamentoDAL:IFormaPagamento
+    public class FormaPagamentoDAL : IFormaPagamento
     {
         SqlServerConexao conexao = new SqlServerConexao();
 
-        string queryPadrao = "SELECT PayMethCod, Descript, Active, Type FROM OPYM ";
+        string queryPadrao = $@"SELECT ""PayMethCod"", ""Descript"", ""Active"", ""Type"" FROM OPYM ";
 
         public IList<FormaPagamentoDTO> Listar(FormaPagamentoDTO formaPagamentoDTO)
         {
-            SqlCommand cmd = new SqlCommand();
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
 
-            StringBuilder stb = new StringBuilder();
-            stb.Append(queryPadrao);
-
-            if(formaPagamentoDTO !=null)
+            if (tipoBD == "Hana")
             {
-                if(!string.IsNullOrEmpty(formaPagamentoDTO.Active) || !string.IsNullOrEmpty(formaPagamentoDTO.Type))
+                HanaConexao conexaoHana = new HanaConexao();
+
+                if (formaPagamentoDTO != null)
                 {
-                    stb.Append("WHERE ");
-
-                    if(!string.IsNullOrEmpty(formaPagamentoDTO.Active))
+                    if (!string.IsNullOrEmpty(formaPagamentoDTO.Active) || !string.IsNullOrEmpty(formaPagamentoDTO.Type))
                     {
-                        stb.Append("Active = @Active ");
+                        queryPadrao += "WHERE ";
 
-                        cmd.Parameters.AddWithValue("@Active", formaPagamentoDTO.Active);
-
-                        if(!string.IsNullOrEmpty(formaPagamentoDTO.Type))
+                        if (!string.IsNullOrEmpty(formaPagamentoDTO.Active))
                         {
-                            stb.Append("AND ");
+                            queryPadrao += $@"""Active"" = '{formaPagamentoDTO.Active}' ";
+
+                            if (!string.IsNullOrEmpty(formaPagamentoDTO.Type))
+                            {
+                                queryPadrao += "AND ";
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(formaPagamentoDTO.Type))
+                        {
+                            queryPadrao += $@"""Type"" = '{formaPagamentoDTO.Type}' ";
                         }
                     }
+                }
+                queryPadrao += $@"ORDER BY ""PayMethCod""";
 
-                    if(!string.IsNullOrEmpty(formaPagamentoDTO.Type))
-                    {
-                        stb.Append("Type = @Type ");
+                try
+                {
+                    conexaoHana.Connection();
 
-                        cmd.Parameters.AddWithValue("@Type", formaPagamentoDTO.Type);
-                    }
+                    return PopularDadosHana(queryPadrao);
+                }
+                catch (Exception er)
+                {
+                    throw new Exception("Erro no banco de dados: " + er.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
                 }
             }
-
-            stb.Append("ORDER BY PayMethCod");
-
-            try
+            else
             {
-                cmd.CommandText = stb.ToString();
-                cmd.Connection = conexao.Conexao;
+                SqlCommand cmd = new SqlCommand();
 
-                conexao.Conectar();
+                StringBuilder stb = new StringBuilder();
+                stb.Append(queryPadrao);
 
-                return PopularDados(ref cmd);
-            }
-            catch(SqlException er)
-            {
-                throw new Exception("Erro no banco de dados: " + er.Message);
-            }
-            finally
-            {
-                conexao.Desconectar();
-                cmd.Dispose();
+                if (formaPagamentoDTO != null)
+                {
+                    if (!string.IsNullOrEmpty(formaPagamentoDTO.Active) || !string.IsNullOrEmpty(formaPagamentoDTO.Type))
+                    {
+                        stb.Append("WHERE ");
+
+                        if (!string.IsNullOrEmpty(formaPagamentoDTO.Active))
+                        {
+                            stb.Append("Active = @Active ");
+
+                            cmd.Parameters.AddWithValue("@Active", formaPagamentoDTO.Active);
+
+                            if (!string.IsNullOrEmpty(formaPagamentoDTO.Type))
+                            {
+                                stb.Append("AND ");
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(formaPagamentoDTO.Type))
+                        {
+                            stb.Append("Type = @Type ");
+
+                            cmd.Parameters.AddWithValue("@Type", formaPagamentoDTO.Type);
+                        }
+                    }
+                }
+
+                stb.Append("ORDER BY PayMethCod");
+
+                try
+                {
+                    cmd.CommandText = stb.ToString();
+                    cmd.Connection = conexao.Conexao;
+
+                    conexao.Conectar();
+
+                    return PopularDados(ref cmd);
+                }
+                catch (SqlException er)
+                {
+                    throw new Exception("Erro no banco de dados: " + er.Message);
+                }
+                finally
+                {
+                    conexao.Desconectar();
+                    cmd.Dispose();
+                }
             }
         }
 
@@ -76,9 +126,9 @@ namespace SAPB1.SqlServerDAL.FormasPagamento
 
             IList<FormaPagamentoDTO> listFormasPagamento = new List<FormaPagamentoDTO>();
 
-            if(rdr.HasRows)
+            if (rdr.HasRows)
             {
-                while(rdr.Read())
+                while (rdr.Read())
                 {
                     FormaPagamentoDTO formaPagamentoDTO = new FormaPagamentoDTO();
                     formaPagamentoDTO.PayMethCod = rdr["PayMethCod"].ToString();
@@ -91,6 +141,31 @@ namespace SAPB1.SqlServerDAL.FormasPagamento
 
                 rdr.Close();
                 rdr.Dispose();
+            }
+
+            return listFormasPagamento;
+        }
+
+        private IList<FormaPagamentoDTO> PopularDadosHana(string query)
+        {
+            HanaConexao conexaoHana = new HanaConexao();
+
+            DataTable dt = conexaoHana.ExecuteDataTable(query);
+
+            IList<FormaPagamentoDTO> listFormasPagamento = new List<FormaPagamentoDTO>();
+
+            if (dt.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    FormaPagamentoDTO formaPagamentoDTO = new FormaPagamentoDTO();
+                    formaPagamentoDTO.PayMethCod = dr["PayMethCod"].ToString();
+                    formaPagamentoDTO.Descript = dr["Descript"].ToString();
+                    formaPagamentoDTO.Active = dr["Active"].ToString();
+                    formaPagamentoDTO.Type = dr["Type"].ToString();
+
+                    listFormasPagamento.Add(formaPagamentoDTO);
+                }
             }
 
             return listFormasPagamento;

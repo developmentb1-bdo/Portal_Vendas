@@ -52,7 +52,7 @@ namespace SAPB1.BLL.PedidoVenda
             }
         }
 
-        public CotacaoDTO Selecionar(int docEntry)
+        public IList<CotacaoDTO> Selecionar(int docEntry)
         {
             try
             {

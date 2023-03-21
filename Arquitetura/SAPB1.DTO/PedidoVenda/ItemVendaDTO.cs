@@ -12,7 +12,7 @@ namespace SAPB1.DTO.PedidoVenda
     public class ItemVendaDTO
     {
         public int DocEntry { get; set; }
-
+        public float NumPerMsr { get; set; }
         public int LineNum { get; set; }
 
         public string ItemCode { get; set; }

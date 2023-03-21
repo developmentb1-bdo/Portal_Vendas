@@ -4,6 +4,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using SAPB1.DTO.Administracao;
 using SAPB1.IDAL.Administracao;
@@ -15,37 +17,72 @@ namespace SAPB1.SqlServerDAL.Administracao
         public FilialDAL() { }
 
         string tSQLBase = @"SELECT BPLId, BPLName, [Disabled] FROM OBPL WHERE [Disabled] = 'N';";
-        SqlServerConexao conexao = new SqlServerConexao();
 
         public IList<FilialDTO> Listar()
         {
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
             IList<FilialDTO> listFilialDTO = new List<FilialDTO>();
-
-            try
+            if (tipoBD == "Hana")
             {
-                conexao.Conectar();
+                HanaConexao conexaoHana = new HanaConexao();
+                string query = $@"SELECT ""BPLId"", ""BPLName"", ""Disabled"" FROM OBPL WHERE ""Disabled"" = 'N';";
 
-                SqlCommand comando = new SqlCommand(tSQLBase, conexao.Conexao);
-                SqlDataReader dataReader = comando.ExecuteReader();
-
-                while (dataReader.Read())
+                try
                 {
-                    FilialDTO filialDTO = new FilialDTO();
-                    filialDTO = ObterFilialDTO(dataReader);
+                    conexaoHana.Connection();
+                    DataTable dt = conexaoHana.ExecuteDataTable(query);
 
-                    listFilialDTO.Add(filialDTO);
+                    if (dt.Rows.Count > 0)
+                    {
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            FilialDTO filialDTO = new FilialDTO();
+                            filialDTO = ObterFiliaHanalDTO(dr);
+                            listFilialDTO.Add(filialDTO);
+                        }
+                    }
+                    return listFilialDTO;
                 }
-                dataReader.Close();
+                catch (Exception err)
+                {
+                    throw new Exception("Erro no banco de Dados: " + err.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
+                }
             }
-            catch (Exception erro)
+            else
             {
-                throw new Exception(erro.Message);
+                SqlServerConexao conexao = new SqlServerConexao();
+                try
+                {
+                    conexao.Conectar();
+
+                    SqlCommand comando = new SqlCommand(tSQLBase, conexao.Conexao);
+                    SqlDataReader dataReader = comando.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        FilialDTO filialDTO = new FilialDTO();
+                        filialDTO = ObterFilialDTO(dataReader);
+
+                        listFilialDTO.Add(filialDTO);
+                    }
+                    dataReader.Close();
+
+                    return listFilialDTO;
+                }
+                catch (Exception erro)
+                {
+                    throw new Exception(erro.Message);
+                }
+                finally
+                {
+                    conexao.Desconectar();
+                }
             }
-            finally
-            {
-                conexao.Desconectar();
-            }
-            return listFilialDTO;
+
         }
 
         private FilialDTO ObterFilialDTO(SqlDataReader dataReader)
@@ -58,6 +95,17 @@ namespace SAPB1.SqlServerDAL.Administracao
                 filialDTO.BPLName = Convert.ToString(dataReader["BPLName"]);
                 filialDTO.Disabled = Convert.ToChar(dataReader["Disabled"]);
             }
+            return filialDTO;
+        }
+
+        private FilialDTO ObterFiliaHanalDTO(DataRow dr)
+        {
+            FilialDTO filialDTO = new FilialDTO();
+
+            filialDTO.BPLId = Convert.ToInt32(dr["BPLId"]);
+            filialDTO.BPLName = Convert.ToString(dr["BPLName"]);
+            filialDTO.Disabled = Convert.ToChar(dr["Disabled"]);
+
             return filialDTO;
         }
     }

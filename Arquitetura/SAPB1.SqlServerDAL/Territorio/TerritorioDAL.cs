@@ -2,6 +2,8 @@
 using SAPB1.IDAL.Territorio;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -10,51 +12,87 @@ namespace SAPB1.SqlServerDAL.Territorio
 {
     public class TerritorioDAL : ITerritorio
     {
-        SqlServerConexao conexao = new SqlServerConexao();
 
         public IList<TerritorioDTO> Listar()
         {
-            StringBuilder stb = new StringBuilder();
-            stb.Append("SELECT * FROM OTER");
 
-            SqlCommand cmd = new SqlCommand();
-
-            try
+            string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
+            IList<TerritorioDTO> listTerritorios = new List<TerritorioDTO>();
+            string query = $@"SELECT * FROM OTER";
+            if (tipoBD == "Hana")
             {
-                cmd.CommandText = stb.ToString();
-                cmd.Connection = conexao.Conexao;
-
-                conexao.Conectar();
-
-                SqlDataReader rdr = cmd.ExecuteReader();
-
-                IList<TerritorioDTO> listTerritorios = new List<TerritorioDTO>();
-
-                if(rdr.HasRows)
+                HanaConexao conexaoHana = new HanaConexao();
+                try
                 {
-                    while(rdr.Read())
+                    conexaoHana.Connection();
+                    DataTable dt = conexaoHana.ExecuteDataTable(query);
+                    if (dt.Rows.Count > 0)
                     {
-                        TerritorioDTO territorioDTO = new TerritorioDTO();
-                        territorioDTO.TerritryId = Convert.ToInt32(rdr["territryID"]);
-                        territorioDTO.Descript = rdr["descript"].ToString();
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            TerritorioDTO territorioDTO = new TerritorioDTO();
+                            territorioDTO.TerritryId = Convert.ToInt32(dr["territryID"]);
+                            territorioDTO.Descript = dr["descript"].ToString();
 
-                        listTerritorios.Add(territorioDTO);
+                            listTerritorios.Add(territorioDTO);
+                        }
                     }
                 }
-
-                rdr.Close();
-                rdr.Dispose();
-
-                return listTerritorios;
+                catch (Exception err)
+                {
+                    throw new Exception(err.Message);
+                }
+                finally
+                {
+                    conexaoHana.Dispose();
+                }
             }
-            catch(SqlException er)
+            else
             {
-                throw new Exception(er.Message);
+                SqlServerConexao conexao = new SqlServerConexao();
+
+                StringBuilder stb = new StringBuilder();
+                stb.Append("SELECT * FROM OTER");
+
+                SqlCommand cmd = new SqlCommand();
+
+                try
+                {
+                    cmd.CommandText = stb.ToString();
+                    cmd.Connection = conexao.Conexao;
+
+                    conexao.Conectar();
+
+                    SqlDataReader rdr = cmd.ExecuteReader();
+
+
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            TerritorioDTO territorioDTO = new TerritorioDTO();
+                            territorioDTO.TerritryId = Convert.ToInt32(rdr["territryID"]);
+                            territorioDTO.Descript = rdr["descript"].ToString();
+
+                            listTerritorios.Add(territorioDTO);
+                        }
+                    }
+
+                    rdr.Close();
+                    rdr.Dispose();
+
+                }
+                catch (SqlException er)
+                {
+                    throw new Exception(er.Message);
+                }
+                finally
+                {
+                    conexao.Desconectar();
+                }
             }
-            finally
-            {
-                conexao.Desconectar();
-            }
+            return listTerritorios;
+
         }
     }
 }

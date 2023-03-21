@@ -14,7 +14,7 @@ namespace SAPB1.SqlServerDAL.Funcionario
     {
         public ColaboradorDTO SelecionarColaboradorPorId(int empId)
         {
-            string query = $@"SELECT * FROM OHEM WHERE empID = {empId}";
+            string query = $@"SELECT * FROM OHEM WHERE ""empID"" = '{empId}'";
             ColaboradorDTO colaborador = new ColaboradorDTO();
 
             string tipoBD = ConfigurationManager.AppSettings["TipoBD"].ToString();
@@ -23,6 +23,7 @@ namespace SAPB1.SqlServerDAL.Funcionario
                 HanaConexao conexaoHana = new HanaConexao();
                 try
                 {
+                    conexaoHana.Connection();
                     var retornoQuery = conexaoHana.ExecuteDataTable(query);
 
                     foreach (DataRow dr in retornoQuery.Rows)
@@ -42,6 +43,8 @@ namespace SAPB1.SqlServerDAL.Funcionario
                         }
                     }
 
+                    return colaborador;
+
                 }
                 catch (Exception er)
                 {
@@ -52,12 +55,11 @@ namespace SAPB1.SqlServerDAL.Funcionario
                     conexaoHana.Dispose();
                 }
 
-                return colaborador;
             }
             else
             {
 
-                SqlCommand cmd = new SqlCommand();                
+                SqlCommand cmd = new SqlCommand();
                 SqlServerConexao conexao = new SqlServerConexao();
 
                 try
@@ -68,7 +70,7 @@ namespace SAPB1.SqlServerDAL.Funcionario
 
                     conexao.Conectar();
 
-                    SqlDataReader rdr = cmd.ExecuteReader();                  
+                    SqlDataReader rdr = cmd.ExecuteReader();
 
                     if (rdr.HasRows)
                     {
@@ -112,7 +114,8 @@ namespace SAPB1.SqlServerDAL.Funcionario
             {
                 HanaConexao conexaoHana = new HanaConexao();
                 try
-                {                    
+                {
+                    conexaoHana.Connection();
                     var retornoQuery = conexaoHana.ExecuteDataTable(query);
 
                     foreach (DataRow dr in retornoQuery.Rows)
@@ -124,14 +127,14 @@ namespace SAPB1.SqlServerDAL.Funcionario
                             colaborador.LastName = dr["lastName"].ToString();
                             colaborador.MiddleName = dr["middleName"].ToString();
 
-                            if(dr["position"] != DBNull.Value)
-                            colaborador.Position = Convert.ToInt32(dr["position"]);
+                            if (dr["position"] != DBNull.Value)
+                                colaborador.Position = Convert.ToInt32(dr["position"]);
 
                             colaborador.SalesPrson = Convert.ToInt32((dr["salesPrson"].ToString().Equals("") ? "0" : dr["salesPrson"]));
                             colaborador.U_AcessoPortal = ((!DBNull.Value.Equals(dr["U_AcessoPortal"])) ? dr["U_AcessoPortal"].ToString() : "");
                         }
                     }
-
+                    return colaborador;
                 }
                 catch (Exception er)
                 {
@@ -141,8 +144,6 @@ namespace SAPB1.SqlServerDAL.Funcionario
                 {
                     conexaoHana.Dispose();
                 }
-
-                return colaborador;
             }
             else
             {
